@@ -1,0 +1,27 @@
+<!-- @dsCard group="Website" viewport="1440x900" name="Marketing website" subtitle="Home (dark) + Pricing (light) click-through" -->
+<!doctype html><html><head><meta charset="utf-8"><title>Saniti — Website UI kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../components/ds-loader.js"></script>
+<style>body{margin:0;background:#0b0b0b;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}a{color:var(--link-dark)}</style>
+</head><body><div id="root"></div>
+<script type="text/babel">
+window.DS = window.SanitiDesignSystem || Object.keys(window).map(k => { try { const v = window[k]; return v && typeof v === 'object' && v.Button && v.NavBar ? v : null; } catch (e) { return null; } }).find(Boolean) || {};
+</script>
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="Pricing.jsx"></script>
+<script type="text/babel">
+const { NavBar, Footer } = window.DS;
+function App(){
+  const [page, setPage] = React.useState(localStorage.getItem('sn-kit-page') || 'Home');
+  const nav = p => { const n = p==='Pricing' ? 'Pricing' : 'Home'; setPage(n); localStorage.setItem('sn-kit-page', n); window.scrollTo(0,0); };
+  return <div>
+    <NavBar active={page==='Pricing' ? 'Pricing' : undefined} onNavigate={nav}/>
+    {page==='Pricing' ? <PricingPage/> : <HomePage onPricing={() => nav('Pricing')}/>}
+    <Footer/>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

@@ -1,0 +1,28 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Core" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../components/ds-loader.js"></script>
+<style>body{margin:0;background:#0b0b0b;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}.lbl{font:var(--t-mono-micro);color:var(--mute)}</style>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const DS = window.SanitiDesignSystem || Object.keys(window).map(k => { try { const v = window[k]; return v && typeof v === 'object' && v.Button && v.NavBar ? v : null; } catch (e) { return null; } }).find(Boolean) || {};
+const { Button, Badge, Wordmark, BrandDot, Eyebrow, TextInput, Textarea, FeatureCard, PricingCard, StudioWindow, AlertBanner, NavBar, Footer, Section, DisplayLockup, ComparisonTable } = DS;
+function App(){ return (<div style={{padding:24,display:'flex',flexDirection:'column',gap:20}}>
+  <div style={{display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}>
+    <Button variant="primary">Get started free</Button><Button variant="brand">Contact sales</Button>
+    <Button variant="secondary-dark">Book a demo</Button><Button variant="ghost-dark">Learn more →</Button><Button variant="primary" disabled>Disabled</Button>
+  </div>
+  <div style={{display:'flex',gap:6,alignItems:'center'}}>
+    <Button variant="app-tab" active>Structure</Button><Button variant="app-tab">Vision</Button><Button variant="app-tab">Presentation</Button>
+    <div style={{width:24}}/><Badge>New</Badge><Badge variant="filled">Beta</Badge>
+  </div>
+  <div style={{display:'flex',gap:12,alignItems:'center',background:'#fff',padding:16,borderRadius:12}}>
+    <Button variant="primary-on-light">Start building</Button><Wordmark tone="light"/><Eyebrow tone="light">Pricing</Eyebrow>
+  </div>
+  <div style={{display:'flex',gap:32,alignItems:'center'}}><Wordmark size={28}/><Eyebrow>Content operating system</Eyebrow><Eyebrow caps>Resources</Eyebrow></div>
+</div>); }
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

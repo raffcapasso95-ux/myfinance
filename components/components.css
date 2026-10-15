@@ -1,0 +1,21 @@
+/* Interaction states for Saniti components (hover/focus can't be inline). */
+.sn-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;border:1px solid transparent;cursor:pointer;white-space:nowrap;text-decoration:none;transition:background var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)}
+.sn-btn:active{transform:scale(.98)}
+.sn-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.sn-btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.sn-btn--primary:hover:not([disabled]){background:var(--canvas-paper)}
+.sn-btn--primary-on-light:hover:not([disabled]){background:var(--graphite)}
+.sn-btn--brand:hover:not([disabled]){background:#f57a70}
+.sn-btn--secondary-dark:hover:not([disabled]){color:var(--on-primary);border-color:var(--slate-soft)}
+.sn-btn--ghost-dark:hover:not([disabled]){color:var(--on-primary);background:var(--canvas-soft)}
+.sn-btn--app-tab:hover:not([disabled]){color:var(--on-primary)}
+.sn-btn--app-tab[aria-pressed="true"]{background:var(--graphite);color:var(--on-primary)}
+.sn-navlink{color:var(--on-primary);text-decoration:none;transition:color var(--duration-fast)}
+.sn-navlink:hover{color:var(--ash)}
+.sn-footlink{color:var(--ash);text-decoration:none}
+.sn-footlink:hover{color:var(--on-primary)}
+.sn-input{transition:box-shadow var(--duration-fast),border-color var(--duration-fast)}
+.sn-input:focus{outline:0;box-shadow:0 0 0 2px var(--focus-ring);border-color:transparent}
+.sn-input::placeholder{color:var(--mute)}
+.sn-link{color:var(--link-light);text-decoration:underline;text-underline-offset:2px}
+.sn-dark .sn-link{color:var(--link-dark)}

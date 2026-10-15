@@ -1,0 +1,18 @@
+<!-- @dsCard group="Components" viewport="900x700" name="Sections" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../components/ds-loader.js"></script>
+<style>body{margin:0;background:#0b0b0b;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}.lbl{font:var(--t-mono-micro);color:var(--mute)}</style>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const DS = window.SanitiDesignSystem || Object.keys(window).map(k => { try { const v = window[k]; return v && typeof v === 'object' && v.Button && v.NavBar ? v : null; } catch (e) { return null; } }).find(Boolean) || {};
+const { Button, Badge, Wordmark, BrandDot, Eyebrow, TextInput, Textarea, FeatureCard, PricingCard, StudioWindow, AlertBanner, NavBar, Footer, Section, DisplayLockup, ComparisonTable } = DS;
+function App(){ return (<div>
+  <Section polarity="dark" compact><DisplayLockup eyebrow="Content operating system" size="md" title="Your content, in one structured place" lead="Model it once, then deliver it to every site, app and agent."/></Section>
+  <Section polarity="light" compact><ComparisonTable tiers={['Free','Growth','Enterprise']} featured="Growth" rows={[{group:'Content'},{label:'Documents',values:['10k','Unlimited','Unlimited']},{label:'Scheduled publishing',values:[false,true,true]},{label:'SSO & SAML',values:[false,false,true]}]}/></Section>
+</div>); }
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

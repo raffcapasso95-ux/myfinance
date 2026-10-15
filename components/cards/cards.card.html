@@ -1,0 +1,25 @@
+<!-- @dsCard group="Components" viewport="700x860" name="Cards" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="../../components/ds-loader.js"></script>
+<style>body{margin:0;background:#0b0b0b;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}.lbl{font:var(--t-mono-micro);color:var(--mute)}</style>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const DS = window.SanitiDesignSystem || Object.keys(window).map(k => { try { const v = window[k]; return v && typeof v === 'object' && v.Button && v.NavBar ? v : null; } catch (e) { return null; } }).find(Boolean) || {};
+const { Button, Badge, Wordmark, BrandDot, Eyebrow, TextInput, Textarea, FeatureCard, PricingCard, StudioWindow, AlertBanner, NavBar, Footer, Section, DisplayLockup, ComparisonTable } = DS;
+function App(){ return (<div style={{padding:24,display:'flex',flexDirection:'column',gap:24}}>
+  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+    <FeatureCard eyebrow="Studio" title="An editor shaped to your team" action={<Button variant="ghost-dark" style={{padding:0}}>Learn more →</Button>}>Configure every field, view and workflow in code.</FeatureCard>
+    <FeatureCard tone="brand" eyebrow="Agent" title="Content that answers back">Ask questions across your whole content lake.</FeatureCard>
+  </div>
+  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,background:'#fff',padding:16,borderRadius:12}}>
+    <PricingCard name="Free" description="For personal projects." price="$0" cta="Start for free" features={['20 seats','10k documents']}/>
+    <PricingCard featured name="Growth" description="For teams shipping weekly." price="$15" period="per seat / mo" cta="Start trial" features={['Unlimited documents','Scheduled publishing']}/>
+  </div>
+  <StudioWindow title="studio / posts / launch-notes"><div style={{display:'grid',gridTemplateColumns:'140px 1fr',gap:16}}><div style={{display:'flex',flexDirection:'column',gap:8,font:'var(--t-caption)',color:'var(--ash)'}}><span style={{color:'#fff'}}>Posts</span><span>Authors</span><span>Categories</span></div><div style={{display:'flex',flexDirection:'column',gap:10}}><TextInput tone="dark" defaultValue="Launch notes"/><Textarea defaultValue="Draft body…" rows={2}/></div></div></StudioWindow>
+</div>); }
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

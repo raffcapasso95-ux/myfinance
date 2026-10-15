@@ -1,0 +1,4 @@
+:root{
+  --radius-none:0px; --radius-app-xs:3px; --radius-app-sm:4px; --radius-app-md:5px;
+  --radius-app-lg:6px; --radius-marketing:12px; --radius-full:99999px;
+}

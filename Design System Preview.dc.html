@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;425;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>body{margin:0;background:#0b0b0b;-webkit-font-smoothing:antialiased}a{color:#55beff}a:hover{color:#afe3ff}*{box-sizing:border-box}</style>
+</helmet>
+<div style="{{ themeVars }}">
+<div style="background:var(--pv-bg);color:var(--pv-fg);font-family:Inter,'Helvetica Neue',Helvetica,Arial,sans-serif;transition:background .2s,color .2s">
+
+<nav style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:24px;height:64px;padding:0 24px;background:var(--pv-bg)">
+  <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif;letter-spacing:-0.36px">Saniti</span><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979;margin-left:12px">DESIGN SYSTEM</span></div>
+  <div style="display:flex;gap:24px;font:500 15px/1.5 Inter,sans-serif;flex-wrap:wrap">
+    <a href="#colors" style="color:var(--pv-fg);text-decoration:none">Colors</a><a href="#type" style="color:var(--pv-fg);text-decoration:none">Type</a><a href="#components" style="color:var(--pv-fg);text-decoration:none">Components</a><a href="#pricing" style="color:var(--pv-fg);text-decoration:none">Pricing</a><a href="#layout" style="color:var(--pv-fg);text-decoration:none">Layout</a>
+  </div>
+  <div style="display:flex;gap:4px;padding:3px;border-radius:99px;border:1px solid var(--pv-border)">
+    <button onClick="{{ setDark }}" style="{{ darkBtn }}">Dark</button>
+    <button onClick="{{ setLight }}" style="{{ lightBtn }}">Light</button>
+  </div>
+</nav>
+
+<section style="padding:64px 24px 96px;max-width:1640px;margin:0 auto">
+  <div style="display:flex;gap:12px;align-items:center"><span style="display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:99px;background:var(--pv-fg);color:var(--pv-bg);font:400 13px/1.5 Inter,sans-serif">v1.0</span><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--pv-body)">Content operating system · design language</span></div>
+  <h1 style="margin:24px 0 0;font:400 112px/1.0 Inter,sans-serif;letter-spacing:-5px;font-feature-settings:'cv01','cv11','ss07';max-width:1300px;text-wrap:balance">Structure gives content its power</h1>
+  <p style="margin:24px 0 0;max-width:620px;font:400 18px/1.5 Inter,sans-serif;letter-spacing:-0.18px;color:var(--pv-body);text-wrap:pretty">A dark-first editorial system: oversized display type, IBM Plex Mono labels, near-black reading bands and a single coral-red accent reserved for the action that matters most.</p>
+  <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
+    <button style="height:44px;padding:0 24px;border-radius:99px;border:1px solid var(--pv-fg);background:var(--pv-fg);color:var(--pv-bg);font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="opacity:.85">Get started free</button>
+    <button style="height:44px;padding:0 24px;border-radius:99px;border:1px solid #f36458;background:#f36458;color:#0b0b0b;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#f57a70">Contact sales</button>
+    <button style="height:44px;padding:0 16px;border-radius:5px;border:1px solid var(--pv-border);background:var(--pv-card);color:var(--pv-body);font:500 13px/1.3 Inter,sans-serif;letter-spacing:-0.13px;cursor:pointer" style-hover="color:var(--pv-fg)">Book a demo</button>
+  </div>
+</section>
+
+<section id="colors" style="padding:96px 24px;border-top:1px solid var(--pv-border)">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--pv-body)">01 · Color</div>
+    <h2 style="margin:12px 0 0;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px">Monochrome, plus one coral.</h2>
+    <p style="margin:16px 0 48px;max-width:620px;font:400 18px/1.5 Inter,sans-serif;color:var(--pv-body)">The brand red appears once per viewport — a CTA, the brand dot, or a single brand card. Everything else is ink, canvas and grey.</p>
+    <sc-for list="{{ colorGroups }}" as="g" hint-placeholder-count="4">
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:24px 0;border-top:1px solid var(--pv-border)">
+        <div><div style="font:400 24px/1.1 Inter,sans-serif;letter-spacing:-0.24px">{{ g.name }}</div><div style="margin-top:8px;font:400 13px/1.5 Inter,sans-serif;color:var(--pv-muted)">{{ g.note }}</div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px">
+          <sc-for list="{{ g.items }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="height:96px;border-radius:12px;background:{{ c.hex }};border:1px solid var(--pv-border)"></div>
+              <div style="font:500 13px/1.3 Inter,sans-serif">{{ c.name }}</div>
+              <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--pv-muted)">{{ c.hex }} · {{ c.role }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="type" style="padding:96px 24px;border-top:1px solid var(--pv-border)">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--pv-body)">02 · Typography</div>
+    <h2 style="margin:12px 0 0;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px">One sans. One mono.</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin:48px 0">
+      <div style="padding:32px;border-radius:12px;background:var(--pv-card);border:1px solid var(--pv-border)">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--pv-muted)">PRIMARY · waldenburgNormal → Inter</div>
+        <div style="font:400 120px/1 Inter,sans-serif;letter-spacing:-5px;margin-top:16px">Aa</div>
+        <div style="font:400 15px/1.5 Inter,sans-serif;color:var(--pv-body);margin-top:16px">Every running-text role, display through caption. Hierarchy comes from size and tracking — never weight contrast.</div>
+      </div>
+      <div style="padding:32px;border-radius:12px;background:var(--pv-card);border:1px solid var(--pv-border)">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--pv-muted)">LABELS · IBM Plex Mono</div>
+        <div style="font:400 120px/1 'IBM Plex Mono',monospace;letter-spacing:-6px;margin-top:16px">Aa</div>
+        <div style="font:400 15px/1.5 Inter,sans-serif;color:var(--pv-body);margin-top:16px">Eyebrows, small-caps tags and technical captions only. Never for body or headlines.</div>
+      </div>
+    </div>
+    <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="12">
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:baseline;padding:20px 0;border-top:1px solid var(--pv-border)">
+        <div><div style="font:500 13px/1.3 Inter,sans-serif">{{ t.name }}</div><div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--pv-muted);margin-top:4px">{{ t.spec }}</div></div>
+        <div style="{{ t.style }}">{{ t.sample }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="components" style="padding:96px 24px;border-top:1px solid var(--pv-border)">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--pv-body)">03 · Components</div>
+    <h2 style="margin:12px 0 48px;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px">Pills for marketing.<br>Sharp corners for product.</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px">
+      <div style="padding:32px;border-radius:12px;background:#0b0b0b;border:1px solid #353535;color:#fff">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">BUTTONS · ON DARK</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px">
+          <button style="height:44px;padding:0 24px;border-radius:99px;border:1px solid #0b0b0b;background:#fff;color:#0b0b0b;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#ededed">Get started free</button>
+          <button style="height:44px;padding:0 24px;border-radius:99px;border:0;background:#f36458;color:#0b0b0b;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#f57a70">Contact sales</button>
+          <button style="height:36px;padding:0 12px;border-radius:5px;border:1px solid #353535;background:#212121;color:#b9b9b9;font:500 13px/1.3 Inter,sans-serif;cursor:pointer" style-hover="color:#fff">Book a demo</button>
+          <button style="height:36px;padding:0 12px;border-radius:99px;border:0;background:transparent;color:#b9b9b9;font:500 13px/1.3 Inter,sans-serif;cursor:pointer" style-hover="color:#fff;background:#212121">Learn more →</button>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:20px">
+          <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#353535;color:#fff;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em;cursor:pointer">STRUCTURE</button>
+          <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#212121;color:#b9b9b9;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em;cursor:pointer" style-hover="color:#fff">VISION</button>
+          <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#212121;color:#b9b9b9;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em;cursor:pointer" style-hover="color:#fff">PRESENTATION</button>
+        </div>
+      </div>
+      <div style="padding:32px;border-radius:12px;background:#fff;border:1px solid #ededed;color:#0b0b0b">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">BUTTONS · ON LIGHT</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px">
+          <button style="height:44px;padding:0 24px;border-radius:99px;border:0;background:#0b0b0b;color:#fff;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#353535">Start building</button>
+          <button style="height:44px;padding:0 24px;border-radius:99px;border:1px solid #0b0b0b;background:#fff;color:#0b0b0b;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#ededed">View docs</button>
+          <button disabled style="height:44px;padding:0 24px;border-radius:99px;border:0;background:#0b0b0b;color:#fff;font:500 16px/1.5 Inter,sans-serif;opacity:.35">Disabled</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:20px;align-items:center">
+          <span style="display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:99px;border:1px solid #ededed;font:400 13px/1.5 Inter,sans-serif">New</span>
+          <span style="display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:99px;background:#0b0b0b;color:#fff;font:400 13px/1.5 Inter,sans-serif">Beta</span>
+          <span style="display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:99px;background:#37cd84;color:#0b0b0b;font:400 13px/1.5 Inter,sans-serif">Live</span>
+          <span style="width:12px;height:12px;border-radius:99px;background:#f36458;margin-left:8px"></span><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">brand-dot 12px</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:24px">
+      <div style="display:flex;flex-direction:column;gap:12px;padding:32px;border-radius:12px;background:#212121;border:1px solid #353535;color:#fff">
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#797979">Studio</div>
+        <div style="font:400 24px/1.1 Inter,sans-serif;letter-spacing:-0.24px">An editor shaped around your team</div>
+        <div style="font:400 16px/1.5 Inter,sans-serif;color:#b9b9b9">Define schemas in code and get a fully customizable editing environment.</div>
+        <a href="#" style="font:500 13px/1.3 Inter,sans-serif;color:#b9b9b9;text-decoration:none;margin-top:8px">Explore Studio →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;padding:32px;border-radius:12px;background:#f36458;color:#0b0b0b">
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace">Agent</div>
+        <div style="font:400 24px/1.1 Inter,sans-serif;letter-spacing:-0.24px">Content that works while you sleep</div>
+        <div style="font:400 16px/1.5 Inter,sans-serif">Automate translation, audits and enrichment across thousands of documents.</div>
+        <a href="#" style="font:500 13px/1.3 Inter,sans-serif;color:#0b0b0b;text-decoration:none;margin-top:8px">See it in action →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;padding:32px;border-radius:12px;background:#fff;border:1px solid #ededed;color:#0b0b0b">
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#505b6c">Content Lake</div>
+        <div style="font:400 24px/1.1 Inter,sans-serif;letter-spacing:-0.24px">Query anything, instantly</div>
+        <div style="font:400 16px/1.5 Inter,sans-serif;color:#212121">Store content as structured data and fetch exactly what each channel needs.</div>
+        <a href="#" style="font:500 13px/1.3 Inter,sans-serif;color:#0052ef;text-decoration:none;margin-top:8px">Read the docs →</a>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px;margin-top:24px">
+      <div style="display:flex;flex-direction:column;gap:16px;padding:32px;border-radius:12px;background:#fff;border:1px solid #ededed;color:#0b0b0b">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">FORMS · LIGHT</div>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.3 Inter,sans-serif">Work email <span style="color:#dd0000">*</span></span><input placeholder="you@company.com" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;color:#0b0b0b;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent"></label>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.3 Inter,sans-serif">Focused</span><input value="Acme Inc." readonly style="height:44px;padding:0 16px;border-radius:3px;border:1px solid transparent;box-shadow:0 0 0 2px #0052ef;font:400 16px/1.5 Inter,sans-serif;color:#0b0b0b;outline:0"></label>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.3 Inter,sans-serif">Project ID</span><input value="abc 123" readonly style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #dd0000;font:400 16px/1.5 Inter,sans-serif;color:#0b0b0b;outline:0"><span style="font:400 12px/1.5 Inter,sans-serif;color:#dd0000">IDs can't contain spaces.</span></label>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px;border-radius:6px;background:#afe3ff;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">Annual plans include two months free.<a href="#" style="color:#0052ef">Compare plans</a></div>
+      </div>
+      <div style="display:flex;flex-direction:column;border-radius:6px;background:#212121;border:1px solid #353535;color:#fff;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-bottom:1px solid #353535"><span style="width:10px;height:10px;border-radius:99px;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:99px;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:99px;background:#28c840"></span><span style="margin-left:12px;font:400 10px/1.3 'IBM Plex Mono',monospace;color:#797979">studio / posts / spring-launch</span></div>
+        <div style="display:grid;grid-template-columns:150px minmax(0,1fr);flex:1">
+          <div style="display:flex;flex-direction:column;gap:10px;padding:16px;border-right:1px solid #353535;font:400 13px/1.5 Inter,sans-serif;color:#b9b9b9"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">CONTENT</span><span style="color:#fff">Posts</span><span>Authors</span><span>Categories</span><span>Products</span></div>
+          <div style="display:flex;flex-direction:column;gap:12px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">FORMS · DARK / STUDIO WINDOW</span><span style="display:inline-flex;align-items:center;gap:6px;font:400 12px/1.5 Inter,sans-serif;color:#37cd84"><span style="width:6px;height:6px;border-radius:99px;background:#37cd84"></span>Published</span></div>
+            <input value="Spring launch: what's new" readonly style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #353535;background:#0b0b0b;color:#b9b9b9;font:400 16px/1.5 Inter,sans-serif;outline:0">
+            <textarea rows="5" readonly style="padding:8px 12px;border-radius:3px;border:1px solid #353535;background:#0b0b0b;color:#b9b9b9;font:400 16px/1.5 Inter,sans-serif;resize:none;outline:0">This season we're shipping the three things our customers asked for most…</textarea>
+            <div style="display:flex;gap:8px;justify-content:flex-end"><button style="height:36px;padding:0 12px;border-radius:5px;border:1px solid #353535;background:#212121;color:#b9b9b9;font:500 13px/1.3 Inter,sans-serif;cursor:pointer">Discard</button><button style="height:36px;padding:0 16px;border-radius:5px;border:0;background:#fff;color:#0b0b0b;font:500 13px/1.3 Inter,sans-serif;cursor:pointer">Publish</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="padding:96px 24px;background:#fff;color:#0b0b0b">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
+      <div><div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#505b6c">04 · Polarity flip — commercial voice</div><h2 style="margin:12px 0 0;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px">Start free. Scale later.</h2></div>
+      <div style="display:flex;gap:4px;padding:4px;border-radius:99px;border:1px solid #ededed">
+        <button onClick="{{ setMonthly }}" style="{{ monthlyBtn }}">Monthly</button>
+        <button onClick="{{ setAnnual }}" style="{{ annualBtn }}">Annual</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:48px">
+      <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="4">
+        <div style="{{ t.card }}">
+          <div style="font:425 32px/1.13 Inter,sans-serif;letter-spacing:-0.32px">{{ t.name }}</div>
+          <div style="font:400 16px/1.5 Inter,sans-serif;color:{{ t.sub }};min-height:48px">{{ t.desc }}</div>
+          <div style="display:flex;align-items:baseline;gap:6px"><span style="font:400 48px/1.08 Inter,sans-serif;letter-spacing:-1.68px">{{ t.price }}</span><span style="font:400 13px/1.5 Inter,sans-serif;color:{{ t.sub }}">{{ t.period }}</span></div>
+          <button style="{{ t.btn }}">{{ t.cta }}</button>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ t.features }}" as="f" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px;color:{{ t.sub }}"><span style="color:#37cd84">✓</span>{{ f }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="overflow-x:auto;margin-top:64px">
+      <table style="width:100%;min-width:720px;border-collapse:collapse;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">
+        <thead><tr><th style="text-align:left;padding:16px;border-bottom:1px solid #0b0b0b;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">FEATURE</th><th style="padding:16px;border-bottom:1px solid #0b0b0b;font:400 24px/1.1 Inter,sans-serif">Free</th><th style="padding:16px;border-bottom:1px solid #0b0b0b;font:400 24px/1.1 Inter,sans-serif;background:#ededed">Growth</th><th style="padding:16px;border-bottom:1px solid #0b0b0b;font:400 24px/1.1 Inter,sans-serif">Enterprise</th><th style="padding:16px;border-bottom:1px solid #0b0b0b;font:400 24px/1.1 Inter,sans-serif">Custom</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ compareRows }}" as="r" hint-placeholder-count="8">
+            <tr><td style="padding:16px;border-bottom:1px solid #ededed;{{ r.labelStyle }}">{{ r.label }}</td><td style="padding:16px;border-bottom:1px solid #ededed;text-align:center;color:{{ r.c0 }}">{{ r.v0 }}</td><td style="padding:16px;border-bottom:1px solid #ededed;text-align:center;background:#ededed;color:{{ r.c1 }}">{{ r.v1 }}</td><td style="padding:16px;border-bottom:1px solid #ededed;text-align:center;color:{{ r.c2 }}">{{ r.v2 }}</td><td style="padding:16px;border-bottom:1px solid #ededed;text-align:center;color:{{ r.c3 }}">{{ r.v3 }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="layout" style="padding:96px 24px">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--pv-body)">05 · Layout & shape</div>
+    <h2 style="margin:12px 0 48px;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px">8px rhythm. Flat depth.</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px">
+      <div style="padding:32px;border-radius:12px;background:var(--pv-card);border:1px solid var(--pv-border)">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--pv-muted)">SPACING</div>
+        <div style="display:flex;align-items:flex-end;gap:14px;margin-top:24px;flex-wrap:wrap">
+          <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="9">
+            <div style="display:flex;flex-direction:column;gap:6px"><div style="width:{{ s.px }};height:{{ s.px }};background:#f36458;border-radius:2px"></div><div style="font:500 12px/1.3 Inter,sans-serif">{{ s.name }}</div><div style="font:400 10px/1.3 'IBM Plex Mono',monospace;color:var(--pv-muted)">{{ s.px }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding:32px;border-radius:12px;background:var(--pv-card);border:1px solid var(--pv-border)">
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--pv-muted)">RADIUS</div>
+        <div style="display:flex;align-items:flex-end;gap:14px;margin-top:24px;flex-wrap:wrap">
+          <sc-for list="{{ radii }}" as="r" hint-placeholder-count="7">
+            <div style="display:flex;flex-direction:column;gap:6px"><div style="width:64px;height:64px;border:1px solid var(--pv-fg);border-radius:{{ r.v }}"></div><div style="font:500 12px/1.3 Inter,sans-serif">{{ r.name }}</div><div style="font:400 10px/1.3 'IBM Plex Mono',monospace;color:var(--pv-muted)">{{ r.label }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:24px;border-radius:12px;overflow:hidden;border:1px solid var(--pv-border)">
+      <div style="background:#0b0b0b;padding:32px"><div style="height:96px;border-radius:12px;background:#212121"></div><div style="margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">FLAT · CARD DARK</div></div>
+      <div style="background:#ededed;padding:32px"><div style="height:96px;border-radius:12px;background:#fff"></div><div style="margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#505b6c">CARD ON PAPER</div></div>
+      <div style="background:#fff;padding:32px"><div style="height:96px;border-radius:12px;background:#0b0b0b"></div><div style="margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#505b6c">INVERTED FEATURED</div></div>
+      <div style="background:#fff;padding:32px"><div style="height:96px;border-radius:12px;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.08)"></div><div style="margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#505b6c">SOFT DROP · RARE</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:96px 24px;border-top:1px solid var(--pv-border)">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--pv-body)">06 · Principles</div>
+    <h2 style="margin:12px 0 48px;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px">Do. Don't.</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px">
+      <div style="padding:32px;border-radius:12px;background:var(--pv-card);border:1px solid var(--pv-border)">
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#37cd84">Do</div>
+        <sc-for list="{{ dos }}" as="d" hint-placeholder-count="5"><div style="padding:14px 0;border-bottom:1px solid var(--pv-border);font:400 16px/1.5 Inter,sans-serif;color:var(--pv-body)">{{ d }}</div></sc-for>
+      </div>
+      <div style="padding:32px;border-radius:12px;background:var(--pv-card);border:1px solid var(--pv-border)">
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#f36458">Don't</div>
+        <sc-for list="{{ donts }}" as="d" hint-placeholder-count="5"><div style="padding:14px 0;border-bottom:1px solid var(--pv-border);font:400 16px/1.5 Inter,sans-serif;color:var(--pv-body)">{{ d }}</div></sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding:64px 24px;background:#0b0b0b;color:#fff;border-top:1px solid #353535">
+  <div style="max-width:1640px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:32px">
+      <sc-for list="{{ footerCols }}" as="c" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979;margin-bottom:4px">{{ c.h }}</div><sc-for list="{{ c.items }}" as="i" hint-placeholder-count="3"><a href="#" style="font:400 13px/1.5 Inter,sans-serif;color:#b9b9b9;text-decoration:none">{{ i }}</a></sc-for></div>
+      </sc-for>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:64px;padding-top:24px;border-top:1px solid #353535;font:400 12px/1.5 Inter,sans-serif;color:#797979"><span>© 2026 Saniti · Design system v1.0</span><div style="display:flex;align-items:center;gap:8px;color:#fff"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif">Saniti</span></div></div>
+  </div>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;}}">
+class Component extends DCLogic {
+  state = { dark: (this.props.theme ?? 'dark') === 'dark', annual: true };
+  seg(on, light) {
+    return { height: 32, padding: '0 14px', borderRadius: 99, border: 0, cursor: 'pointer', font: '500 13px/1.3 Inter,sans-serif',
+      background: on ? (light ? '#0b0b0b' : 'var(--pv-fg)') : 'transparent', color: on ? (light ? '#fff' : 'var(--pv-bg)') : (light ? '#0b0b0b' : 'var(--pv-fg)') };
+  }
+  renderVals() {
+    const { dark, annual } = this.state;
+    const themeVars = dark
+      ? { '--pv-bg': '#0b0b0b', '--pv-fg': '#ffffff', '--pv-body': '#b9b9b9', '--pv-muted': '#797979', '--pv-card': '#212121', '--pv-border': '#353535' }
+      : { '--pv-bg': '#ffffff', '--pv-fg': '#0b0b0b', '--pv-body': '#212121', '--pv-muted': '#797979', '--pv-card': '#ededed', '--pv-border': '#ededed' };
+    const ts = (w, s, lh, ls, mono, extra = '') => `font:${w} ${s}px/${lh} ${mono ? "'IBM Plex Mono',monospace" : 'Inter,sans-serif'};letter-spacing:${ls};padding-bottom:0.15em;text-wrap:balance;${extra}`;
+    const css = s => Object.fromEntries(s.split(';').filter(Boolean).map(p => { const i = p.indexOf(':'); return [p.slice(0, i).trim().replace(/-([a-z])/g, (_, c) => c.toUpperCase()), p.slice(i + 1).trim()]; }));
+    const typeScale = [
+      ['display-mega', '112 / 1.0 / -4.48', 400, 112, 1, '-4.48px', 0, 'Editorial scale'],
+      ['display-xl', '72 / 1.05 / -2.88', 400, 72, 1.05, '-2.88px', 0, 'Loved by builders'],
+      ['display-lg', '60 / 0.8', 400, 60, 0.8, '0', 0, 'Ship it faster'],
+      ['display-md', '48 / 1.08 / -1.68', 400, 48, 1.08, '-1.68px', 0, 'Every surface, one source'],
+      ['display-sm', '38 / 1.1 / -1.14', 400, 38, 1.1, '-1.14px', 0, 'Structured content, everywhere'],
+      ['heading-md', '32 / 1.13 / 425', 425, 32, 1.13, '-0.32px', 0, 'Real-time collaboration'],
+      ['heading-sm', '24 / 1.1', 400, 24, 1.1, '-0.24px', 0, 'Feature card title'],
+      ['subtitle', '18 / 1.5', 400, 18, 1.5, '-0.18px', 0, 'Model content once and deliver it to every channel.'],
+      ['body', '16 / 1.5', 400, 16, 1.5, '0', 0, 'Default running body copy across both themes.'],
+      ['body-sm', '15 / 1.5', 400, 15, 1.5, '-0.15px', 0, 'Comparison-table cells and mid-density reading.'],
+      ['caption', '13 / 1.5', 400, 13, 1.5, '0', 0, 'Card captions and list-item meta'],
+      ['meta', '12 / 1.5', 400, 12, 1.5, '-0.12px', 0, 'Footnotes and fine print'],
+      ['mono-eyebrow', 'Plex Mono 13 / 1.5', 400, 13, 1.5, '0', 1, 'Content operating system'],
+      ['mono-caps', 'Plex Mono 11 / caps', 400, 11, 1.5, '.06em', 1, 'RESOURCES'],
+      ['button-lg', '16 / 1.5 / 500', 500, 16, 1.5, '0', 0, 'Get started free'],
+      ['button-uppercase', '11 / 1.5 / 600', 600, 11, 1.5, '.04em', 0, 'STRUCTURE'],
+    ].map(([name, spec, w, s, lh, ls, mono, sample]) => ({ name, spec, sample, style: css(ts(w, s, lh, ls, mono, s > 40 ? "font-feature-settings:'cv01','cv11','ss07'" : '')) }));
+    const colorGroups = [
+      { name: 'Brand', note: 'One accent, used scarcely.', items: [['brand', '#f36458', 'accent / CTA'], ['brand-deep', '#dd0000', 'destructive'], ['ink', '#0b0b0b', 'primary'], ['on-primary', '#ffffff', 'text on dark']] },
+      { name: 'Surfaces', note: 'Tonal stepping replaces shadow.', items: [['canvas', '#0b0b0b', 'dark band'], ['canvas-soft', '#212121', 'dark card'], ['canvas-light', '#ffffff', 'light band'], ['canvas-paper', '#ededed', 'paper band'], ['hairline-soft', '#353535', 'border dark'], ['surface-blue-bg', '#afe3ff', 'info']] },
+      { name: 'Text', note: 'Ash on dark, ink on light.', items: [['ink-soft', '#212121', 'secondary light'], ['graphite', '#353535', 'tertiary'], ['slate', '#3c4758', 'cool neutral'], ['slate-soft', '#505b6c', 'cool neutral'], ['mute', '#797979', 'mono captions'], ['ash', '#b9b9b9', 'body on dark']] },
+      { name: 'Semantic', note: 'Links and status.', items: [['link-blue', '#0052ef', 'link on light'], ['link-blue-soft', '#55beff', 'link on dark'], ['success', '#37cd84', 'available'], ['error', '#dd0000', 'error']] },
+    ].map(g => ({ ...g, items: g.items.map(([name, hex, role]) => ({ name, hex, role })) }));
+    const tierDefs = [
+      ['Free', 'For personal projects and prototypes.', '$0', '$0', 'forever', 'Start for free', 0, ['20 user seats', '10,000 documents', 'Community support']],
+      ['Growth', 'For teams shipping content every week.', '$15', '$18', 'per seat / month', 'Start 30-day trial', 1, ['Unlimited documents', 'Scheduled publishing', 'Comments & tasks']],
+      ['Enterprise', 'For organizations with scale and compliance needs.', 'Custom', 'Custom', '', 'Contact sales', 0, ['SSO & SAML', 'Dedicated infrastructure', '99.9% uptime SLA']],
+      ['Custom', 'A plan built around your exact usage.', 'Talk', 'Talk', 'to us', 'Book a call', 0, ['Volume pricing', 'Custom contracts', 'Migration services']],
+    ];
+    const tiers = tierDefs.map(([name, desc, pa, pm, period, cta, f, features]) => ({
+      name, desc, period, cta, features, price: annual ? pa : pm, sub: f ? '#b9b9b9' : '#212121',
+      card: { display: 'flex', flexDirection: 'column', gap: 24, padding: 32, borderRadius: 12, background: f ? '#0b0b0b' : '#fff', color: f ? '#fff' : '#0b0b0b', border: `1px solid ${f ? '#0b0b0b' : '#ededed'}` },
+      btn: { height: 44, borderRadius: 99, border: '1px solid #0b0b0b', background: f ? '#fff' : '#0b0b0b', color: f ? '#0b0b0b' : '#fff', font: '500 16px/1.5 Inter,sans-serif', cursor: 'pointer' },
+    }));
+    const rowDefs = [['Content'], ['Documents', '10k', 'Unlimited', 'Unlimited', 'Unlimited'], ['Datasets', '2', '5', 'Unlimited', 'Unlimited'], ['Scheduled publishing', 0, 1, 1, 1], ['Collaboration'], ['Real-time editing', 1, 1, 1, 1], ['Comments & tasks', 0, 1, 1, 1], ['Custom roles', 0, 0, 1, 1], ['Security'], ['SSO & SAML', 0, 0, 1, 1], ['Audit log', 0, '30 days', '1 year', 'Custom']];
+    const cv = v => v === 1 ? ['✓', '#37cd84'] : v === 0 ? ['—', '#b9b9b9'] : [v, '#0b0b0b'];
+    const compareRows = rowDefs.map(r => {
+      if (r.length === 1) return { label: r[0].toUpperCase(), labelStyle: css("font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979;padding-top:32px"), v0: '', v1: '', v2: '', v3: '', c0: '', c1: '', c2: '', c3: '' };
+      const o = { label: r[0], labelStyle: {} };
+      for (let i = 0; i < 4; i++) { const [v, c] = cv(r[i + 1]); o['v' + i] = v; o['c' + i] = c; }
+      return o;
+    });
+    return {
+      themeVars, typeScale, colorGroups, tiers, compareRows,
+      setDark: () => this.setState({ dark: true }), setLight: () => this.setState({ dark: false }),
+      darkBtn: this.seg(dark), lightBtn: this.seg(!dark),
+      setMonthly: () => this.setState({ annual: false }), setAnnual: () => this.setState({ annual: true }),
+      monthlyBtn: this.seg(!annual, true), annualBtn: this.seg(annual, true),
+      spacing: [['xxs', 4], ['xs', 8], ['sm', 12], ['md', 16], ['lg', 24], ['xl', 32], ['xxl', 48], ['section', 64], ['section-lg', 96]].map(([name, v]) => ({ name, px: v + 'px' })),
+      radii: [['none', '0px', '0'], ['app-xs', '3px', '3px'], ['app-sm', '4px', '4px'], ['app-md', '5px', '5px'], ['app-lg', '6px', '6px'], ['marketing', '12px', '12px'], ['full', '999px', 'pill']].map(([name, v, label]) => ({ name, v, label })),
+      dos: ['Run dark sections as the default brand voice; flip to light for pricing and comparisons.', 'Pair every display headline with a mono eyebrow above it.', 'Keep coral-red to one CTA or surface per viewport.', 'Use pills for marketing CTAs and 3–6px corners for product UI.', 'Divide sections with a hard polarity cut, not rules or gradients.'],
+      donts: ['Use coral-red as a section background.', 'Introduce extra accent hues or gradients.', 'Set body or headlines in IBM Plex Mono.', 'Add a "Most popular" ribbon — the black inversion is the badge.', 'Mix light and bold weights inside one heading.'],
+      footerCols: [['PRODUCT', ['Studio', 'Content Lake', 'Live preview']], ['SOLUTIONS', ['E-commerce', 'Media', 'Marketing sites']], ['RESOURCES', ['Docs', 'Guides', 'Changelog']], ['CUSTOMERS', ['Case studies', 'Partners']], ['COMPANY', ['About', 'Careers', 'Contact']], ['LEGAL', ['Privacy', 'Terms']]].map(([h, items]) => ({ h, items })),
+    };
+  }
+}
+</script>
+</body>
+</html>

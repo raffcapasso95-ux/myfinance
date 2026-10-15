@@ -1,0 +1,35 @@
+:root{
+  /* base */
+  --primary:#0b0b0b; --on-primary:#ffffff;
+  --brand:#f36458; --brand-deep:#dd0000;
+  --ink:#0b0b0b; --ink-soft:#212121; --graphite:#353535;
+  --slate:#3c4758; --slate-soft:#505b6c;
+  --mute:#797979; --ash:#b9b9b9;
+  --hairline:#ededed; --hairline-soft:#353535;
+  --canvas:#0b0b0b; --canvas-soft:#212121; --canvas-light:#ffffff; --canvas-paper:#ededed;
+  --on-canvas-light:#0b0b0b;
+  --link-blue:#0052ef; --link-blue-soft:#55beff;
+  --surface-blue-bg:#afe3ff;
+  --success:#37cd84; --error:#dd0000;
+  /* semantic — dark (default brand voice) */
+  --surface-page-dark:var(--canvas);
+  --surface-card-dark:var(--canvas-soft);
+  --border-dark:var(--hairline-soft);
+  --text-heading-dark:var(--on-primary);
+  --text-body-dark:var(--ash);
+  --text-meta-dark:var(--mute);
+  --link-dark:var(--link-blue-soft);
+  /* semantic — light (commercial voice) */
+  --surface-page-light:var(--canvas-light);
+  --surface-paper:var(--canvas-paper);
+  --surface-card-light:var(--canvas-light);
+  --border-light:var(--hairline);
+  --text-heading-light:var(--ink);
+  --text-body-light:var(--ink-soft);
+  --link-light:var(--link-blue);
+  /* accent */
+  --accent:var(--brand);
+  --on-accent:var(--ink);
+  --surface-info:var(--surface-blue-bg);
+  --focus-ring:var(--link-blue);
+}

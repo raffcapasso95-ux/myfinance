@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;425;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>body{margin:0;background:#e6e6e6;font-family:Inter,'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}*{box-sizing:border-box}a{color:#0052ef}a:hover{color:#0b0b0b}input[type=number]::-webkit-inner-spin-button{opacity:0}input[type=range]{accent-color:#f36458}.dv-turn{padding:40px 44px 32px;scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 Inter,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 Inter,sans-serif;color:rgba(0,0,0,.6)}.dv-card{max-width:100%;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}.dv-opt:target .dv-oid{background:#f36458;color:#0b0b0b}.dv-next{margin:22px 0 0;font:12px/1.5 Inter,sans-serif;color:rgba(0,0,0,.55)}</style>
+</helmet>
+<section class="dv-turn" id="t2" style="border-bottom:1px solid rgba(0,0,0,.1)">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Unione di <a class="dv-oid" href="#1a">1a</a> + <a class="dv-oid" href="#1c">1c</a></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Buste di <a class="dv-oid" href="#1a">1a</a> in alto, poi flip chiaro con inserimento e movimenti di <a class="dv-oid" href="#1c">1c</a></div>
+<div class="dv-card" style="width:1280px">
+  <div style="background:#0b0b0b;color:#fff">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 32px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif;letter-spacing:-0.36px">Myfinance</span></div>
+      <div style="display:flex;gap:6px">
+        <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#212121;color:#b9b9b9;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em">SETTEMBRE</button>
+        <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#353535;color:#fff;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em">OTTOBRE</button>
+        <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#212121;color:#b9b9b9;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em">NOVEMBRE</button>
+      </div>
+      <span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#797979">Regola {{ splitLabel }}</span>
+    </div>
+    <div style="padding:40px 32px 32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:end">
+      <div>
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Stipendio di ottobre</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-top:8px"><span style="font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px;color:#797979">€</span><input type="number" value="{{ salary }}" onChange="{{ onSalary }}" style="width:100%;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px;padding:0"></div>
+      </div>
+      <div>
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Puoi ancora spendere</div>
+        <div style="font:400 72px/1.05 Inter,sans-serif;letter-spacing:-2.88px;margin-top:8px">{{ varLeftFmt }}</div>
+      </div>
+      <div style="font:400 16px/1.5 Inter,sans-serif;color:#b9b9b9;text-wrap:pretty">{{ perDayNote }}<br><span style="color:#fff">Disponibile totale {{ leftFmt }}</span></div>
+    </div>
+    <div style="padding:0 32px">
+      <div style="display:flex;height:12px;border-radius:99px;overflow:hidden;gap:3px">
+        <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3"><div style="{{ b.segStyle }}"></div></sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:32px">
+      <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3">
+        <div style="{{ b.cardStyle }}">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:{{ b.eyebrow }}">{{ b.name }} · {{ b.pct }}%</span><span style="font:400 12px/1.5 Inter,sans-serif;color:{{ b.eyebrow }}">{{ b.usedLabel }}</span></div>
+          <div style="font:425 32px/1.13 Inter,sans-serif;letter-spacing:-0.32px">{{ b.budgetFmt }}</div>
+          <div style="height:4px;border-radius:99px;background:{{ b.track }};overflow:hidden"><div style="{{ b.fillStyle }}"></div></div>
+          <div style="display:flex;justify-content:space-between;font:400 13px/1.5 Inter,sans-serif;color:{{ b.body }}"><span>Speso {{ b.spentFmt }}</span><span>Resta {{ b.leftFmt }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="background:#fff;color:#0b0b0b;padding:48px 32px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:48px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#505b6c">Inserimento rapido</div>
+      <h2 style="margin:0 0 8px;font:400 38px/1.1 Inter,sans-serif;letter-spacing:-1.14px">Nuova spesa</h2>
+      <input placeholder="Es. Spesa al supermercato" value="{{ formName }}" onChange="{{ onFormName }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+      <input type="number" placeholder="€ 0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+      <div style="display:flex;gap:4px;padding:4px;border-radius:99px;border:1px solid #ededed;align-self:flex-start">
+        <sc-for list="{{ bucketPicker }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.name }}</button></sc-for>
+      </div>
+      <button onClick="{{ addExpense }}" style="height:44px;padding:0 24px;border-radius:99px;border:0;background:#0b0b0b;color:#fff;font:500 16px/1.5 Inter,sans-serif;cursor:pointer;align-self:flex-start" style-hover="background:#353535">Aggiungi spesa</button>
+    </div>
+    <div>
+      <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979;padding:0 0 8px;border-bottom:1px solid #0b0b0b">MOVIMENTI · {{ count }}</div>
+      <sc-for list="{{ recent }}" as="e" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 110px 100px 28px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #ededed;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">
+          <span>{{ e.name }}</span><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">{{ e.bucketName }}</span><span style="text-align:right">{{ e.fmt }}</span>
+          <button onClick="{{ e.del }}" style="width:28px;height:28px;border-radius:4px;border:0;background:transparent;color:#b9b9b9;cursor:pointer;font:400 15px/1 Inter,sans-serif" style-hover="background:#ededed;color:#dd0000">×</button>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div></div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Sidebar scura di <a class="dv-oid" href="#1c">1c</a> + buste di <a class="dv-oid" href="#1a">1a</a> nel pannello chiaro</div>
+<div class="dv-card" style="width:1280px;display:grid;grid-template-columns:440px minmax(0,1fr)">
+  <div style="background:#0b0b0b;color:#fff;padding:32px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif;letter-spacing:-0.36px">Myfinance</span></div>
+    <div>
+      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Puoi ancora spendere</div>
+      <div style="font:400 96px/1 Inter,sans-serif;letter-spacing:-4px;margin-top:12px">{{ varLeftFmt }}</div>
+      <div style="font:400 16px/1.5 Inter,sans-serif;color:#b9b9b9;margin-top:12px">{{ perDayNote }}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:12px;background:#212121;border:1px solid #353535">
+      <label style="display:flex;flex-direction:column;gap:6px"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">STIPENDIO NETTO</span><input type="number" value="{{ salary }}" onChange="{{ onSalary }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #353535;background:#0b0b0b;color:#fff;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent"></label>
+      <label style="display:flex;flex-direction:column;gap:4px"><span style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span>Spese fisse</span><span style="color:#b9b9b9">{{ pFisse }}%</span></span><input type="range" min="0" max="100" value="{{ pFisse }}" onChange="{{ onFisse }}"></label>
+      <label style="display:flex;flex-direction:column;gap:4px"><span style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span>Spese variabili</span><span style="color:#b9b9b9">{{ pVar }}%</span></span><input type="range" min="0" max="100" value="{{ pVar }}" onChange="{{ onVar }}"></label>
+      <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif;padding-top:12px;border-top:1px solid #353535"><span>Risparmio (resto)</span><span style="color:#f36458">{{ pSave }}% · {{ saveBudgetFmt }}</span></div>
+    </div>
+  </div>
+  <div style="background:#ededed;color:#0b0b0b;padding:32px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font:400 38px/1.1 Inter,sans-serif;letter-spacing:-1.14px">Ottobre 2026</h2><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#505b6c">Disponibile {{ leftFmt }}</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+      <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3">
+        <div style="{{ b.cardStyleLight }}">
+          <div style="display:flex;justify-content:space-between;font:400 13px/1.5 'IBM Plex Mono',monospace;color:{{ b.bodyLight }}"><span>{{ b.name }}</span><span>{{ b.pct }}%</span></div>
+          <div style="font:400 24px/1.1 Inter,sans-serif;letter-spacing:-0.24px">{{ b.spentFmt }} <span style="color:{{ b.bodyLight }}">/ {{ b.budgetFmt }}</span></div>
+          <div style="height:4px;border-radius:99px;background:{{ b.trackLight }};overflow:hidden"><div style="{{ b.fillStyleLight }}"></div></div>
+          <div style="font:400 12px/1.5 Inter,sans-serif;color:{{ b.bodyLight }}">{{ b.usedLabel }} · resta {{ b.leftFmt }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:12px;background:#fff">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 140px auto;gap:12px">
+        <input placeholder="Nuova spesa…" value="{{ formName }}" onChange="{{ onFormName }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+        <input type="number" placeholder="€ 0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+        <button onClick="{{ addExpense }}" style="height:44px;padding:0 24px;border-radius:99px;border:0;background:#0b0b0b;color:#fff;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#353535">Aggiungi</button>
+      </div>
+      <div style="display:flex;gap:4px;padding:4px;border-radius:99px;border:1px solid #ededed;align-self:flex-start">
+        <sc-for list="{{ bucketPicker }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.name }}</button></sc-for>
+      </div>
+      <div>
+        <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979;padding:8px 0;border-bottom:1px solid #0b0b0b">MOVIMENTI · {{ count }}</div>
+        <sc-for list="{{ recent }}" as="e" hint-placeholder-count="8">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 110px 100px 28px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #ededed;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">
+            <span>{{ e.name }}</span><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">{{ e.bucketName }}</span><span style="text-align:right">{{ e.fmt }}</span>
+            <button onClick="{{ e.del }}" style="width:28px;height:28px;border-radius:4px;border:0;background:transparent;color:#b9b9b9;cursor:pointer;font:400 15px/1 Inter,sans-serif" style-hover="background:#ededed;color:#dd0000">×</button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+</div>
+<p class="dv-next">Prova: "vai con <a class="dv-oid" href="#2a">2a</a>, aggiungi gli obiettivi di risparmio" · "<a class="dv-oid" href="#2b">2b</a> con lo storico dei mesi precedenti" · "rendilo un'app vera che salva i dati"</p>
+</section>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Myfinance — tre modi di dividere lo stipendio (dati condivisi: modifica in una, cambia in tutte)</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Busta divisa — dark, tre buste con budget e speso</div>
+<div class="dv-card" style="width:1280px;background:#0b0b0b;color:#fff">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 32px">
+    <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif;letter-spacing:-0.36px">Myfinance</span></div>
+    <div style="display:flex;gap:6px">
+      <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#212121;color:#b9b9b9;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em">SETTEMBRE</button>
+      <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#353535;color:#fff;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em">OTTOBRE</button>
+      <button style="height:32px;padding:0 8px;border-radius:4px;border:0;background:#212121;color:#b9b9b9;font:600 11px/1.5 Inter,sans-serif;letter-spacing:.04em">NOVEMBRE</button>
+    </div>
+    <button onClick="{{ focusAdd }}" style="height:36px;padding:0 16px;border-radius:99px;border:1px solid #0b0b0b;background:#fff;color:#0b0b0b;font:500 13px/1.3 Inter,sans-serif;cursor:pointer" style-hover="background:#ededed">+ Aggiungi spesa</button>
+  </div>
+  <div style="padding:48px 32px 32px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end">
+    <div>
+      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Stipendio di ottobre</div>
+      <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px"><span style="font:400 112px/1 Inter,sans-serif;letter-spacing:-5px;color:#797979">€</span><input type="number" value="{{ salary }}" onChange="{{ onSalary }}" style="width:520px;background:transparent;border:0;outline:0;color:#fff;font:400 112px/1 Inter,sans-serif;letter-spacing:-5px;padding:0"></div>
+    </div>
+    <div style="text-align:right">
+      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Ancora disponibile</div>
+      <div style="font:400 48px/1.08 Inter,sans-serif;letter-spacing:-1.68px;margin-top:4px">{{ leftFmt }}</div>
+    </div>
+  </div>
+  <div style="padding:0 32px">
+    <div style="display:flex;height:12px;border-radius:99px;overflow:hidden;gap:3px">
+      <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3"><div style="{{ b.segStyle }}"></div></sc-for>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979"><span>0%</span><span>{{ splitLabel }}</span><span>100%</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:32px">
+    <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3">
+      <div style="{{ b.cardStyle }}">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:{{ b.eyebrow }}">{{ b.name }} · {{ b.pct }}%</span><span style="font:400 12px/1.5 Inter,sans-serif;color:{{ b.eyebrow }}">{{ b.usedLabel }}</span></div>
+        <div style="font:425 32px/1.13 Inter,sans-serif;letter-spacing:-0.32px">{{ b.budgetFmt }}</div>
+        <div style="height:4px;border-radius:99px;background:{{ b.track }};overflow:hidden"><div style="{{ b.fillStyle }}"></div></div>
+        <div style="display:flex;justify-content:space-between;font:400 13px/1.5 Inter,sans-serif;color:{{ b.body }}"><span>Speso {{ b.spentFmt }}</span><span>Resta {{ b.leftFmt }}</span></div>
+        <div style="display:flex;flex-direction:column;margin-top:8px">
+          <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid {{ b.rule }};font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px"><span>{{ it.name }}</span><span style="color:{{ b.body }}">{{ it.fmt }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div></div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Il foglio Excel, rifatto — light, registro + riepilogo invertito</div>
+<div class="dv-card" style="width:1280px;background:#fff;color:#0b0b0b">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 32px;border-bottom:1px solid #ededed">
+    <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif;letter-spacing:-0.36px">Myfinance</span></div>
+    <div style="display:flex;gap:24px;font:500 15px/1.5 Inter,sans-serif"><span>Mese</span><span style="color:#797979">Anno</span><span style="color:#797979">Obiettivi</span></div>
+    <span style="display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:99px;background:#0b0b0b;color:#fff;font:400 13px/1.5 Inter,sans-serif">Ottobre 2026</span>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:32px;padding:48px 32px">
+    <div>
+      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#505b6c">Ottobre 2026</div>
+      <h2 style="margin:8px 0 32px;font:400 48px/1.08 Inter,sans-serif;letter-spacing:-1.68px">Dove va il tuo stipendio</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:32px">
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.3 Inter,sans-serif">Stipendio netto</span><input type="number" value="{{ salary }}" onChange="{{ onSalary }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent"></label>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.3 Inter,sans-serif">Spese fisse · {{ pFisse }}%</span><input type="range" min="0" max="100" value="{{ pFisse }}" onChange="{{ onFisse }}" style="height:44px"></label>
+        <label style="display:flex;flex-direction:column;gap:6px"><span style="font:500 13px/1.3 Inter,sans-serif">Spese variabili · {{ pVar }}%</span><input type="range" min="0" max="100" value="{{ pVar }}" onChange="{{ onVar }}" style="height:44px"></label>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">
+        <thead><tr><th style="text-align:left;padding:12px 16px;border-bottom:1px solid #0b0b0b;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">VOCE</th><th style="text-align:right;padding:12px 16px;border-bottom:1px solid #0b0b0b;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">% STIPENDIO</th><th style="text-align:right;padding:12px 16px;border-bottom:1px solid #0b0b0b;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">IMPORTO</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ ledger }}" as="r" hint-placeholder-count="12">
+            <tr style="{{ r.rowStyle }}"><td style="padding:12px 16px;border-bottom:1px solid #ededed">{{ r.name }}</td><td style="padding:12px 16px;border-bottom:1px solid #ededed;text-align:right;color:#797979">{{ r.share }}</td><td style="padding:12px 16px;border-bottom:1px solid #ededed;text-align:right">{{ r.fmt }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:20px;padding:32px;border-radius:12px;background:#0b0b0b;color:#fff">
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Riepilogo del mese</div>
+        <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span>{{ b.name }}</span><span style="color:#b9b9b9">{{ b.spentFmt }} / {{ b.budgetFmt }}</span></div>
+            <div style="height:4px;border-radius:99px;background:#353535;overflow:hidden"><div style="{{ b.fillStyleDark }}"></div></div>
+          </div>
+        </sc-for>
+        <div style="padding-top:16px;border-top:1px solid #353535">
+          <div style="font:400 13px/1.5 Inter,sans-serif;color:#b9b9b9">Ancora disponibile</div>
+          <div style="font:400 48px/1.08 Inter,sans-serif;letter-spacing:-1.68px">{{ leftFmt }}</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px;border-radius:6px;background:#afe3ff;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">{{ savingsNote }}</div>
+    </div>
+  </div>
+</div></div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Polarity split — quanto posso spendere (dark) + inserimento rapido (light)</div>
+<div class="dv-card" style="width:1280px;display:grid;grid-template-columns:520px minmax(0,1fr)">
+  <div style="background:#0b0b0b;color:#fff;padding:32px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span><span style="font:500 18px/1 Inter,sans-serif;letter-spacing:-0.36px">Myfinance</span></div>
+    <div>
+      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Puoi ancora spendere questo mese</div>
+      <div style="font:400 112px/1 Inter,sans-serif;letter-spacing:-5px;margin-top:12px">{{ varLeftFmt }}</div>
+      <div style="font:400 16px/1.5 Inter,sans-serif;color:#b9b9b9;margin-top:12px">{{ perDayNote }}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:12px;background:#212121;border:1px solid #353535">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">REGOLA DI DIVISIONE</span><span style="font:400 13px/1.5 Inter,sans-serif;color:#b9b9b9">su {{ salaryFmt }}</span></div>
+      <label style="display:flex;flex-direction:column;gap:4px"><span style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span>Spese fisse</span><span style="color:#b9b9b9">{{ pFisse }}%</span></span><input type="range" min="0" max="100" value="{{ pFisse }}" onChange="{{ onFisse }}"></label>
+      <label style="display:flex;flex-direction:column;gap:4px"><span style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span>Spese variabili</span><span style="color:#b9b9b9">{{ pVar }}%</span></span><input type="range" min="0" max="100" value="{{ pVar }}" onChange="{{ onVar }}"></label>
+      <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif;padding-top:12px;border-top:1px solid #353535"><span>Risparmio (resto)</span><span style="color:#f36458">{{ pSave }}% · {{ saveBudgetFmt }}</span></div>
+    </div>
+  </div>
+  <div style="background:#fff;color:#0b0b0b;padding:32px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font:400 38px/1.1 Inter,sans-serif;letter-spacing:-1.14px">Nuova spesa</h2><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#505b6c">Ottobre 2026</span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:12px">
+      <input ref="{{ nameRef }}" placeholder="Es. Spesa al supermercato" value="{{ formName }}" onChange="{{ onFormName }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+      <input type="number" placeholder="€ 0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" style="height:44px;padding:0 16px;border-radius:3px;border:1px solid #ededed;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="display:flex;gap:4px;padding:4px;border-radius:99px;border:1px solid #ededed">
+        <sc-for list="{{ bucketPicker }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.name }}</button></sc-for>
+      </div>
+      <button onClick="{{ addExpense }}" style="height:44px;padding:0 24px;border-radius:99px;border:0;background:#0b0b0b;color:#fff;font:500 16px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:#353535">Aggiungi</button>
+    </div>
+    <div>
+      <div style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979;padding:0 0 8px;border-bottom:1px solid #0b0b0b">MOVIMENTI · {{ count }}</div>
+      <sc-for list="{{ recent }}" as="e" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 110px 100px 28px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #ededed;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">
+          <span>{{ e.name }}</span>
+          <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;color:#797979">{{ e.bucketName }}</span>
+          <span style="text-align:right">{{ e.fmt }}</span>
+          <button onClick="{{ e.del }}" style="width:28px;height:28px;border-radius:4px;border:0;background:transparent;color:#b9b9b9;cursor:pointer;font:400 15px/1 Inter,sans-serif" style-hover="background:#ededed;color:#dd0000">×</button>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div></div>
+
+</div>
+<p class="dv-next">Prova: "vai con <a class="dv-oid" href="#1a">1a</a> ma col form di <a class="dv-oid" href="#1c">1c</a>" · "aggiungi una vista annuale a <a class="dv-oid" href="#1b">1b</a>" · "aggiungi obiettivi di risparmio"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  nameRef = React.createRef();
+  state = {
+    salary: 2000, pFisse: 50, pVar: 30, formName: '', formAmount: '', formBucket: 'var', nextId: 100,
+    expenses: [
+      { id: 1, name: 'Affitto', amount: 650, bucket: 'fisse' }, { id: 2, name: 'Bollette', amount: 120, bucket: 'fisse' },
+      { id: 3, name: 'Assicurazione auto', amount: 60, bucket: 'fisse' }, { id: 4, name: 'Palestra', amount: 40, bucket: 'fisse' },
+      { id: 5, name: 'Telefono e internet', amount: 35, bucket: 'fisse' },
+      { id: 6, name: 'Spesa alimentare', amount: 180, bucket: 'var' }, { id: 7, name: 'Ristoranti', amount: 75, bucket: 'var' },
+      { id: 8, name: 'Benzina', amount: 60, bucket: 'var' }, { id: 9, name: 'Shopping', amount: 45, bucket: 'var' },
+      { id: 10, name: 'Fondo emergenza', amount: 250, bucket: 'save' }, { id: 11, name: 'Viaggio estate', amount: 100, bucket: 'save' },
+    ],
+  };
+  renderVals() {
+    const s = this.state;
+    const eur = n => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+    const pSave = Math.max(0, 100 - s.pFisse - s.pVar);
+    const defs = [
+      ['fisse', 'Spese fisse', s.pFisse, '#ffffff'],
+      ['var', 'Spese variabili', s.pVar, '#797979'],
+      ['save', 'Risparmio', pSave, '#f36458'],
+    ];
+    const buckets = defs.map(([key, name, pct, color]) => {
+      const budget = s.salary * pct / 100;
+      const items = s.expenses.filter(e => e.bucket === key);
+      const spent = items.reduce((a, e) => a + e.amount, 0);
+      const used = budget ? Math.min(100, spent / budget * 100) : 0;
+      const over = spent > budget;
+      const brand = key === 'save';
+      const fillColor = over ? '#dd0000' : brand ? '#0b0b0b' : '#fff';
+      return {
+        key, name, pct, budget, spent,
+        budgetFmt: eur(budget), spentFmt: eur(spent), leftFmt: eur(budget - spent),
+        usedLabel: over ? 'Sforato' : Math.round(used) + '% usato',
+        items: items.map(e => ({ name: e.name, fmt: eur(e.amount) })),
+        segStyle: { width: pct + '%', background: color, transition: 'width .2s' },
+        cardStyle: { display: 'flex', flexDirection: 'column', gap: 12, padding: 32, borderRadius: 12, background: brand ? '#f36458' : '#212121', color: brand ? '#0b0b0b' : '#fff', border: brand ? '1px solid #f36458' : '1px solid #353535' },
+        eyebrow: brand ? '#0b0b0b' : '#797979', body: brand ? '#0b0b0b' : '#b9b9b9', rule: brand ? 'rgba(11,11,11,.2)' : '#353535', track: brand ? 'rgba(11,11,11,.2)' : '#353535',
+        fillStyle: { width: used + '%', height: '100%', background: fillColor, transition: 'width .2s' },
+        cardStyleLight: { display: 'flex', flexDirection: 'column', gap: 10, padding: 24, borderRadius: 12, background: brand ? '#f36458' : '#fff', color: '#0b0b0b', border: brand ? '1px solid #f36458' : '1px solid #ededed' },
+        bodyLight: brand ? '#0b0b0b' : '#505b6c', trackLight: brand ? 'rgba(11,11,11,.2)' : '#ededed',
+        fillStyleLight: { width: used + '%', height: '100%', background: over ? '#dd0000' : '#0b0b0b', transition: 'width .2s' },
+        fillStyleDark: { width: used + '%', height: '100%', background: over ? '#dd0000' : brand ? '#f36458' : '#fff', transition: 'width .2s' },
+      };
+    });
+    const totalSpent = s.expenses.reduce((a, e) => a + e.amount, 0);
+    const varB = buckets[1];
+    const today = 15, days = 31, daysLeft = days - today + 1;
+    const varLeft = varB.budget - varB.spent;
+    const ledger = [];
+    buckets.forEach(b => {
+      ledger.push({ name: b.name.toUpperCase(), share: b.pct + '%', fmt: eur(b.budget), rowStyle: { font: "400 11px/1.5 'IBM Plex Mono',monospace", letterSpacing: '.06em', color: '#797979', background: '#ededed' } });
+      s.expenses.filter(e => e.bucket === b.key).forEach(e => ledger.push({ name: e.name, share: s.salary ? (e.amount / s.salary * 100).toFixed(1) + '%' : '—', fmt: eur(e.amount), rowStyle: {} }));
+    });
+    ledger.push({ name: 'Totale uscite', share: s.salary ? (totalSpent / s.salary * 100).toFixed(1) + '%' : '—', fmt: eur(totalSpent), rowStyle: { fontWeight: 500 } });
+    const saveB = buckets[2];
+    const seg = on => ({ height: 36, padding: '0 14px', borderRadius: 99, border: 0, cursor: 'pointer', font: '500 13px/1.3 Inter,sans-serif', background: on ? '#0b0b0b' : 'transparent', color: on ? '#fff' : '#0b0b0b' });
+    const bucketName = { fisse: 'FISSA', var: 'VARIABILE', save: 'RISPARMIO' };
+    const setPct = (k, v) => this.setState(st => {
+      const other = k === 'pFisse' ? st.pVar : st.pFisse;
+      return { [k]: Math.min(+v, 100 - other) };
+    });
+    return {
+      salary: s.salary, salaryFmt: eur(s.salary), pFisse: s.pFisse, pVar: s.pVar, pSave,
+      buckets, ledger, leftFmt: eur(s.salary - totalSpent),
+      splitLabel: `${s.pFisse} / ${s.pVar} / ${pSave}`,
+      varLeftFmt: eur(Math.max(0, varLeft)),
+      perDayNote: varLeft > 0 ? `Circa ${eur(varLeft / daysLeft)} al giorno per i ${daysLeft} giorni rimanenti di ottobre.` : 'Hai superato il budget delle spese variabili.',
+      saveBudgetFmt: eur(saveB.budget),
+      savingsNote: saveB.spent >= saveB.budget ? `Obiettivo raggiunto: hai messo da parte ${eur(saveB.spent)} questo mese.` : `Mancano ${eur(saveB.budget - saveB.spent)} per raggiungere il ${pSave}% di risparmio.`,
+      onSalary: e => this.setState({ salary: Math.max(0, +e.target.value || 0) }),
+      onFisse: e => setPct('pFisse', e.target.value),
+      onVar: e => setPct('pVar', e.target.value),
+      nameRef: this.nameRef,
+      focusAdd: () => { const el = document.getElementById('1c'); if (el) window.location.hash = '1c'; setTimeout(() => this.nameRef.current && this.nameRef.current.focus(), 50); },
+      formName: s.formName, formAmount: s.formAmount,
+      onFormName: e => this.setState({ formName: e.target.value }),
+      onFormAmount: e => this.setState({ formAmount: e.target.value }),
+      bucketPicker: [['fisse', 'Fissa'], ['var', 'Variabile'], ['save', 'Risparmio']].map(([k, n]) => ({ name: n, style: seg(s.formBucket === k), pick: () => this.setState({ formBucket: k }) })),
+      addExpense: () => {
+        const amt = parseFloat(s.formAmount);
+        if (!s.formName.trim() || !(amt > 0)) return;
+        this.setState(st => ({ expenses: [{ id: st.nextId, name: st.formName.trim(), amount: amt, bucket: st.formBucket }, ...st.expenses], nextId: st.nextId + 1, formName: '', formAmount: '' }));
+      },
+      count: s.expenses.length,
+      recent: s.expenses.slice(0, 8).map(e => ({ name: e.name, fmt: eur(e.amount), bucketName: bucketName[e.bucket], del: () => this.setState(st => ({ expenses: st.expenses.filter(x => x.id !== e.id) })) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

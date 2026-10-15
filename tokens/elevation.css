@@ -1,0 +1,6 @@
+:root{
+  --shadow-none:none;
+  --shadow-soft-drop:0 4px 24px rgba(0,0,0,0.08); /* light cards only, rare */
+  --ease-standard:cubic-bezier(.2,0,0,1);
+  --duration-fast:120ms; --duration-base:200ms;
+}
