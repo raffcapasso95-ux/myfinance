@@ -10,7 +10,8 @@
 <helmet>
 <title>Myfinance</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0b'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23f36458'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0b0b'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23f36458'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#0b0b0b">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -21,7 +22,7 @@
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0b0b0b"></rect><circle cx="50" cy="50" r="20" fill="#f36458"></circle></svg></template>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;425;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/lucide-static@0.460.0/font/lucide.css">
-<style>html{-webkit-text-size-adjust:100%}button,input,label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}body{margin:0;padding-bottom:calc(96px + env(safe-area-inset-bottom));overscroll-behavior-y:none;background:#0b0b0b;font-family:Inter,'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}*{box-sizing:border-box}a{color:#0052ef}a:hover{color:#0b0b0b}input[type=number]::-webkit-inner-spin-button{opacity:0}input[type=range]{accent-color:#f36458}</style>
+<style>html{-webkit-text-size-adjust:100%}button,input,label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}body{font-variant-numeric:tabular-nums;margin:0;padding-bottom:calc(96px + env(safe-area-inset-bottom));overscroll-behavior-y:none;background:#0b0b0b;font-family:Inter,'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}*{box-sizing:border-box}a{color:#0052ef}a:hover{color:#0b0b0b}input[type=number]::-webkit-inner-spin-button{opacity:0}input[type=range]{accent-color:#f36458}</style>
 </helmet>
 <div style="font-family:Inter,'Helvetica Neue',Helvetica,Arial,sans-serif">
 <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div style="position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top));transform:translateX(-50%);z-index:120;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:99px;background:#fff;color:#0b0b0b;font:500 14px/1.3 Inter,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.3)"><i class="icon-circle-check" style="font-size:16px;line-height:1;color:#37cd84"></i><span>{{ toast }}</span></div></sc-if>
@@ -180,7 +181,7 @@
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Pagina del mese</div></sc-if></sc-if>
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
       <h1 style="margin:8px 0 0;font:400 clamp(32px,8.5vw,72px)/1.05 Inter,sans-serif;letter-spacing:-0.04em">{{ monthTitle }}</h1>
-      <button onClick="{{ deleteMonth }}" style="height:36px;padding:0 14px;border-radius:99px;border:1px solid #353535;background:transparent;color:#b9b9b9;font:500 13px/1.3 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px" style-hover="color:#dd0000;border-color:#dd0000"><i class="icon-trash-2" style="font-size:14px;line-height:1"></i><span>Elimina mese</span></button>
+      <button onClick="{{ deleteMonth }}" style="height:36px;padding:0 14px;border-radius:99px;border:1px solid #353535;background:transparent;color:#b9b9b9;font:500 13px/1.3 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px" style-hover="color:#dd0000;border-color:#dd0000"><i class="icon-trash-2" style="font-size:14px;line-height:1"></i><sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span>Elimina mese</span></sc-if></button>
     </div>
     <div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:12px;margin-top:24px">
       <div style="display:flex;flex-wrap:wrap;align-items:stretch;border-radius:12px;background:#212121;border:1px solid #353535;overflow:hidden;max-width:100%">
@@ -201,37 +202,49 @@
         </div>
       </div>
       <div style="display:flex;flex-direction:column;justify-content:center;gap:6px;max-width:360px;font:400 13px/1.5 Inter,sans-serif;color:#797979">
-        <span>Tocca una data per cambiarla. Di solito va dal giorno dello stipendio al giorno prima del successivo.</span>
+        <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span>Tocca una data per cambiarla. Di solito va dal giorno dello stipendio al giorno prima del successivo.</span></sc-if>
         <span>Il prossimo mese partirà da {{ nextStartLabel }}.</span>
       </div>
     </div>
   </div>
-  <div style="max-width:1280px;margin:0 auto;padding:clamp(20px,6vw,40px) 16px clamp(16px,4.5vw,32px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(16px,4.5vw,32px);align-items:end">
-    <div>
-      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">Stipendio del mese</div>
-      <div style="display:flex;align-items:baseline;gap:4px;margin-top:8px"><span style="font:400 clamp(32px,8.5vw,72px)/1.05 Inter,sans-serif;letter-spacing:-0.04em;color:#797979">€</span><input type="number" value="{{ salary }}" onChange="{{ onSalary }}" style="width:100%;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:400 clamp(32px,8.5vw,72px)/1.05 Inter,sans-serif;letter-spacing:-0.04em;padding:0"></div>
-      <div style="font:400 12px/1.5 Inter,sans-serif;color:#797979;margin-top:4px">Tocca la cifra per modificarla</div>
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(20px,5vw,32px) 16px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:12px;align-items:stretch">
+    <div style="display:flex;flex-direction:column;gap:14px;padding:clamp(20px,4.5vw,28px);border-radius:20px;background:#fff;color:#0b0b0b">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.04em;color:#505b6c">{{ heroLabel }}</span><span style="width:10px;height:10px;border-radius:99px;background:#f36458;flex:none"></span></div>
+      <span style="font:400 clamp(44px,12vw,64px)/1 Inter,sans-serif;letter-spacing:-0.045em;white-space:nowrap">{{ heroValue }}</span>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:auto">
+        <div style="height:8px;border-radius:99px;background:#ededed;overflow:hidden"><div style="{{ heroBarStyle }}"></div></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;font:400 13px/1.4 Inter,sans-serif;color:#505b6c"><span>Speso {{ heroSpentFmt }}</span><span>Budget {{ heroBudgetFmt }}</span></div>
+      </div>
+      <span style="font:400 13px/1.45 Inter,sans-serif;color:#505b6c;text-wrap:pretty">{{ heroNote }}</span>
     </div>
-    <div>
-      <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#b9b9b9">{{ heroLabel }}</div>
-      <div style="font:400 clamp(32px,8.5vw,72px)/1.05 Inter,sans-serif;letter-spacing:-0.04em;margin-top:8px">{{ heroValue }}</div>
-      <div style="font:400 13px/1.5 Inter,sans-serif;color:#b9b9b9;margin-top:4px">{{ heroNote }}</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:12px;background:#212121;border:1px solid #353535">
-      <sc-if value="{{ hasIncExtra }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span style="color:#b9b9b9">Entrate extra</span><span style="color:#37cd84">+ {{ incExtraFmt }}</span></div></sc-if>
-      <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span style="color:#b9b9b9">Risparmio {{ pSave }}% (messo da parte)</span><span style="color:#f36458">− {{ saveAutoFmt }}</span></div>
-      <sc-if value="{{ hasExtraSave }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span style="color:#b9b9b9">Messo da parte extra</span><span style="color:#f36458">− {{ extraSaveFmt }}</span></div></sc-if>
-      <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span style="color:#b9b9b9">Rimasto nel mese</span><span>{{ leftFmt }}</span></div>
-      <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif"><span style="color:#b9b9b9">Riporto da {{ prevName }}</span><span style="color:{{ carryColor }}">{{ carryFmt }}</span></div>
-      <div style="display:flex;justify-content:space-between;font:400 15px/1.5 Inter,sans-serif;padding-top:10px;border-top:1px solid #353535"><span>Totale disponibile</span><span>{{ totalAvailFmt }}</span></div>
+    <div style="display:flex;flex-direction:column;padding:clamp(20px,4.5vw,28px);border-radius:20px;background:#161616;border:1px solid #2a2a2a">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:12px"><span style="font:500 16px/1.3 Inter,sans-serif">Riepilogo del mese</span><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:#797979">{{ monthTitle }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9">Stipendio</span><label style="display:flex;align-items:center;gap:6px;cursor:text"><i class="icon-pencil" style="font-size:13px;line-height:1;color:#797979"></i><span style="color:#797979">€</span><input type="number" inputmode="decimal" value="{{ salary }}" onChange="{{ onSalary }}" aria-label="Stipendio del mese" style="width:96px;text-align:right;background:transparent;border:0;border-bottom:1px dashed #505b6c;color:#fff;font:500 16px/1.4 Inter,sans-serif;outline:0;padding:2px 0;font-variant-numeric:tabular-nums" style-focus="border-bottom-color:#f36458"></label></div>
+      <sc-if value="{{ hasIncExtra }}" hint-placeholder-val="{{ false }}">      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9;min-width:0">Entrate extra</span><span style="white-space:nowrap;color:#37cd84">+ {{ incExtraFmt }}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9;min-width:0">Spese fisse</span><span style="white-space:nowrap;color:#fff">− {{ fixedTotalFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9;min-width:0">Spese variabili finora</span><span style="white-space:nowrap;color:#fff">− {{ varSpentFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9;min-width:0">Risparmio {{ pSave }}% · salvadanaio</span><span style="white-space:nowrap;color:#f36458">− {{ saveAutoFmt }}</span></div>
+      <sc-if value="{{ hasExtraSave }}" hint-placeholder-val="{{ false }}">      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9;min-width:0">Extra messo da parte · torna il mese dopo</span><span style="white-space:nowrap;color:#f36458">− {{ extraSaveFmt }}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #505b6c;font:500 15px/1.4 Inter,sans-serif"><span>Rimasto nel mese</span><span style="white-space:nowrap">{{ leftFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #2a2a2a;font:400 15px/1.4 Inter,sans-serif"><span style="color:#b9b9b9;min-width:0">Riporto da {{ prevName }}</span><span style="white-space:nowrap;color:{{ carryColor }}">{{ carryFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:14px;margin-top:auto;border-top:1px solid #505b6c"><span style="font:500 15px/1.4 Inter,sans-serif">Totale disponibile</span><span style="font:500 clamp(22px,6vw,28px)/1.1 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ totalAvailFmt }}</span></div>
     </div>
   </div>
 
-  <div style="max-width:1280px;margin:0 auto;padding:0 16px">
-    <div style="display:flex;height:12px;border-radius:99px;overflow:hidden;gap:3px;background:#212121">
+  <div style="max-width:1280px;margin:0 auto;padding:12px 16px 0">
+   <div style="display:flex;flex-direction:column;gap:16px;padding:clamp(20px,4.5vw,28px);border-radius:20px;background:#161616;border:1px solid #2a2a2a">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.04em;color:#797979">RIPARTIZIONE DELLO STIPENDIO</span><span style="font:500 18px/1.25 Inter,sans-serif;letter-spacing:-0.01em">Dove vanno i tuoi {{ salaryFmt }}</span></div>
+      <button onClick="{{ toggleSplit }}" style="height:36px;padding:0 14px;border-radius:99px;border:1px solid #353535;background:transparent;color:#fff;font:500 13px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap" style-hover="background:#212121"><i class="icon-sliders-horizontal" style="font-size:15px;line-height:1"></i><span>{{ splitBtnLabel }}</span></button>
+    </div>
+    <div style="display:flex;height:14px;border-radius:99px;overflow:hidden;gap:3px;background:#212121">
       <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3"><div style="{{ b.segStyle }}"></div></sc-for>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:clamp(12px,3.5vw,24px);margin-top:20px;align-items:center">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+      <sc-for list="{{ buckets }}" as="b" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="display:flex;align-items:center;gap:8px;font:400 13px/1.4 Inter,sans-serif;color:#b9b9b9"><span style="{{ b.dotStyle }}"></span>{{ b.name }}</span><span style="display:flex;align-items:baseline;gap:8px"><span style="font:500 20px/1.15 Inter,sans-serif;letter-spacing:-0.02em">{{ b.budgetFmt }}</span><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:#797979">{{ b.pct }}%</span></span></div></sc-for>
+    </div>
+    <sc-if value="{{ splitOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(12px,3.5vw,24px);align-items:center;padding-top:16px;border-top:1px solid #2a2a2a">
       <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979">REGOLA DI DIVISIONE</span>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;border-radius:12px;background:#212121;border:1px solid #353535">
         <span style="display:flex;align-items:center;gap:8px;font:400 15px/1.5 Inter,sans-serif;color:#fff"><i class="icon-piggy-bank" style="font-size:16px;line-height:1;color:#f36458"></i><span>Risparmio</span></span>
@@ -285,15 +298,25 @@
           </div>
         </div>
       </sc-if>
-      <sc-if value="{{ varWarning }}" hint-placeholder-val="{{ false }}"><span style="font:400 13px/1.5 Inter,sans-serif;color:#dd0000">Risparmio troppo alto: non resta nulla per le variabili</span></sc-if>
     </div>
+    </sc-if>
+    <sc-if value="{{ varWarning }}" hint-placeholder-val="{{ false }}"><span style="font:400 13px/1.5 Inter,sans-serif;color:#dd0000">Risparmio troppo alto: non resta nulla per le variabili</span></sc-if>
+   </div>
   </div>
 
   <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(12px,3.5vw,24px);padding:clamp(16px,5vw,32px) 16px 0">
 
-    <div style="display:flex;flex-direction:column;gap:12px;padding:clamp(16px,4.5vw,32px);border-radius:12px;background:#212121;border:1px solid #353535">
-      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:#797979">Entrate del mese</span><span style="font:400 12px/1.5 Inter,sans-serif;color:#797979">{{ incCountLabel }}</span></div>
-      <div style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ incTotalFmt }}</div>
+    <div style="display:flex;flex-direction:column;gap:12px;padding:clamp(20px,4.5vw,28px);border-radius:20px;background:#161616;border:1px solid #2a2a2a">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <span style="width:44px;height:44px;flex:none;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:rgba(55,205,132,.16);color:#37cd84"><i class="icon-arrow-down-left" style="font-size:20px;line-height:1"></i></span>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:500 18px/1.25 Inter,sans-serif;letter-spacing:-0.01em">Entrate</span><span style="font:400 12px/1.5 'IBM Plex Mono',monospace;color:#797979;white-space:nowrap">{{ incCountLabel }}</span></div>
+          <span style="font:400 13px/1.45 Inter,sans-serif;color:#b9b9b9;text-wrap:pretty">I soldi che arrivano: stipendio ed eventuali entrate extra</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid #353535">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:#797979">Totale entrate</span><span style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ incTotalFmt }}</span></div>
+      </div>
       <div style="display:flex;height:4px;border-radius:99px;overflow:hidden;gap:2px;background:#353535"><div style="{{ incSalaryBar }}"></div><div style="{{ incExtraBar }}"></div></div>
       <div style="display:flex;justify-content:space-between;font:400 13px/1.5 Inter,sans-serif;color:#b9b9b9"><span>Stipendio {{ salaryFmt }}</span><span style="color:#37cd84">Extra + {{ incExtraFmt }}</span></div>
       <div style="display:flex;flex-direction:column;margin-top:4px">
@@ -337,9 +360,17 @@
       </div>
     </div>
 
-    <div style="display:flex;flex-direction:column;gap:12px;padding:clamp(16px,4.5vw,32px);border-radius:12px;background:#f36458;color:#0b0b0b">
-      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 13px/1.5 'IBM Plex Mono',monospace">Risparmio del mese</span><span style="display:inline-flex;align-items:center;gap:6px;font:400 12px/1.5 Inter,sans-serif"><i class="icon-lock" style="font-size:12px;line-height:1"></i>Messo da parte, non si spende</span></div>
-      <div style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ savTotalFmt }}</div>
+    <div style="display:flex;flex-direction:column;gap:12px;padding:clamp(20px,4.5vw,28px);border-radius:20px;background:#f36458;color:#0b0b0b">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <span style="width:44px;height:44px;flex:none;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:#0b0b0b;color:#f36458"><i class="icon-piggy-bank" style="font-size:20px;line-height:1"></i></span>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:500 18px/1.25 Inter,sans-serif;letter-spacing:-0.01em">Risparmio</span><span style="display:inline-flex;align-items:center;gap:5px;font:400 12px/1.5 'IBM Plex Mono',monospace;white-space:nowrap"><i class="icon-lock" style="font-size:12px;line-height:1"></i>{{ pSave }}%</span></div>
+          <span style="font:400 13px/1.45 Inter,sans-serif;color:#0b0b0b;text-wrap:pretty">Il tuo salvadanaio: questi soldi si mettono da parte e non si toccano</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid rgba(11,11,11,.2)">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:#0b0b0b">Messo da parte questo mese</span><span style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ savTotalFmt }}</span></div>
+      </div>
       <div style="display:flex;height:4px;border-radius:99px;overflow:hidden;gap:2px;background:rgba(11,11,11,.2)"><div style="{{ savAutoBar }}"></div><div style="{{ savExtraBar }}"></div></div>
       <div style="display:flex;flex-direction:column;margin-top:4px">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid rgba(11,11,11,.2);font:400 15px/1.5 Inter,sans-serif"><span style="flex:1;display:flex;align-items:center;gap:8px"><span style="width:28px;height:28px;flex:none;border-radius:99px;background:rgba(11,11,11,.15);display:inline-flex;align-items:center;justify-content:center"><i class="icon-piggy-bank" style="font-size:14px;line-height:1"></i></span><span>Automatico · {{ pSave }}% dello stipendio</span></span><span>{{ saveAutoFmt }}</span><span style="width:24px"></span></div>
@@ -383,10 +414,29 @@
   <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(12px,3.5vw,24px);padding:clamp(12px,3.5vw,24px) 16px clamp(28px,8vw,96px)">
     <sc-for list="{{ bucketCards }}" as="b" hint-placeholder-count="2">
       <div style="{{ b.cardStyle }}">
-        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:{{ b.eyebrow }}">{{ b.name }} · {{ b.pct }}%</span><span style="font:400 12px/1.5 Inter,sans-serif;color:{{ b.eyebrow }}">{{ b.usedLabel }}</span></div>
-        <div style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ b.budgetFmt }}</div>
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <span style="{{ b.badgeStyle }}"><i class="{{ b.icon }}" style="font-size:20px;line-height:1"></i></span>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:500 18px/1.25 Inter,sans-serif;letter-spacing:-0.01em">{{ b.name }}</span><span style="font:400 12px/1.5 'IBM Plex Mono',monospace;color:{{ b.eyebrow }};white-space:nowrap">{{ b.pct }}% stipendio</span></div>
+          <span style="font:400 13px/1.45 Inter,sans-serif;color:{{ b.body }};text-wrap:pretty">{{ b.desc }}</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid {{ b.rule }}">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:{{ b.eyebrow }}">{{ b.amtLabel }}</span><span style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ b.budgetFmt }}</span></div><span style="font:400 12px/1.5 Inter,sans-serif;color:{{ b.eyebrow }};text-align:right">{{ b.usedLabel }}</span>
+      </div>
         <div style="height:4px;border-radius:99px;background:{{ b.track }};overflow:hidden"><div style="{{ b.fillStyle }}"></div></div>
         <div style="display:flex;justify-content:space-between;font:400 13px/1.5 Inter,sans-serif;color:{{ b.body }}"><span>{{ b.l1 }}</span><span>{{ b.l2 }}</span></div>
+        <sc-if value="{{ b.isVar }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ b.barsGrid }}">
+            <sc-for list="{{ b.weekBars }}" as="wb" hint-placeholder-count="5"><button onClick="{{ wb.go }}" title="{{ wb.title }}" style="{{ wb.colStyle }}" style-hover="opacity:.85">
+              <span style="font:500 clamp(10px,2.8vw,12px)/1.2 Inter,sans-serif;white-space:nowrap;color:{{ wb.amtColor }}">{{ wb.amt }}</span>
+              <div style="{{ wb.trackStyle }}"><div style="{{ wb.fillStyle }}"></div></div>
+              <span style="font:500 11px/1.2 'IBM Plex Mono',monospace;letter-spacing:.04em;color:{{ wb.labelColor }}">{{ wb.label }}</span>
+              <span style="font:400 clamp(10px,2.6vw,11px)/1.25 Inter,sans-serif;color:#797979;text-align:center">{{ wb.range }}</span>
+            </button></sc-for>
+          </div>
+          <span style="font:400 12px/1.45 Inter,sans-serif;color:#797979">Barra piena = budget della settimana. Tocca una settimana per vedere le spese.</span>
+        </sc-if>
         <div style="display:flex;flex-direction:column;margin-top:4px">
           <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="2">
 <sc-if value="{{ it.viewing }}" hint-placeholder-val="{{ true }}">
@@ -535,7 +585,7 @@
 </sc-if>
 
 <sc-if value="{{ showWeekDesk }}" hint-placeholder-val="{{ true }}">
-<section style="background:#fff;color:#0b0b0b">
+<section data-weeks="1" style="background:#fff;color:#0b0b0b">
   <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,8vw,96px) 16px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(16px,4.5vw,32px);flex-wrap:wrap">
       <div>
@@ -1088,6 +1138,10 @@ class Component extends DCLogic {
       const over = (key === 'var' || (key === 'fisse' && !!mo.split)) && spent > budget + 0.5;
       const brand = key === 'save';
       return {
+        icon: key === 'fisse' ? 'icon-house' : key === 'var' ? 'icon-shopping-bag' : 'icon-piggy-bank',
+        desc: key === 'fisse' ? 'Uguali ogni mese: affitto, bollette, abbonamenti e rate' : key === 'var' ? 'Le spese di tutti i giorni (spesa, bar, uscite), divise per settimana' : '',
+        amtLabel: key === 'fisse' ? (mo.split ? 'Budget del mese' : 'Totale del mese') : 'Budget del mese',
+        badgeStyle: { width: 44, height: 44, flex: 'none', borderRadius: 12, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: key === 'fisse' ? '#fff' : key === 'var' ? 'rgba(243,100,88,.16)' : '#0b0b0b', color: key === 'fisse' ? '#0b0b0b' : '#f36458' },
         name, pct, items: items.map(it => ({ viewing: true, editing: false, edit: null, sub: '', rule: brand ? 'rgba(11,11,11,.2)' : '#353535', muted: brand ? '#0b0b0b' : '#b9b9b9', amtColor: brand ? '#0b0b0b' : '#b9b9b9', badgeBg: 'rgba(127,127,127,.22)', iconColor: 'inherit', ...it })), l1, l2, emptyText, empty: items.length === 0, budgetFmt: eur(budget),
         usedLabel: label || (over ? (brand ? 'Oltre obiettivo' : 'Sforato') : Math.round(used) + '% usato'),
         canAdd: key !== 'var', ph: key === 'fisse' ? 'Nuova voce fissa' : 'Es. extra per il viaggio',
@@ -1099,8 +1153,8 @@ class Component extends DCLogic {
         onAdd: key === 'fisse' ? addFor('fixed', 'fxName', 'fxAmount', 'fxIcon') : addFor('extraSave', 'svName', 'svAmount'),
         pk: picker('fix', 'fxIcon', false, s.fxName),
         inputBg: brand ? 'rgba(255,255,255,.35)' : '#0b0b0b', inputFg: brand ? '#0b0b0b' : '#fff', addBg: brand ? '#0b0b0b' : '#fff', addFg: brand ? '#fff' : '#0b0b0b',
-        segStyle: { width: pct + '%', background: color, transition: 'width .2s' },
-        cardStyle: { display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(16px,4.5vw,32px)', borderRadius: 12, background: brand ? '#f36458' : '#212121', color: brand ? '#0b0b0b' : '#fff', border: brand ? '1px solid #f36458' : '1px solid #353535' },
+        segStyle: { width: pct + '%', background: color, transition: 'width .2s' }, dotStyle: { width: 8, height: 8, borderRadius: 99, flex: 'none', background: color },
+        cardStyle: { display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,4.5vw,28px)', borderRadius: 20, background: brand ? '#f36458' : '#161616', color: brand ? '#0b0b0b' : '#fff', border: brand ? '1px solid #f36458' : '1px solid #2a2a2a' },
         eyebrow: brand ? '#0b0b0b' : '#797979', body: brand ? '#0b0b0b' : '#b9b9b9', rule: brand ? 'rgba(11,11,11,.2)' : '#353535', track: brand ? 'rgba(11,11,11,.2)' : '#353535',
         fillStyle: { width: Math.min(100, used) + '%', height: '100%', background: over && !brand ? '#dd0000' : brand ? '#0b0b0b' : '#fff', transition: 'width .2s' },
       };
@@ -1143,7 +1197,8 @@ class Component extends DCLogic {
     });
 
     const prev = months.filter(m => idx(m) < idx(mo)).pop();
-    const carry = prev ? this.calc(prev).left : 0;
+    const carryOf = m => { const p = months.filter(x => idx(x) < idx(m)).pop(); if (!p) return 0; const pc2 = this.calc(p); return pc2.left + pc2.extraSaved + carryOf(p); };
+    const carry = carryOf(mo);
     let heroLabel, heroValue, heroNote;
     if (curR) { heroLabel = 'Puoi spendere questa settimana'; heroValue = eur(Math.max(0, weekLeft)); const lastD = curR[curR.length - 1]; const dl = curR.filter(d => dkey(d) >= nowK).length || 1; heroNote = weekLeft >= 0 ? `Circa ${eur(weekLeft / dl)} al giorno fino a ${DOWS[lastD.getDay()].toLowerCase()} ${fmtD(lastD)}` : `Hai superato la media settimanale di ${eur(-weekLeft)}`; }
     else if (weeksLeft === ranges.length) { heroLabel = 'Budget settimanale previsto'; heroValue = eur(allowance); heroNote = `Spese variabili ${eur(c.varBudget)} su ${ranges.length} settimane`; }
@@ -1166,6 +1221,23 @@ class Component extends DCLogic {
     const mChips = weeks.map((w, i) => { const on = i === selW; return { label: 'Sett. ' + (i + 1), range: w.range, pick: () => setW(i), sub: on ? '#b9b9b9' : '#797979',
       style: { flex: 'none', scrollSnapAlign: 'start', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3, minHeight: 52, padding: '9px 14px', borderRadius: 16, border: on ? '1px solid #0b0b0b' : '1px solid #e4e4e4', background: on ? '#0b0b0b' : '#fff', color: on ? '#fff' : '#0b0b0b', cursor: 'pointer', textAlign: 'left', font: 'inherit' },
       dotStyle: { width: 6, height: 6, borderRadius: 99, flex: 'none', background: w._cur ? '#f36458' : w._past ? (w._over ? '#dd0000' : '#37cd84') : '#b9b9b9' } }; });
+    {
+      const vb = buckets[1];
+      vb.isVar = true; vb.items = []; vb.empty = false;
+      vb.barsGrid = { display: 'grid', gridTemplateColumns: `repeat(${weeks.length},minmax(0,1fr))`, gap: 6, alignItems: 'end', padding: '8px 0 4px' };
+      vb.weekBars = weeks.map((w, i) => ({
+        label: 'S' + (i + 1), range: s.isMobile ? w.range.split(' – ')[0] : w.range, amt: w.spentFmt, title: `Settimana ${i + 1}: ${w.spentFmt} su ${w.targetFmt}`,
+        amtColor: w._over ? '#dd0000' : w._cur || w._past ? '#fff' : '#797979', labelColor: w._cur ? '#f36458' : '#b9b9b9',
+        colStyle: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, minWidth: 0, border: 0, background: 'transparent', color: 'inherit', cursor: 'pointer', padding: 0, font: 'inherit' },
+        trackStyle: { position: 'relative', width: '100%', maxWidth: 48, height: 104, borderRadius: 10, overflow: 'hidden', boxSizing: 'border-box', background: w._cur ? 'rgba(243,100,88,.14)' : w._past ? '#2a2a2a' : 'transparent', border: w._past || w._cur ? '0' : '1px dashed #505b6c' },
+        fillStyle: { position: 'absolute', left: 0, right: 0, bottom: 0, height: Math.min(100, w._used) + '%', borderRadius: 10, background: w._over ? '#dd0000' : w._cur ? '#f36458' : '#fff', transition: 'height .3s' },
+        go: () => {
+          if (s.isMobile) { this.setState(st => ({ mTab: 'week', mW: { ...(st.mW || {}), [mo.id]: i } })); window.scrollTo(0, 0); return; }
+          this.setState(st => ({ openW: { ...(st.openW || {}), [mo.id + ':' + i]: true } }));
+          setTimeout(() => { const el = document.querySelector('[data-weeks]'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 8, behavior: 'smooth' }); }, 30);
+        },
+      }));
+    }
     const mDays = wr.days.map(d => ({ dow: d.dow, num: d.inW ? d.num : '', amt: d.inW ? (d.tot ? eur(d.tot) : '·') : '', disabled: !d.inW,
       add: d.inW ? () => { this.setState({ formDate: d.iso, sheetOpen: true, picker: null }); setTimeout(() => { const el = this.amountRef.current; if (el) el.focus(); }, 80); } : () => {},
       dowColor: d.isToday ? '#f36458' : '#797979', amtColor: d.isToday ? '#fff' : (d.tot ? '#0b0b0b' : '#b9b9b9'),
@@ -1180,7 +1252,10 @@ class Component extends DCLogic {
       monthTitle: `${MN[M]} ${Y}`, monthShortName: MN[M].toLowerCase(), monthYear: Y,
       salary: mo.salary, pSave: mo.pSave, buckets, weeks, mw, mChips, mDays,
       heroLabel, heroValue, heroNote,
-      leftFmt: eur(c.left), prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
+      leftFmt: eur(c.left), fixedTotalFmt: eur(c.fixedTotal), varSpentFmt: eur(c.varSpent),
+      ...(() => { const sp = curR ? curSpent : c.varSpent, bd = curR ? allowance : c.varBudget, pctH = bd ? Math.min(100, sp / bd * 100) : (sp ? 100 : 0);
+        return { heroSpentFmt: eur(sp), heroBudgetFmt: eur(bd), heroBarStyle: { width: pctH + '%', height: '100%', borderRadius: 99, background: sp > bd + 0.5 ? '#dd0000' : '#0b0b0b', transition: 'width .3s' } }; })(),
+      splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica regola', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
       pFisseCalc: pc(c.fixedTotal), pVarCalc: pc(c.varBudget), varWarning: c.varRaw < 0,
       ...(() => {
         const sp = mo.split;
