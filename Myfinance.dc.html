@@ -133,6 +133,30 @@
     </div>
   </div>
 </sc-if>
+<sc-if value="{{ syncOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeSync }}" style="position:fixed;inset:0;z-index:110;background:rgba(11,11,11,.72);display:flex;align-items:center;justify-content:center;padding:16px">
+    <div onClick="{{ stopProp }}" style="width:100%;max-width:440px;display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:20px;background:#0b0b0b;color:#fff;border:1px solid #353535;box-shadow:0 24px 64px rgba(0,0,0,.5)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;flex:none;border-radius:12px;background:#212121;display:inline-flex;align-items:center;justify-content:center"><i class="{{ syncIcon }}" style="font-size:20px;line-height:1;color:{{ syncIconColor }}"></i></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 18px/1.25 Inter,sans-serif">Sincronizzazione</span><span style="font:400 13px/1.4 Inter,sans-serif;color:{{ syncIconColor }}">{{ syncStatusText }}</span></div></div>
+        <button onClick="{{ closeSync }}" aria-label="Chiudi" style="width:40px;height:40px;flex:none;border-radius:99px;border:1px solid #353535;background:transparent;color:#b9b9b9;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:18px;line-height:1"></i></button>
+      </div>
+      <span style="font:400 14px/1.5 Inter,sans-serif;color:#b9b9b9;text-wrap:pretty">Collega ogni dispositivo (telefono, computer, app dalla Home) con lo stesso codice: i dati restano uguali ovunque e si aggiornano da soli.</span>
+      <sc-if value="{{ syncDisconnected }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#797979">CODICE DI SINCRONIZZAZIONE</span>
+          <input type="password" autocomplete="current-password" placeholder="Il tuo codice personale" value="{{ syncInput }}" onChange="{{ onSyncInput }}" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid #353535;background:#212121;color:#fff;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+          <button onClick="{{ connectSync }}" style="height:48px;border-radius:99px;border:0;background:#fff;color:#0b0b0b;font:500 15px/1 Inter,sans-serif;cursor:pointer">Collega questo dispositivo</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ syncConnected }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:8px">
+          <button onClick="{{ disconnectSync }}" style="flex:1;height:48px;border-radius:99px;border:1px solid #353535;background:transparent;color:#b9b9b9;font:500 15px/1 Inter,sans-serif;cursor:pointer" style-hover="color:#dd0000;border-color:#dd0000">Scollega</button>
+          <button onClick="{{ syncNow }}" style="flex:1.4;height:48px;border-radius:99px;border:0;background:#fff;color:#0b0b0b;font:500 15px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px"><i class="icon-refresh-cw" style="font-size:16px;line-height:1"></i>Sincronizza ora</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;inset:0;z-index:100;background:rgba(11,11,11,.72);display:flex;align-items:center;justify-content:center;padding:24px">
     <div style="width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px;padding:clamp(16px,4.5vw,32px);border-radius:12px;background:#fff;color:#0b0b0b;box-shadow:0 24px 64px rgba(0,0,0,.4)">
@@ -156,6 +180,7 @@
       <span style="width:1px;background:#353535;margin:0 6px"></span>
       <sc-for list="{{ monthTabs }}" as="t" hint-placeholder-count="1"><button onClick="{{ t.go }}" style="{{ t.style }}">{{ t.label }}</button></sc-for>
     </div>
+    <button onClick="{{ openSync }}" style="height:36px;padding:0 14px;border-radius:99px;border:1px solid #353535;background:transparent;color:#fff;font:500 13px/1.3 Inter,sans-serif;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px" style-hover="background:#212121"><i class="{{ syncIcon }}" style="font-size:15px;line-height:1;color:{{ syncIconColor }}"></i><span>{{ syncShort }}</span></button>
     <button onClick="{{ addMonth }}" style="height:36px;padding:0 16px;border-radius:99px;border:1px solid #0b0b0b;background:#fff;color:#0b0b0b;font:500 13px/1.3 Inter,sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#ededed">+ Nuovo mese ({{ nextMonthLabel }})</button>
   </div>
 </nav>
@@ -169,6 +194,7 @@
     </select>
     <i class="icon-chevron-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:#b9b9b9;font-size:16px;line-height:1"></i>
   </div>
+  <button onClick="{{ openSync }}" aria-label="Sincronizzazione" style="width:42px;height:42px;flex:none;border-radius:12px;border:1px solid #353535;background:#212121;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="{{ syncIcon }}" style="font-size:18px;line-height:1;color:{{ syncIconColor }}"></i></button>
   <button onClick="{{ addMonth }}" aria-label="Nuovo mese" style="width:42px;height:42px;flex:none;border-radius:12px;border:1px solid #353535;background:#212121;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:18px;line-height:1"></i></button>
 </header>
 </sc-if>
@@ -905,11 +931,58 @@ class Component extends DCLogic {
     this.state = { ...clean, formName: '', formAmount: '', formDate: '', formIcon: '', fxIcon: '', svIcon: '', inIcon: '', picker: null, iconQ: '', ed: null, edName: '', edAmount: '', edDate: '', edIcon: '', edCount: '', edPaid: '', modal: null, openW: {}, sheetOpen: false, toast: '', mTab: 'home', isMobile: typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(max-width: 760px)').matches : false, inName: '', inAmount: '', esName: '', esAmount: '', fxName: '', fxAmount: '', svName: '', svAmount: '', rName: '', rTotal: '', rCount: '', rPaid: '' };
     this.nameRef = React.createRef();
     this.amountRef = React.createRef();
+    try { this.syncKey = localStorage.getItem('mf-sync-key') || ''; } catch (e) { this.syncKey = ''; }
+    this.dataAt = (saved && saved.dataAt) || 0;
+    this._lastData = JSON.stringify({ months: this.state.months, rates: this.state.rates, nextId: this.state.nextId });
+    this.state.sync = { status: this.syncKey ? 'idle' : 'off', at: null };
+    this.state.syncOpen = false; this.state.syncInput = '';
+  }
+  setSync(o) { this.setState(st => ({ sync: { ...st.sync, ...o } })); }
+  syncPayload() { const { months, rates, nextId } = this.state; return { dataAt: this.dataAt, months, rates, nextId }; }
+  schedulePush(delay = 1200) { if (!this.syncKey) return; clearTimeout(this._pushT); this._pushPending = true; this._pushT = setTimeout(() => this.push(), delay); }
+  async syncFetch(method, body, keepalive) {
+    return fetch('/api/data', { method, keepalive: !!keepalive, headers: { 'content-type': 'application/json', 'x-sync-key': this.syncKey }, body: body ? JSON.stringify(body) : undefined });
+  }
+  syncErr(res) { this.setSync({ status: 'error', err: res && res.status === 401 ? 'Codice non valido' : res && res.status === 500 ? 'Sincronizzazione non configurata sul server' : 'Nessuna connessione: riprovo più tardi' }); }
+  async push(keepalive) {
+    if (!this.syncKey) return; clearTimeout(this._pushT); this._pushPending = false;
+    this.setSync({ status: 'syncing' });
+    try {
+      const res = await this.syncFetch('PUT', this.syncPayload(), keepalive);
+      if (res.status === 409) { this.applyRemote(await res.json()); return; }
+      if (!res.ok) { this._pushPending = true; return this.syncErr(res); }
+      this.setSync({ status: 'ok', at: new Date(), err: '' });
+    } catch (e) { this._pushPending = true; this.syncErr(); }
+  }
+  async pull() {
+    if (!this.syncKey || this._pulling) return; this._pulling = true;
+    this.setSync({ status: 'syncing' });
+    try {
+      const res = await this.syncFetch('GET');
+      if (!res.ok) return this.syncErr(res);
+      const d = await res.json();
+      if (d.empty || (d.dataAt || 0) < this.dataAt || this._pushPending) { if (!this.dataAt) this.dataAt = Date.now(); await this.push(); }
+      else if (d.dataAt > this.dataAt) this.applyRemote(d);
+      else this.setSync({ status: 'ok', at: new Date(), err: '' });
+    } catch (e) { this.syncErr(); } finally { this._pulling = false; }
+  }
+  applyRemote(d) {
+    if (!d || !Array.isArray(d.months) || !d.months.length) return;
+    const months = d.months.map(m => ({ incomes: [], extraSave: [], startDay: 1, savings: [], fixed: [], variable: [], ...m }));
+    this.dataAt = d.dataAt;
+    this._lastData = JSON.stringify({ months, rates: d.rates || [], nextId: d.nextId || 1000 });
+    this.setState(st => {
+      const ids = months.map(m => 'm:' + m.id), years = months.map(m => 'y:' + m.year);
+      const view = ids.includes(st.view) || years.includes(st.view) ? st.view : ids[ids.length - 1];
+      return { months, rates: d.rates || [], nextId: d.nextId || 1000, view, sync: { status: 'ok', at: new Date(), err: '' } };
+    });
   }
   persist() {
     const { months, rates, nextId, view } = this.state;
     if (!Array.isArray(months) || !months.length) return;
-    try { localStorage.setItem(MF_KEY, JSON.stringify({ months, rates, nextId, view, savedAt: Date.now() })); this.savedOk = true; this.savedAt = new Date(); } catch (e) { this.savedOk = false; }
+    const ds = JSON.stringify({ months, rates, nextId });
+    if (ds !== this._lastData) { this._lastData = ds; this.dataAt = Date.now(); this.schedulePush(); }
+    try { localStorage.setItem(MF_KEY, JSON.stringify({ months, rates, nextId, view, savedAt: Date.now(), dataAt: this.dataAt })); this.savedOk = true; this.savedAt = new Date(); } catch (e) { this.savedOk = false; }
   }
   componentDidMount() {
     try { this._mq = window.matchMedia('(max-width: 760px)'); this._mqH = e => this.setState({ isMobile: e.matches }); this._mq.addEventListener ? this._mq.addEventListener('change', this._mqH) : this._mq.addListener(this._mqH); this.setState({ isMobile: this._mq.matches }); } catch (e) {}
@@ -918,9 +991,16 @@ class Component extends DCLogic {
     window.addEventListener('beforeunload', this._onHide);
     document.addEventListener('visibilitychange', this._onHide);
     try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+    this._onVis = () => { if (document.visibilityState === 'visible') this.pull(); else if (this._pushPending) this.push(true); };
+    this._onFocus = () => this.pull();
+    document.addEventListener('visibilitychange', this._onVis);
+    window.addEventListener('focus', this._onFocus);
+    this._syncI = setInterval(() => { if (document.visibilityState === 'visible') this.pull(); }, 30000);
+    if (this.syncKey) this.pull();
   }
   componentWillUnmount() {
     window.removeEventListener('pagehide', this._onHide); window.removeEventListener('beforeunload', this._onHide); document.removeEventListener('visibilitychange', this._onHide);
+    document.removeEventListener('visibilitychange', this._onVis); window.removeEventListener('focus', this._onFocus); clearInterval(this._syncI); clearTimeout(this._pushT);
   }
   componentDidUpdate() { this.persist(); }
   range(mo) {
@@ -997,6 +1077,23 @@ class Component extends DCLogic {
       style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3, height: 52, minWidth: 0, border: 0, borderRadius: 99, background: on ? 'rgba(255,255,255,.14)' : 'transparent', color: on ? '#fff' : '#8a8a8a', cursor: 'pointer', transition: 'background .2s, color .2s' },
       dotStyle: { width: 4, height: 4, borderRadius: 99, background: on ? '#f36458' : 'transparent' } }; };
     const base = {
+      ...(() => {
+        const sy = s.sync || { status: 'off' }, st = sy.status;
+        const t = sy.at ? `${String(sy.at.getHours()).padStart(2, '0')}:${String(sy.at.getMinutes()).padStart(2, '0')}` : '';
+        const col = st === 'ok' ? '#37cd84' : st === 'error' ? '#dd0000' : st === 'syncing' || st === 'idle' ? '#b9b9b9' : '#797979';
+        return {
+          syncIcon: st === 'off' ? 'icon-cloud-off' : st === 'error' ? 'icon-triangle-alert' : st === 'syncing' ? 'icon-refresh-cw' : 'icon-cloud',
+          syncShort: st === 'off' ? 'Sincronizza' : st === 'error' ? 'Errore sync' : st === 'syncing' ? 'Sincronizzo…' : 'Sincronizzato',
+          syncIconColor: col, syncConnected: st !== 'off', syncDisconnected: st === 'off',
+          syncStatusText: st === 'ok' ? `Dati sincronizzati${t ? ' · ultimo alle ' + t : ''}` : st === 'syncing' ? 'Sincronizzazione in corso…' : st === 'error' ? (sy.err || 'Errore') : st === 'idle' ? 'In attesa…' : 'Non collegato',
+          syncOpen: !!s.syncOpen, syncInput: s.syncInput || '',
+          openSync: () => this.setState({ syncOpen: true }), closeSync: () => this.setState({ syncOpen: false }),
+          onSyncInput: e => this.setState({ syncInput: e.target.value }),
+          connectSync: () => { const k = (s.syncInput || '').trim(); if (!k) return; this.syncKey = k; try { localStorage.setItem('mf-sync-key', k); } catch (e) {} this.setState({ syncInput: '' }); this.setSync({ status: 'idle', err: '' }); setTimeout(() => this.pull(), 0); },
+          syncNow: () => this.pull(),
+          disconnectSync: () => { this.syncKey = ''; try { localStorage.removeItem('mf-sync-key'); } catch (e) {} clearTimeout(this._pushT); this._pushPending = false; this.setSync({ status: 'off', at: null, err: '' }); },
+        };
+      })(),
       isMobile: mob, isDesktop: !mob, showFab: !isYear && !mob,
       showHome: !mob || mTab === 'home', showWeek: !mob || mTab === 'week', showWeekDesk: !mob, showWeekMob: mob && mTab === 'week', showRate: !mob || mTab === 'rate',
       mNav: [tabBtn('home', 'wallet', 'Mese'), tabBtn('week', 'calendar-days', 'Settimane'), tabBtn('rate', 'calendar-clock', 'Rate'), tabBtn('year', 'trending-up', 'Anno')],
