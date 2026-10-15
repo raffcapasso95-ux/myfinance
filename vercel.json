@@ -1,0 +1,19 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/Myfinance.dc.html" },
+    { "source": "/dashboard", "destination": "/Myfinance Dashboard.dc.html" },
+    { "source": "/design-system", "destination": "/Design System Preview.dc.html" }
+  ],
+  "redirects": [
+    { "source": "/index", "destination": "/", "permanent": true },
+    { "source": "/Myfinance.dc", "destination": "/", "permanent": true },
+    { "source": "/Myfinance.dc.html", "destination": "/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    }
+  ]
+}
