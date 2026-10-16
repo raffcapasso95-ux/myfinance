@@ -252,10 +252,13 @@
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font:500 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5);text-transform:uppercase">{{ heroLabel }}</span><span style="width:10px;height:10px;border-radius:99px;background:#f36458;flex:none"></span></div>
       <span style="font:400 clamp(48px,13vw,68px)/1 Inter,sans-serif;letter-spacing:-0.045em;white-space:nowrap">{{ heroValue }}</span>
       <div style="display:flex;flex-direction:column;gap:16px;margin-top:auto">
-      <div style="height:8px;border-radius:99px;background:var(--n8);overflow:hidden"><div style="{{ heroBarStyle }}"></div></div>
+      <sc-if value="{{ heroHasWeek }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px"><span style="height:28px;padding:0 10px;border-radius:99px;background:var(--n9);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;white-space:nowrap">{{ heroWeekTag }}</span><span style="height:28px;padding:0 10px;border-radius:99px;background:var(--n9);font:500 12px/1 Inter,sans-serif;display:inline-flex;align-items:center;white-space:nowrap">{{ heroDaysTag }}</span></div></sc-if>
+      <div style="display:flex;flex-direction:column;gap:6px"><div style="position:relative;height:10px;border-radius:99px;background:var(--n8)"><div style="{{ heroBarStyle }}"></div><sc-if value="{{ heroHasWeek }}" hint-placeholder-val="{{ false }}"><div style="{{ heroPace }}"></div></sc-if></div><sc-if value="{{ heroHasWeek }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;gap:8px;font:400 11px/1.4 'IBM Plex Mono',monospace;color:var(--n5)"><span>{{ heroPct }} USATO</span><span>| RITMO DI OGGI</span></div></sc-if></div>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px">
         <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:var(--n9)"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">SPESO</span><span style="font:500 18px/1.2 Inter,sans-serif;letter-spacing:-0.01em;white-space:nowrap">{{ heroSpentFmt }}</span></div>
         <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:var(--n9)"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">BUDGET</span><span style="font:500 18px/1.2 Inter,sans-serif;letter-spacing:-0.01em;white-space:nowrap">{{ heroBudgetFmt }}</span></div>
+        <sc-if value="{{ heroHasWeek }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:var(--n9)"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">AL GIORNO</span><span style="font:500 18px/1.2 Inter,sans-serif;letter-spacing:-0.01em;white-space:nowrap">{{ heroPerDayFmt }}</span></div></sc-if>
+        <sc-if value="{{ heroHasWeek }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:12px;background:var(--n9)"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">RESTA NEL MESE</span><span style="font:500 18px/1.2 Inter,sans-serif;letter-spacing:-0.01em;white-space:nowrap;color:{{ heroMonthColor }}">{{ heroMonthLeftFmt }}</span></div></sc-if>
       </div>
       <span style="font:400 13px/1.45 Inter,sans-serif;color:var(--n5);text-wrap:pretty">{{ heroNote }}</span>
       </div>
@@ -481,8 +484,11 @@
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid {{ b.rule }}">
         <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:{{ b.eyebrow }}">{{ b.amtLabel }}</span><span style="font:425 clamp(26px,7vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ b.budgetFmt }}</span></div><span style="font:400 12px/1.5 Inter,sans-serif;color:{{ b.eyebrow }};text-align:right">{{ b.usedLabel }}</span>
       </div>
-        <div style="height:4px;border-radius:99px;background:{{ b.track }};overflow:hidden"><div style="{{ b.fillStyle }}"></div></div>
-        <div style="display:flex;justify-content:space-between;font:400 13px/1.5 Inter,sans-serif;color:{{ b.body }}"><span>{{ b.l1 }}</span><span>{{ b.l2 }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:{{ b.eyebrow }}">{{ b.mLeftLbl }}</span><span style="font:500 17px/1.2 Inter,sans-serif;letter-spacing:-0.01em;white-space:nowrap">{{ b.mLeftVal }}</span></span><span style="display:flex;flex-direction:column;gap:1px;align-items:flex-end;min-width:0;text-align:right"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:{{ b.eyebrow }}">{{ b.mRightLbl }}</span><span style="font:500 17px/1.2 Inter,sans-serif;letter-spacing:-0.01em;white-space:nowrap;color:{{ b.mRightColor }}">{{ b.mRightVal }}</span></span></div>
+          <div style="position:relative;height:12px;border-radius:99px;background:{{ b.track }}"><div style="{{ b.mFill }}"></div><sc-if value="{{ b.mShowPace }}" hint-placeholder-val="{{ false }}"><div style="{{ b.mPace }}"></div></sc-if></div>
+          <sc-if value="{{ b.mPaceLbl }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:8px;font:400 12px/1.4 Inter,sans-serif;color:{{ b.body }};text-wrap:pretty"><span style="width:2px;height:14px;border-radius:2px;background:{{ b.mPaceColor }};flex:none"></span>{{ b.mPaceLbl }}</span></sc-if>
+        </div>
         <sc-if value="{{ b.isVar }}" hint-placeholder-val="{{ false }}">
           <div style="{{ b.barsGrid }}">
             <sc-for list="{{ b.weekBars }}" as="wb" hint-placeholder-count="5"><button onClick="{{ wb.go }}" title="{{ wb.title }}" style="{{ wb.colStyle }}" style-hover="opacity:.85">
@@ -1311,7 +1317,28 @@ class Component extends DCLogic {
       const used = key === 'fisse' ? (mo.split ? (budget ? spent / budget * 100 : 0) : pct) : key === 'save' ? (mo.salary ? (c.saveBudget + c.extraSaved) / mo.salary * 100 : 0) : budget ? Math.min(100, spent / budget * 100) : 0;
       const over = (key === 'var' || (key === 'fisse' && !!mo.split)) && spent > budget + 0.5;
       const brand = key === 'save';
-      return { _used: used, _over: over,
+      const mtr = (() => {
+        const ink = brand ? '#0b0b0c' : 'var(--nW)';
+        const fillW = key === 'fisse' && !mo.split ? 100 : Math.min(100, Math.max(0, budget ? spent / budget * 100 : 0));
+        const fillC = over ? '#dd0000' : key === 'var' ? '#f36458' : ink;
+        const o = { mFill: { position: 'absolute', left: 0, top: 0, bottom: 0, width: fillW + '%', borderRadius: 99, background: fillC, transition: 'width .3s' }, mShowPace: false, mPaceLbl: '', mPaceColor: ink, mRightColor: over ? '#dd0000' : 'inherit' };
+        if (key === 'var') {
+          const tot = Math.max(1, dkey(rg.end) - dkey(rg.start) + 1), pace = Math.max(0, Math.min(1, (nowK - dkey(rg.start) + 1) / tot));
+          const should = budget * (inPeriod ? pace : nowK > dkey(rg.end) ? 1 : 0);
+          Object.assign(o, { mLeftLbl: 'SPESO FINORA', mLeftVal: eur(spent), mRightLbl: over ? 'SFORATO DI' : 'PUOI ANCORA SPENDERE', mRightVal: eur(Math.abs(budget - spent)) });
+          if (inPeriod) Object.assign(o, { mShowPace: true, mPace: { position: 'absolute', top: -4, bottom: -4, left: 'calc(' + (pace * 100).toFixed(1) + '% - 1px)', width: 2, borderRadius: 2, background: 'var(--nW)' }, mPaceLbl: spent <= should ? 'In linea: ad oggi il ritmo previsto è ' + eur(should) + ', sei sotto di ' + eur(should - spent) : 'Più veloce del previsto: ad oggi il ritmo è ' + eur(should) + ', sei sopra di ' + eur(spent - should) });
+        } else if (key === 'fisse') {
+          if (mo.split) Object.assign(o, { mLeftLbl: 'USCITE FISSE', mLeftVal: eur(spent), mRightLbl: over ? 'OLTRE IL BUDGET' : 'MARGINE', mRightVal: eur(Math.abs(budget - spent)) });
+          else Object.assign(o, { mLeftLbl: 'VOCI', mLeftVal: mo.fixed.length + (c.act.length ? ' + ' + c.act.length + ' rate' : ''), mRightLbl: 'DI CUI RATE', mRightVal: eur(c.rateMonth) });
+        } else {
+          const aw = budget ? c.saveBudget / budget * 100 : 100;
+          o.mFill = { position: 'absolute', left: 0, top: 0, bottom: 0, width: aw + '%', borderRadius: 99, background: '#0b0b0c' };
+          o.mShowPace = c.extraSaved > 0; o.mPace = { position: 'absolute', top: 0, bottom: 0, left: 'calc(' + aw + '% + 2px)', right: 0, borderRadius: 99, background: 'rgba(255,255,255,.6)' };
+          Object.assign(o, { mLeftLbl: 'AUTOMATICO ' + mo.pSave + '%', mLeftVal: eur(c.saveBudget), mRightLbl: 'EXTRA', mRightVal: eur(c.extraSaved), mRightColor: 'inherit' });
+        }
+        return o;
+      })();
+      return { ...mtr, _used: used, _over: over,
         icon: key === 'fisse' ? 'icon-house' : key === 'var' ? 'icon-shopping-bag' : 'icon-piggy-bank',
         desc: key === 'fisse' ? 'Uguali ogni mese: affitto, bollette, abbonamenti e rate' : key === 'var' ? 'Le spese di tutti i giorni (spesa, bar, uscite), divise per settimana' : '',
         amtLabel: key === 'fisse' ? (mo.split ? 'Budget del mese' : 'Totale del mese') : 'Budget del mese',
@@ -1374,7 +1401,7 @@ class Component extends DCLogic {
     const carryOf = m => { const p = months.filter(x => idx(x) < idx(m)).pop(); if (!p) return 0; const pc2 = this.calc(p); return pc2.left + pc2.extraSaved + carryOf(p); };
     const carry = carryOf(mo);
     let heroLabel, heroValue, heroNote;
-    if (curR) { heroLabel = 'Puoi spendere questa settimana'; heroValue = eur(Math.max(0, weekLeft)); const lastD = curR[curR.length - 1]; const dl = curR.filter(d => dkey(d) >= nowK).length || 1; heroNote = weekLeft >= 0 ? `Circa ${eur(weekLeft / dl)} al giorno fino a ${DOWS[lastD.getDay()].toLowerCase()} ${fmtD(lastD)}` : `Hai superato la media settimanale di ${eur(-weekLeft)}`; }
+    if (curR) { heroLabel = 'Puoi spendere questa settimana'; heroValue = eur(Math.max(0, weekLeft)); const lastD = curR[curR.length - 1]; const dl = curR.filter(d => dkey(d) >= nowK).length || 1; heroNote = weekLeft >= 0 ? 'Fino a ' + DOWS[lastD.getDay()].toLowerCase() + ' ' + fmtD(lastD) + '. Quello che non spendi passa alle settimane successive.' : 'Hai superato il budget della settimana di ' + eur(-weekLeft) + ': le prossime settimane avranno un po\' meno.'; }
     else if (weeksLeft === ranges.length) { heroLabel = 'Budget settimanale previsto'; heroValue = eur(allowance); heroNote = `Spese variabili ${eur(c.varBudget)} su ${ranges.length} settimane`; }
     else { heroLabel = 'Variabili rimaste a fine mese'; heroValue = eur(c.varBudget - c.varSpent); heroNote = 'Periodo concluso'; }
     const defW = curR ? ranges.indexOf(curR) : (pastR.length === ranges.length ? ranges.length - 1 : 0);
@@ -1426,9 +1453,17 @@ class Component extends DCLogic {
       monthTitle: `${MN[M]} ${Y}`, monthShortName: MN[M].toLowerCase(), monthYear: Y,
       salary: mo.salary, pSave: mo.pSave, buckets, weeks, mw, mChips, mDays,
       heroLabel, heroValue, heroNote,
+      ...(() => {
+        if (!curR) return { heroHasWeek: false };
+        const dl = curR.filter(d => dkey(d) >= nowK).length || 1, el = curR.length - dl;
+        const pace = (el + 1) / curR.length, pct = allowance ? Math.round(curSpent / allowance * 100) : 0, ml = c.varBudget - c.varSpent;
+        return { heroHasWeek: true, heroWeekTag: 'Settimana ' + (ranges.indexOf(curR) + 1) + ' di ' + ranges.length, heroDaysTag: dl === 1 ? 'Ultimo giorno' : dl + ' giorni rimasti',
+          heroPerDayFmt: eur(Math.max(0, weekLeft) / dl), heroMonthLeftFmt: eur(ml), heroMonthColor: ml < 0 ? '#dd0000' : 'inherit', heroPct: pct + '%',
+          heroPace: { position: 'absolute', top: -4, bottom: -4, left: 'calc(' + Math.min(100, pace * 100).toFixed(1) + '% - 1px)', width: 2, borderRadius: 2, background: 'var(--n0)' } };
+      })(),
       leftFmt: eur(c.left), fixedTotalFmt: eur(c.fixedTotal), varSpentFmt: eur(c.varSpent),
       ...(() => { const sp = curR ? curSpent : c.varSpent, bd = curR ? allowance : c.varBudget, pctH = bd ? Math.min(100, sp / bd * 100) : (sp ? 100 : 0);
-        return { heroSpentFmt: eur(sp), heroBudgetFmt: eur(bd), heroBarStyle: { width: pctH + '%', height: '100%', borderRadius: 99, background: sp > bd + 0.5 ? '#dd0000' : 'var(--n0)', transition: 'width .3s' } }; })(),
+        return { heroSpentFmt: eur(sp), heroBudgetFmt: eur(bd), heroBarStyle: { position: 'absolute', left: 0, top: 0, width: pctH + '%', height: '100%', borderRadius: 99, background: sp > bd + 0.5 ? '#dd0000' : 'var(--n0)', transition: 'width .3s' } }; })(),
       splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica regola', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
       pFisseCalc: pc(c.fixedTotal), pVarCalc: pc(c.varBudget), varWarning: c.varRaw < 0,
       ...(() => {
