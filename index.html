@@ -262,13 +262,13 @@
           <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n5)">{{ chTitle }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n5)">{{ chLegend }}</span></div>
           <div style="display:flex;gap:2px;padding:3px;border-radius:99px;background:var(--n9)"><sc-for list="{{ chModes }}" as="cm" hint-placeholder-count="3"><button onClick="{{ cm.pick }}" aria-pressed="{{ cm.on }}" style="{{ cm.style }}">{{ cm.label }}</button></sc-for></div>
         </div>
-        <div style="position:relative;height:96px">
+        <div style="position:relative;height:104px">
           <sc-if value="{{ chHasSel }}" hint-placeholder-val="{{ false }}"><div style="{{ chTipStyle }}">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.04em;color:var(--n5);white-space:nowrap">{{ chSelLabel }}</span><span style="{{ chDeltaStyle }}">{{ chSelDelta }}</span></div>
             <span style="font:500 22px/1.1 Inter,sans-serif;letter-spacing:-0.02em;font-variant-numeric:tabular-nums">{{ chSelAmt }}</span>
             <sc-for list="{{ chSelRows }}" as="r" hint-placeholder-count="0"><div style="display:flex;justify-content:space-between;gap:8px;font:400 12px/1.35 Inter,sans-serif;color:var(--n5)"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</span><span style="flex:none;color:var(--n0);font-variant-numeric:tabular-nums">{{ r.amt }}</span></div></sc-for>
             <sc-if value="{{ chHasFoot }}" hint-placeholder-val="{{ false }}"><span style="font:400 12px/1.35 Inter,sans-serif;color:var(--n5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ chSelFoot }}</span></sc-if>
-          </div></sc-if>
+          </div><span style="{{ chCaretStyle }}"></span></sc-if>
         </div>
         <sc-if value="{{ chIsBars }}" hint-placeholder-val="{{ true }}">
           <div onMouseMove="{{ chScrub }}" onMouseLeave="{{ chLeave }}" onTouchStart="{{ chScrub }}" onTouchMove="{{ chScrub }}" style="position:relative;flex:1;min-height:130px;display:flex;align-items:flex-end;gap:2px;touch-action:pan-y;cursor:crosshair">
@@ -301,7 +301,7 @@
       <sc-if value="{{ hasExtraSave }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Extra nel salvadanaio</span><span style="white-space:nowrap;color:#f36458;font-weight:500">− {{ extraSaveFmt }}</span></div></sc-if>
       <span style="padding:12px 0 4px;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">RISULTATO</span>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Avanzo del mese</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">{{ leftFmt }}</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Dal mese prima · {{ prevName }}</span><span style="white-space:nowrap;color:{{ carryColor }};font-weight:500">{{ carryFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">{{ carryLabel }}</span><span style="white-space:nowrap;color:{{ carryColor }};font-weight:500">{{ carryFmt }}</span></div>
       <div style="display:flex;flex-direction:column;margin-top:auto;padding-top:16px"><div style="display:flex;flex-direction:column;border-radius:14px;background:var(--n2);border:1px solid var(--n4);overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font:500 15px/1.3 Inter,sans-serif">Disponibile ora</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Avanzo + mese prima</span></div><span style="font:500 clamp(24px,6.5vw,30px)/1.1 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ totalAvailEl }}</span></div>
       <sc-if value="{{ hasAvailFree }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:0;padding:0 16px 4px;border-top:1px dashed var(--n4)">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;font:400 13px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Ti resta per le quotidiane</span><span style="white-space:nowrap;font-weight:500">{{ availVarFmt }}</span></div>
@@ -1557,10 +1557,11 @@ class Component extends DCLogic {
         else { const v = dTot[si] || 0; big = eur(v); over = v > dailyB + 0.5; delta = fut ? 'giorno futuro' : v ? (v > dailyB ? '+' : '−') + eur(Math.abs(v - dailyB)) + ' sul budget' : 'nessuna spesa';
           rows = (list.length > 2 ? list.slice(0, 1) : list).map(e => ({ name: e.name, amt: eur(e.amount) }));
           foot = list.length > 2 ? '+ altre ' + (list.length - 1) + ' spese' : list.length ? '' : 'Budget del giorno ' + eur(dailyB); }
-        const x = mode === 'cal' ? 0 : xPct(si);
+        const x = mode === 'cal' ? (((rg.start.getDay() + 6) % 7 + si) % 7 + 0.5) / 7 * 100 : xPct(si);
         Object.assign(res, { chHasSel: true, chSelLabel: lbl, chSelAmt: big, chSelDelta: delta, chSelRows: rows, chSelFoot: foot, chHasFoot: !!foot,
           chDeltaStyle: { flex: 'none', height: 22, padding: '0 8px', borderRadius: 99, display: 'inline-flex', alignItems: 'center', font: '500 11px/1 Inter,sans-serif', whiteSpace: 'nowrap', background: over ? 'rgba(243,100,88,.16)' : 'var(--n9)', color: over ? '#c2392d' : 'var(--n5)' },
-          chTipStyle: { position: 'absolute', bottom: 0, left: x + '%', transform: 'translateX(-' + x + '%)', width: mode === 'cal' ? '100%' : 'min(240px, 100%)', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 3, padding: '10px 12px', borderRadius: 12, background: 'var(--nW)', color: 'var(--n0)', boxShadow: '0 6px 20px rgba(0,0,0,.10), 0 0 0 1px var(--n8)', transition: 'left 140ms cubic-bezier(.23,1,.32,1), transform 140ms cubic-bezier(.23,1,.32,1)', pointerEvents: 'none' },
+          chCaretStyle: { position: 'absolute', bottom: 2, left: 'calc(' + x + '% - 6px)', width: 12, height: 12, background: 'var(--nW)', transform: 'rotate(45deg)', boxShadow: '1px 1px 0 0 var(--n8)', transition: 'left 140ms cubic-bezier(.23,1,.32,1)', pointerEvents: 'none', zIndex: 1 },
+          chTipStyle: { position: 'absolute', bottom: 8, left: x + '%', transform: 'translateX(-' + x + '%)', width: mob ? 'min(220px, 100%)' : 'min(260px, 100%)', zIndex: 2, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 3, padding: '10px 12px', borderRadius: 12, background: 'var(--nW)', color: 'var(--n0)', boxShadow: '0 6px 20px rgba(0,0,0,.10), 0 0 0 1px var(--n8)', transition: 'left 140ms cubic-bezier(.23,1,.32,1), transform 140ms cubic-bezier(.23,1,.32,1)', pointerEvents: 'none' },
           chGuide: mode === 'cal' ? { display: 'none' } : { position: 'absolute', top: -10, bottom: 0, left: 'calc(' + x + '% - 0.5px)', width: 1, background: 'var(--n0)', opacity: 0.2, pointerEvents: 'none', zIndex: 2, transition: 'left 140ms cubic-bezier(.23,1,.32,1)' } });
         selIsoEff = iso;
       }
@@ -1678,7 +1679,7 @@ class Component extends DCLogic {
       leftFmt: eur(c.left), fixedTotalFmt: eur(c.fixedTotal), varSpentFmt: eur(c.varSpent),
       ...(() => { const sp = curR ? curSpent : c.varSpent, bd = curR ? allowance : c.varBudget, pctH = bd ? Math.min(100, sp / bd * 100) : (sp ? 100 : 0);
         return { heroSpentFmt: eur(sp), heroBudgetFmt: eur(bd), heroBarStyle: { position: 'absolute', left: 0, top: 0, width: pctH + '%', height: '100%', borderRadius: 99, background: sp > bd + 0.5 ? '#dd0000' : 'var(--n0)', transition: 'width .3s' } }; })(),
-      splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
+      splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryLabel: prev ? 'Dal mese prima (' + MN[prev.month].toLowerCase() + ')' : 'Dal mese prima', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
       ...(() => {
         const varLeft = c.varBudget - c.varSpent, tot = c.left + carry, free = tot - varLeft;
         const parts = [];
