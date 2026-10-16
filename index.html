@@ -149,7 +149,7 @@
       <sc-if value="{{ isMonth }}" hint-placeholder-val="{{ true }}">
       <div style="display:grid;gap:12px">
       <span style="padding:4px 4px 0;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">MESE</span>
-      <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden;margin-top:-1px"><button onClick="{{ stPeriod }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:0;background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-calendar" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Periodo del mese</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">{{ pStartShort }} → {{ pEndShort }} · {{ daysCount }} giorni</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><button onClick="{{ stSplit }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-sliders-horizontal" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Regola di divisione</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Risparmio {{ pSave }}% · fisse e variabili</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><button onClick="{{ stNewMonth }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Nuovo mese</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Crea {{ nextMonthLabel }}</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><button onClick="{{ stDelMonth }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:#dd0000;cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-trash-2" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Elimina questo mese</span></span> </button></div>
+      <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden;margin-top:-1px"><button onClick="{{ stPeriod }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:0;background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-calendar" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Periodo del mese</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">{{ pStartShort }} → {{ pEndShort }} · {{ daysCount }} giorni</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><button onClick="{{ stSplit }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-sliders-horizontal" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Regola di divisione</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Salvadanaio {{ pSave }}% · fisse e quotidiane</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><button onClick="{{ stNewMonth }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Nuovo mese</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Crea {{ nextMonthLabel }}</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><button onClick="{{ stDelMonth }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:#dd0000;cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-trash-2" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Elimina questo mese</span></span> </button></div>
       </div>
       </sc-if>
       <span style="padding:4px 4px 0;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">DATI E BACKUP</span>
@@ -296,16 +296,16 @@
       <sc-if value="{{ hasIncExtra }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Entrate extra</span><span style="white-space:nowrap;color:#37cd84;font-weight:500">+ {{ incExtraFmt }}</span></div></sc-if>
       <span style="padding:12px 0 4px;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">USCITE</span>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Spese fisse</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">− {{ fixedTotalFmt }}</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Spese variabili finora</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">− {{ varSpentFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Spese quotidiane finora</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">− {{ varSpentFmt }}</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Salvadanaio {{ pSave }}% · non si tocca</span><span style="white-space:nowrap;color:#f36458;font-weight:500">− {{ saveAutoFmt }}</span></div>
-      <sc-if value="{{ hasExtraSave }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Extra messo da parte</span><span style="white-space:nowrap;color:#f36458;font-weight:500">− {{ extraSaveFmt }}</span></div></sc-if>
+      <sc-if value="{{ hasExtraSave }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Extra nel salvadanaio</span><span style="white-space:nowrap;color:#f36458;font-weight:500">− {{ extraSaveFmt }}</span></div></sc-if>
       <span style="padding:12px 0 4px;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">RISULTATO</span>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Rimasto nel mese</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">{{ leftFmt }}</span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Riporto da {{ prevName }}</span><span style="white-space:nowrap;color:{{ carryColor }};font-weight:500">{{ carryFmt }}</span></div>
-      <div style="display:flex;flex-direction:column;margin-top:auto;padding-top:16px"><div style="display:flex;flex-direction:column;border-radius:14px;background:var(--n2);border:1px solid var(--n4);overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font:500 15px/1.3 Inter,sans-serif">Totale disponibile</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Rimasto + riporto</span></div><span style="font:500 clamp(24px,6.5vw,30px)/1.1 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ totalAvailEl }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Avanzo del mese</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">{{ leftFmt }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Dal mese prima · {{ prevName }}</span><span style="white-space:nowrap;color:{{ carryColor }};font-weight:500">{{ carryFmt }}</span></div>
+      <div style="display:flex;flex-direction:column;margin-top:auto;padding-top:16px"><div style="display:flex;flex-direction:column;border-radius:14px;background:var(--n2);border:1px solid var(--n4);overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font:500 15px/1.3 Inter,sans-serif">Disponibile ora</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Avanzo + mese prima</span></div><span style="font:500 clamp(24px,6.5vw,30px)/1.1 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ totalAvailEl }}</span></div>
       <sc-if value="{{ hasAvailFree }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:0;padding:0 16px 4px;border-top:1px dashed var(--n4)">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;font:400 13px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Budget variabili rimasto</span><span style="white-space:nowrap;font-weight:500">{{ availVarFmt }}</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:10px 0;border-top:1px solid var(--n3);font:400 13px/1.4 Inter,sans-serif"><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="color:var(--n7)">Extra fuori budget</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6);text-wrap:pretty">{{ availFreeNote }}</span></span><span style="white-space:nowrap;font-weight:500;color:{{ availFreeColor }}">{{ availFreeFmt }}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;font:400 13px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Ti resta per le quotidiane</span><span style="white-space:nowrap;font-weight:500">{{ availVarFmt }}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:10px 0;border-top:1px solid var(--n3);font:400 13px/1.4 Inter,sans-serif"><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="color:var(--n7)">Soldi liberi oltre il budget</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6);text-wrap:pretty">{{ availFreeNote }}</span></span><span style="white-space:nowrap;font-weight:500;color:{{ availFreeColor }}">{{ availFreeFmt }}</span></div>
       </div></sc-if>
       </div></div>
     </div>
@@ -315,7 +315,7 @@
   <div style="max-width:1280px;margin:0 auto;padding:12px 16px 0">
    <div style="display:flex;flex-direction:column;gap:12px;padding:clamp(14px,3.5vw,20px);border-radius:20px;background:var(--n1);border:1px solid var(--n3)">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <div style="display:flex;align-items:baseline;gap:8px;min-width:0;flex-wrap:wrap"><span style="font:500 15px/1.3 Inter,sans-serif">Ripartizione</span><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:var(--n6);white-space:nowrap">di {{ salaryFmt }}</span></div>
+      <div style="display:flex;align-items:baseline;gap:8px;min-width:0;flex-wrap:wrap"><span style="font:500 15px/1.3 Inter,sans-serif">Come dividi lo stipendio</span><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:var(--n6);white-space:nowrap">di {{ salaryFmt }}</span></div>
       <button onClick="{{ toggleSplit }}" style="height:32px;padding:0 12px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--nW);font:500 13px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap" style-hover="background:var(--n2)"><i class="icon-sliders-horizontal" style="font-size:15px;line-height:1"></i><span>{{ splitBtnLabel }}</span></button>
     </div>
     <div style="display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px;background:var(--n2)">
@@ -326,9 +326,9 @@
     </div>
     <sc-if value="{{ splitOpen }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex;flex-wrap:wrap;gap:clamp(12px,3.5vw,24px);align-items:center;padding-top:16px;border-top:1px solid var(--n3)">
-      <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">REGOLA DI DIVISIONE</span>
+      <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">COME DIVIDERLO</span>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;border-radius:12px;background:var(--n2);border:1px solid var(--n4)">
-        <span style="display:flex;align-items:center;gap:8px;font:400 15px/1.5 Inter,sans-serif;color:var(--nW)"><i class="icon-piggy-bank" style="font-size:16px;line-height:1;color:#f36458"></i><span>Risparmio</span></span>
+        <span style="display:flex;align-items:center;gap:8px;font:400 15px/1.5 Inter,sans-serif;color:var(--nW)"><i class="icon-piggy-bank" style="font-size:16px;line-height:1;color:#f36458"></i><span>Salvadanaio</span></span>
         <div style="position:relative;width:220px;height:28px;display:flex;align-items:center">
           <div style="position:absolute;left:0;right:0;height:6px;border-radius:99px;background:var(--n4)"></div>
           <div style="{{ sliderFill }}"></div>
@@ -347,7 +347,7 @@
         <button onClick="{{ splitAuto }}" style="{{ splitAutoStyle }}">Automatica</button>
         <button onClick="{{ splitCustom }}" style="{{ splitCustomStyle }}">Personalizzata</button>
       </div>
-      <sc-if value="{{ splitIsAuto }}" hint-placeholder-val="{{ true }}"><span style="font:400 13px/1.5 Inter,sans-serif;color:var(--n7)">→ Fisse {{ pFisseCalc }}% (somma delle voci) · Variabili {{ pVarCalc }}% (quello che resta)</span></sc-if>
+      <sc-if value="{{ splitIsAuto }}" hint-placeholder-val="{{ true }}"><span style="font:400 13px/1.5 Inter,sans-serif;color:var(--n7)">→ Fisse {{ pFisseCalc }}% (somma delle voci) · Quotidiane {{ pVarCalc }}% (quello che resta)</span></sc-if>
       <sc-if value="{{ splitIsCustom }}" hint-placeholder-val="{{ false }}">
         <div style="flex:1 1 100%;display:flex;flex-direction:column;gap:16px;padding:clamp(16px,4vw,20px);border-radius:12px;background:var(--n2);border:1px solid var(--n4)">
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px 28px">
@@ -381,7 +381,7 @@
       </sc-if>
     </div>
     </sc-if>
-    <sc-if value="{{ varWarning }}" hint-placeholder-val="{{ false }}"><span style="font:400 13px/1.5 Inter,sans-serif;color:#dd0000">Risparmio troppo alto: non resta nulla per le variabili</span></sc-if>
+    <sc-if value="{{ varWarning }}" hint-placeholder-val="{{ false }}"><span style="font:400 13px/1.5 Inter,sans-serif;color:#dd0000">Salvadanaio troppo alto: non resta nulla per le quotidiane</span></sc-if>
    </div>
   </div>
 
@@ -456,12 +456,12 @@
       <div style="display:flex;align-items:flex-start;gap:12px">
         <span style="width:44px;height:44px;flex:none;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;background:#f36458;color:#0b0b0c"><i class="icon-piggy-bank" style="font-size:20px;line-height:1"></i></span>
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
-          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:500 18px/1.25 Inter,sans-serif;letter-spacing:-0.01em">Risparmio</span><span style="display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:99px;background:rgba(243,100,88,.16);color:#f36458;font:500 12px/1 'IBM Plex Mono',monospace;white-space:nowrap"><i class="icon-lock" style="font-size:12px;line-height:1"></i>{{ pSave }}%</span></div>
-          <span style="font:400 13px/1.45 Inter,sans-serif;color:var(--n5);text-wrap:pretty">Il tuo salvadanaio: questi soldi si mettono da parte e non si toccano</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:500 18px/1.25 Inter,sans-serif;letter-spacing:-0.01em">Salvadanaio</span><span style="display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:99px;background:rgba(243,100,88,.16);color:#f36458;font:500 12px/1 'IBM Plex Mono',monospace;white-space:nowrap"><i class="icon-lock" style="font-size:12px;line-height:1"></i>{{ pSave }}%</span></div>
+          <span style="font:400 13px/1.45 Inter,sans-serif;color:var(--n5);text-wrap:pretty">Soldi messi da parte ogni mese: non si toccano</span>
         </div>
       </div>
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid var(--n8)">
-        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n5)">Messo da parte questo mese</span><span style="font:425 clamp(28px,7.5vw,36px)/1.13 Inter,sans-serif;letter-spacing:-0.03em;color:var(--n0);font-size:clamp(34px,9vw,44px)">{{ savTotalFmt }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n5)">Nel salvadanaio questo mese</span><span style="font:425 clamp(28px,7.5vw,36px)/1.13 Inter,sans-serif;letter-spacing:-0.03em;color:var(--n0);font-size:clamp(34px,9vw,44px)">{{ savTotalFmt }}</span></div>
       </div>
       <div style="display:flex;height:6px;border-radius:99px;overflow:hidden;gap:2px;background:var(--n8)"><div style="{{ savAutoBar }}"></div><div style="{{ savExtraBar }}"></div></div>
       <div style="display:flex;flex-direction:column;margin-top:4px">
@@ -609,7 +609,7 @@
   <div style="max-width:560px;margin:0 auto;padding:20px 16px 28px;display:flex;flex-direction:column;gap:14px">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
       <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
-        <span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:var(--n5)">Spese variabili · {{ monthTitle }}</span>
+        <span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:var(--n5)">Spese quotidiane · {{ monthTitle }}</span>
         <h2 style="margin:0;font:400 30px/1.05 Inter,sans-serif;letter-spacing:-0.035em">Settimane</h2>
       </div>
       <div style="display:flex;gap:6px;flex:none">
@@ -678,9 +678,9 @@
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
-      <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:16px;background:var(--nW)"><span style="font:400 11px/1.3 Inter,sans-serif;color:var(--n5)">Residuo mese</span><span style="font:400 18px/1.15 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ varLeftFmt }}</span></div>
-      <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:16px;background:var(--nW)"><span style="font:400 11px/1.3 Inter,sans-serif;color:var(--n5)">Media consentita</span><span style="font:400 18px/1.15 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ allowanceFmt }}</span></div>
-      <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:16px;background:var(--nW)"><span style="font:400 11px/1.3 Inter,sans-serif;color:var(--n5)">Media reale</span><span style="font:400 18px/1.15 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ avgWeekFmt }}</span></div>
+      <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:16px;background:var(--nW)"><span style="font:400 11px/1.3 Inter,sans-serif;color:var(--n5)">Ti resta</span><span style="font:400 18px/1.15 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ varLeftFmt }}</span></div>
+      <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:16px;background:var(--nW)"><span style="font:400 11px/1.3 Inter,sans-serif;color:var(--n5)">Budget a settimana</span><span style="font:400 18px/1.15 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ allowanceFmt }}</span></div>
+      <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:16px;background:var(--nW)"><span style="font:400 11px/1.3 Inter,sans-serif;color:var(--n5)">Spesa media a sett.</span><span style="font:400 18px/1.15 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ avgWeekFmt }}</span></div>
     </div>
   </div>
 </section>
@@ -691,13 +691,13 @@
   <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,8vw,96px) 16px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(16px,4.5vw,32px);flex-wrap:wrap">
       <div>
-        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--n5)">Spese variabili · {{ monthTitle }}</div>
+        <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--n5)">Spese quotidiane · {{ monthTitle }}</div>
         <h2 style="margin:12px 0 0;font:400 clamp(24px,6.4vw,48px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Settimana per settimana</h2>
       </div>
       <div style="display:flex;gap:clamp(16px,4.5vw,32px);flex-wrap:wrap">
-        <div><div style="font:400 13px/1.5 Inter,sans-serif;color:var(--n5)">Residuo variabili</div><div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ varLeftFmt }}</div></div>
-        <div><div style="font:400 13px/1.5 Inter,sans-serif;color:var(--n5)">Media consentita / sett.</div><div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ allowanceFmt }}</div></div>
-        <div><div style="font:400 13px/1.5 Inter,sans-serif;color:var(--n5)">Media spesa reale / sett.</div><div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ avgWeekFmt }}</div></div>
+        <div><div style="font:400 13px/1.5 Inter,sans-serif;color:var(--n5)">Ti resta</div><div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ varLeftFmt }}</div></div>
+        <div><div style="font:400 13px/1.5 Inter,sans-serif;color:var(--n5)">Budget a settimana</div><div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ allowanceFmt }}</div></div>
+        <div><div style="font:400 13px/1.5 Inter,sans-serif;color:var(--n5)">Spesa media a settimana</div><div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em">{{ avgWeekFmt }}</div></div>
       </div>
     </div>
 
@@ -910,8 +910,8 @@
           <th style="text-align:left;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">MESE</th>
           <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">STIPENDIO</th>
           <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">FISSE</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">VARIABILI</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">RISPARMIO</th>
+          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">QUOTIDIANE</th>
+          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">SALVADANAIO</th>
           <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">RIMASTO</th>
           <th style="padding:12px;border-bottom:1px solid var(--n0)"></th>
         </tr></thead>
@@ -1170,7 +1170,7 @@ class Component extends DCLogic {
           { id: 'box-in', name: 'Entrate', icon: 'icon-arrow-down-left', amt: v.incTotalFmt, sub: v.incCountLabel, chip: chip('rgba(55,205,132,.16)', '#37cd84'), bar: bar(100, '#37cd84') },
           bf && { id: 'box-fisse', name: bf.name, icon: bf.icon, amt: bf.budgetFmt, sub: bf.usedLabel || bf.l1, chip: chip('var(--n3)', 'var(--nW)'), bar: bar(bf._used, 'var(--nW)') },
           bv && { id: 'box-var', name: bv.name, icon: bv.icon, amt: bv.budgetFmt, sub: bv.l2 || bv.usedLabel, chip: chip('rgba(243,100,88,.16)', '#f36458'), bar: bar(bv._used, bv._over ? '#dd0000' : '#f36458') },
-          { id: 'box-save', name: 'Risparmio', icon: 'icon-piggy-bank', amt: v.savTotalFmt, sub: (v.pSave || 0) + '% · non si tocca', chip: chip('#f36458', '#0b0b0b'), bar: bar(sb._used != null ? sb._used * (100 / Math.max(1, v.pSave || 1)) : 100, '#f36458') },
+          { id: 'box-save', name: 'Salvadanaio', icon: 'icon-piggy-bank', amt: v.savTotalFmt, sub: (v.pSave || 0) + '% · non si tocca', chip: chip('#f36458', '#0b0b0b'), bar: bar(sb._used != null ? sb._used * (100 / Math.max(1, v.pSave || 1)) : 100, '#f36458') },
         ].filter(Boolean).map(t => ({ ...t, go: go(t.id) }));
         return { boxTiles: tiles, bucketCards: v.bucketCards.map((b, i) => ({ ...b, boxId: i === 0 ? 'box-fisse' : 'box-var' })) };
       })(),
@@ -1229,7 +1229,7 @@ class Component extends DCLogic {
       const nRates = s.rates.filter(r => { const k = this.rateK(r, nm); return k >= 1 && k <= r.count; }).length;
       const lr = this.range(last); const ns = new Date(lr.end.getTime() + 864e5);
       const eurS = n => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-      ask(`Creare ${MN[nxt.month]} ${nxt.year}?`, `Porto con me lo stipendio (${eurS(last.salary)}), ${last.fixed.length} ${last.fixed.length === 1 ? 'spesa fissa' : 'spese fisse'}, la percentuale di risparmio (${last.pSave}%) e ${nRates} ${nRates === 1 ? 'rata in corso' : 'rate in corso'}. Il periodo partirà dal ${ns.getDate()} ${MN[ns.getMonth()].toLowerCase()}.`, 'Crea mese', false, doAddMonth);
+      ask(`Creare ${MN[nxt.month]} ${nxt.year}?`, `Porto con me lo stipendio (${eurS(last.salary)}), ${last.fixed.length} ${last.fixed.length === 1 ? 'spesa fissa' : 'spese fisse'}, la percentuale del salvadanaio (${last.pSave}%) e ${nRates} ${nRates === 1 ? 'rata in corso' : 'rate in corso'}. Il periodo partirà dal ${ns.getDate()} ${MN[ns.getMonth()].toLowerCase()}.`, 'Crea mese', false, doAddMonth);
     };
     const rateInfo = (r, ref) => {
       const k = this.rateK(r, ref), rata = this.rataOf(r);
@@ -1304,8 +1304,8 @@ class Component extends DCLogic {
         ...base, yearTitle: String(y),
         yearLead: `${cs.length} ${cs.length === 1 ? 'mese registrato' : 'mesi registrati'} nel ${y}. Tocca un mese nel grafico o nella tabella per aprirlo.`,
         yearStats: [
-          stat('Totale risparmiato', eur(tot('savSpent') + tot('extraSaved')), true), stat('Entrate totali (con extra)', eur(inc)), stat('Totale rimasto', eur(totLeft)),
-          stat('Media rimasta / mese', eur(avgL)), stat('Media spese fisse / mese', eur(tot('fixedTotal') / n)), stat('Media spese variabili / mese', eur(tot('varSpent') / n)),
+          stat('Totale nel salvadanaio', eur(tot('savSpent') + tot('extraSaved')), true), stat('Entrate totali (con extra)', eur(inc)), stat('Totale rimasto', eur(totLeft)),
+          stat('Media rimasta / mese', eur(avgL)), stat('Media spese fisse / mese', eur(tot('fixedTotal') / n)), stat('Media spese quotidiane / mese', eur(tot('varSpent') / n)),
         ],
         yearAvgLeftFmt: eur(avgL),
         avgLineStyle: { position: 'absolute', left: 0, right: 0, bottom: Math.max(0, avgL / maxL * 180) + 'px', borderTop: '1px dashed var(--n6)' },
@@ -1410,8 +1410,8 @@ class Component extends DCLogic {
 
     const defs = [
       ['fisse', 'Spese fisse', mo.split ? mo.split.fix : pc(c.fixedTotal), 'var(--nW)', c.fixedTotal, fixedItems, c.fixedBudget, `${mo.fixed.length} voci${c.act.length ? ' + rate' : ''}`, c.act.length ? `Rate ${eur(c.rateMonth)}` : '', (mo.split ? 'Budget ' + mo.split.fix + '% · reali ' + pc(c.fixedTotal) + '%' : pc(c.fixedTotal) + '% dello stipendio'), 'Aggiungi affitto, bollette, assicurazione, carburante…'],
-      ['var', 'Spese variabili', pc(c.varBudget), 'var(--n6)', c.varSpent, ranges.map((r, i) => ({ name: `Sett. ${i + 1} · ${rLabel(r)}${curR === r ? ' (in corso)' : ''}`, fmt: eur(spentIn(r)), icon: '', del: null })), c.varBudget, `Speso ${eur(c.varSpent)}`, `Resta ${eur(c.varBudget - c.varSpent)}`, null, ''],
-      ['save', 'Risparmio', mo.pSave, '#f36458', c.saveBudget + c.extraSaved, (mo.extraSave || []).map(e => ({ name: e.name, icon: '', fmt: eur(e.amount), del: del('extraSave', e.id) })), c.saveBudget + c.extraSaved, `Automatico ${eur(c.saveBudget)}`, `Extra ${eur(c.extraSaved)}`, `${mo.pSave}% dello stipendio · non si spende`, 'Nessun extra questo mese (facoltativo)'],
+      ['var', 'Spese quotidiane', pc(c.varBudget), 'var(--n6)', c.varSpent, ranges.map((r, i) => ({ name: `Sett. ${i + 1} · ${rLabel(r)}${curR === r ? ' (in corso)' : ''}`, fmt: eur(spentIn(r)), icon: '', del: null })), c.varBudget, `Speso ${eur(c.varSpent)}`, `Resta ${eur(c.varBudget - c.varSpent)}`, null, ''],
+      ['save', 'Salvadanaio', mo.pSave, '#f36458', c.saveBudget + c.extraSaved, (mo.extraSave || []).map(e => ({ name: e.name, icon: '', fmt: eur(e.amount), del: del('extraSave', e.id) })), c.saveBudget + c.extraSaved, `Automatico ${eur(c.saveBudget)}`, `Extra ${eur(c.extraSaved)}`, `${mo.pSave}% dello stipendio · non si spende`, 'Nessun extra questo mese (facoltativo)'],
     ];
     const buckets = defs.map(([key, name, pct, color, spent, items, budget, l1, l2, label, emptyText]) => {
       const used = key === 'fisse' ? (mo.split ? (budget ? spent / budget * 100 : 0) : pct) : key === 'save' ? (mo.salary ? (c.saveBudget + c.extraSaved) / mo.salary * 100 : 0) : budget ? Math.min(100, spent / budget * 100) : 0;
@@ -1428,7 +1428,7 @@ class Component extends DCLogic {
           Object.assign(o, { mLeftLbl: 'SPESO FINORA', mLeftVal: eur(spent), mRightLbl: over ? 'SFORATO DI' : 'PUOI ANCORA SPENDERE', mRightVal: eur(Math.abs(budget - spent)) });
           if (inPeriod) Object.assign(o, { mShowPace: true, mPace: { position: 'absolute', top: -4, bottom: -4, left: 'calc(' + (pace * 100).toFixed(1) + '% - 1px)', width: 2, borderRadius: 2, background: 'var(--nW)' }, mPaceLbl: spent <= should ? 'In linea: ad oggi il ritmo previsto è ' + eur(should) + ', sei sotto di ' + eur(should - spent) : 'Più veloce del previsto: ad oggi il ritmo è ' + eur(should) + ', sei sopra di ' + eur(spent - should) });
         } else if (key === 'fisse') {
-          if (mo.split) Object.assign(o, { mLeftLbl: 'USCITE FISSE', mLeftVal: eur(spent), mRightLbl: over ? 'OLTRE IL BUDGET' : 'MARGINE', mRightVal: eur(Math.abs(budget - spent)) });
+          if (mo.split) Object.assign(o, { mLeftLbl: 'USCITE FISSE', mLeftVal: eur(spent), mRightLbl: over ? 'OLTRE IL BUDGET' : 'AVANZO', mRightVal: eur(Math.abs(budget - spent)) });
           else Object.assign(o, { mLeftLbl: 'VOCI', mLeftVal: mo.fixed.length + (c.act.length ? ' + ' + c.act.length + ' rate' : ''), mRightLbl: 'DI CUI RATE', mRightVal: eur(c.rateMonth) });
         } else {
           const aw = budget ? c.saveBudget / budget * 100 : 100;
@@ -1613,8 +1613,8 @@ class Component extends DCLogic {
     const carry = carryOf(mo);
     let heroLabel, heroValue, heroNote;
     if (curR) { heroLabel = 'Puoi spendere questa settimana'; heroValue = eur(Math.max(0, weekLeft)); const lastD = curR[curR.length - 1]; const dl = curR.filter(d => dkey(d) >= nowK).length || 1; heroNote = weekLeft >= 0 ? 'Fino a ' + DOWS[lastD.getDay()].toLowerCase() + ' ' + fmtD(lastD) + '. Quello che non spendi passa alle settimane successive.' : 'Hai superato il budget della settimana di ' + eur(-weekLeft) + ': le prossime settimane avranno un po\' meno.'; }
-    else if (weeksLeft === ranges.length) { heroLabel = 'Budget settimanale previsto'; heroValue = eur(allowance); heroNote = `Spese variabili ${eur(c.varBudget)} su ${ranges.length} settimane`; }
-    else { heroLabel = 'Variabili rimaste a fine mese'; heroValue = eur(c.varBudget - c.varSpent); heroNote = 'Periodo concluso'; }
+    else if (weeksLeft === ranges.length) { heroLabel = 'Budget settimanale previsto'; heroValue = eur(allowance); heroNote = `Spese quotidiane ${eur(c.varBudget)} su ${ranges.length} settimane`; }
+    else { heroLabel = 'Quotidiane rimaste a fine mese'; heroValue = eur(c.varBudget - c.varSpent); heroNote = 'Periodo concluso'; }
     const defW = curR ? ranges.indexOf(curR) : (pastR.length === ranges.length ? ranges.length - 1 : 0);
     const selW = Math.min(ranges.length - 1, Math.max(0, (s.mW || {})[mo.id] ?? defW));
     const setW = n => this.setState(st => ({ mW: { ...(st.mW || {}), [mo.id]: Math.max(0, Math.min(ranges.length - 1, n)) } }));
@@ -1678,14 +1678,14 @@ class Component extends DCLogic {
       leftFmt: eur(c.left), fixedTotalFmt: eur(c.fixedTotal), varSpentFmt: eur(c.varSpent),
       ...(() => { const sp = curR ? curSpent : c.varSpent, bd = curR ? allowance : c.varBudget, pctH = bd ? Math.min(100, sp / bd * 100) : (sp ? 100 : 0);
         return { heroSpentFmt: eur(sp), heroBudgetFmt: eur(bd), heroBarStyle: { position: 'absolute', left: 0, top: 0, width: pctH + '%', height: '100%', borderRadius: 99, background: sp > bd + 0.5 ? '#dd0000' : 'var(--n0)', transition: 'width .3s' } }; })(),
-      splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica regola', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
+      splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
       ...(() => {
         const varLeft = c.varBudget - c.varSpent, tot = c.left + carry, free = tot - varLeft;
         const parts = [];
-        if (Math.abs(carry) >= 0.5) parts.push('riporto ' + eur(carry));
+        if (Math.abs(carry) >= 0.5) parts.push('dal mese prima ' + eur(carry));
         if (c.incExtra >= 0.5) parts.push('entrate extra ' + eur(c.incExtra));
-        const marg = mo.split ? c.fixedBudget - c.fixedTotal : 0; if (Math.abs(marg) >= 0.5) parts.push((marg >= 0 ? 'margine fisse ' : 'fisse oltre budget ') + eur(Math.abs(marg)));
-        if (c.extraSaved >= 0.5) parts.push('− extra risparmio ' + eur(c.extraSaved));
+        const marg = mo.split ? c.fixedBudget - c.fixedTotal : 0; if (Math.abs(marg) >= 0.5) parts.push((marg >= 0 ? 'avanzo dalle fisse ' : 'fisse oltre budget ') + eur(Math.abs(marg)));
+        if (c.extraSaved >= 0.5) parts.push('− extra nel salvadanaio ' + eur(c.extraSaved));
         const vr = mo.split ? mo.salary * mo.split.var / 100 : null;
         return { availVarFmt: eur(varLeft), availFreeFmt: (free >= 0 ? '+ ' : '− ') + eur(Math.abs(free)), availFreeColor: free < -0.5 ? '#dd0000' : '#37cd84', availFreeNote: parts.length ? parts.join(' · ') : 'Nessun extra questo mese', hasAvailFree: Math.abs(free) >= 0.5 };
       })(),
@@ -1706,8 +1706,8 @@ class Component extends DCLogic {
           splitCustom: () => upd(m => m.split ? m : ({ ...m, split: { fix: Math.min(100, realFix), var: Math.max(0, 100 - realFix - m.pSave) } })),
           splitRows: sp ? [
             row('fix', 'Spese fisse', 'icon-house', 'var(--nW)', sp.fix, `Voci reali ${eur(c.fixedTotal)} (${realFix}%)${c.fixedTotal > c.fixedBudget + 0.5 ? ' · oltre il budget' : ''}`, c.fixedTotal > c.fixedBudget + 0.5 ? '#dd0000' : 'var(--n6)'),
-            row('var', 'Spese variabili', 'icon-shopping-bag', 'var(--n7)', sp.var, `Circa ${eur(mo.salary * sp.var / 100 / 4.33)} a settimana`),
-            row('save', 'Risparmio', 'icon-piggy-bank', '#f36458', mo.pSave, 'Messo da parte, non si spende'),
+            row('var', 'Spese quotidiane', 'icon-shopping-bag', 'var(--n7)', sp.var, `Circa ${eur(mo.salary * sp.var / 100 / 4.33)} a settimana`),
+            row('save', 'Salvadanaio', 'icon-piggy-bank', '#f36458', mo.pSave, 'Messo da parte, non si spende'),
           ] : [],
           splitPresets: [[50, 30, 20], [60, 25, 15], [70, 20, 10]].map(([a, b, d]) => ({ label: `${a} / ${b} / ${d}`, pick: () => upd(m => ({ ...m, pSave: d, split: { fix: a, var: b } })) }))
             .concat([{ label: 'Da spese reali', pick: () => upd(m => ({ ...m, split: { fix: Math.min(100, realFix), var: Math.max(0, 100 - realFix - m.pSave) } })) }]),
@@ -1747,7 +1747,7 @@ class Component extends DCLogic {
       inName: s.inName, inAmount: s.inAmount, onInName: e => this.setState({ inName: e.target.value }), onInAmount: e => this.setState({ inAmount: e.target.value }),
       addIncome: addFor('incomes', 'inName', 'inAmount', 'inIcon'),
       esName: s.esName, esAmount: s.esAmount, onEsName: e => this.setState({ esName: e.target.value }), onEsAmount: e => this.setState({ esAmount: e.target.value }),
-      addExtraSave: () => { const st = this.state, a = parseFloat(String(st.svAmount || '').replace(',', '.')); if (!(a > 0)) return; if (!(st.svName || '').trim()) this.state.svName = 'Extra risparmio'; this.state.svAmount = String(a); addFor('extraSave', 'svName', 'svAmount')(); },
+      addExtraSave: () => { const st = this.state, a = parseFloat(String(st.svAmount || '').replace(',', '.')); if (!(a > 0)) return; if (!(st.svName || '').trim()) this.state.svName = 'Extra salvadanaio'; this.state.svAmount = String(a); addFor('extraSave', 'svName', 'svAmount')(); },
       canSaveRest: c.left > 1, halfLeftFmt: eur(Math.floor(c.left / 2)),
       saveRest: () => { const a = Math.floor(c.left / 2); if (a <= 0) return; const id = s.nextId; upd(m => ({ ...m, extraSave: [...(m.extraSave || []), { id, name: 'Metà del rimasto', amount: a }] })); this.setState({ nextId: id + 1 }); },
       onSalary: e => upd(m => ({ ...m, salary: Math.max(0, +e.target.value || 0) })),
