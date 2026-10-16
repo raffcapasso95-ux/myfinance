@@ -394,7 +394,7 @@
     <div style="display:flex;flex-wrap:wrap;gap:6px">
       <sc-if value="{{ it.ed.showIcon }}" hint-placeholder-val="{{ false }}"><button onClick="{{ it.ed.pk.toggle }}" title="Cambia icona" style="width:40px;height:40px;border-radius:5px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="{{ it.ed.pk.sel }}" style="font-size:16px;line-height:1"></i></button></sc-if>
       <input value="{{ it.ed.name }}" onChange="{{ it.ed.onName }}" placeholder="Nome" style="flex:2 1 180px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
-      <input type="number" value="{{ it.ed.amount }}" onChange="{{ it.ed.onAmount }}" placeholder="€" style="flex:0 1 110px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
+      <input type="text" inputmode="decimal" autocomplete="off" value="{{ it.ed.amount }}" onChange="{{ it.ed.onAmount }}" placeholder="€" style="flex:0 1 110px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
       <sc-if value="{{ it.ed.hasDate }}" hint-placeholder-val="{{ false }}"><input type="date" value="{{ it.ed.date }}" min="{{ it.ed.dateMin }}" max="{{ it.ed.dateMax }}" onChange="{{ it.ed.onDate }}" style="flex:0 1 170px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0"></sc-if>
     </div>
 
@@ -412,7 +412,7 @@
       </div>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 100px 36px;gap:6px">
         <input placeholder="Nome entrata" value="{{ inName }}" onChange="{{ onInName }}" style="height:36px;min-width:0;padding:0 10px;border-radius:3px;border:1px solid var(--n4);background:var(--n0);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
-        <input type="number" placeholder="€" value="{{ inAmount }}" onChange="{{ onInAmount }}" style="height:36px;min-width:0;padding:0 10px;border-radius:3px;border:1px solid var(--n4);background:var(--n0);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
+        <input type="text" inputmode="decimal" autocomplete="off" placeholder="€" value="{{ inAmount }}" onChange="{{ onInAmount }}" style="height:36px;min-width:0;padding:0 10px;border-radius:3px;border:1px solid var(--n4);background:var(--n0);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
         <button onClick="{{ addIncome }}" title="Aggiungi entrata" style="height:36px;border-radius:5px;border:0;background:#37cd84;color:var(--n0);font:500 18px/1 Inter,sans-serif;cursor:pointer">+</button>
       </div>
     </div>
@@ -447,7 +447,7 @@
     <div style="display:flex;flex-wrap:wrap;gap:6px">
       <sc-if value="{{ it.ed.showIcon }}" hint-placeholder-val="{{ false }}"><button onClick="{{ it.ed.pk.toggle }}" title="Cambia icona" style="width:40px;height:40px;border-radius:5px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="{{ it.ed.pk.sel }}" style="font-size:16px;line-height:1"></i></button></sc-if>
       <input value="{{ it.ed.name }}" onChange="{{ it.ed.onName }}" placeholder="Nome" style="flex:2 1 180px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
-      <input type="number" value="{{ it.ed.amount }}" onChange="{{ it.ed.onAmount }}" placeholder="€" style="flex:0 1 110px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
+      <input type="text" inputmode="decimal" autocomplete="off" value="{{ it.ed.amount }}" onChange="{{ it.ed.onAmount }}" placeholder="€" style="flex:0 1 110px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
       <sc-if value="{{ it.ed.hasDate }}" hint-placeholder-val="{{ false }}"><input type="date" value="{{ it.ed.date }}" min="{{ it.ed.dateMin }}" max="{{ it.ed.dateMax }}" onChange="{{ it.ed.onDate }}" style="flex:0 1 170px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0"></sc-if>
     </div>
 
@@ -462,7 +462,7 @@
       <div style="font:400 12px/1.5 Inter,sans-serif;margin-top:4px">Quota extra: solo se questo mese puoi permettertelo. Viene tolta dal rimasto.</div>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 100px 36px;gap:6px">
         <input placeholder="Es. extra per il viaggio" value="{{ svName }}" onChange="{{ onSvName }}" style="height:36px;min-width:0;padding:0 10px;border-radius:10px;border:1px solid rgba(11,11,11,.2);background:rgba(255,255,255,.35);color:#0b0b0c;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
-        <input type="number" placeholder="€" value="{{ svAmount }}" onChange="{{ onSvAmount }}" style="height:36px;min-width:0;padding:0 10px;border-radius:10px;border:1px solid rgba(11,11,11,.2);background:rgba(255,255,255,.35);color:#0b0b0c;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
+        <input type="text" inputmode="decimal" autocomplete="off" placeholder="€" value="{{ svAmount }}" onChange="{{ onSvAmount }}" style="height:36px;min-width:0;padding:0 10px;border-radius:10px;border:1px solid rgba(11,11,11,.2);background:rgba(255,255,255,.35);color:#0b0b0c;font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
         <button onClick="{{ addExtraSave }}" title="Metti da parte" style="height:36px;border-radius:10px;border:0;background:#0b0b0b;color:#fff;font:500 18px/1 Inter,sans-serif;cursor:pointer">+</button>
       </div>
       <div style="display:flex;justify-content:space-between;padding-top:12px;margin-top:4px;border-top:1px solid rgba(11,11,11,.2);font:400 15px/1.5 Inter,sans-serif"><span>Risparmiato nel {{ monthYear }} finora</span><span style="font-weight:500">{{ savYearFmt }}</span></div>
@@ -511,7 +511,7 @@
     <div style="display:flex;flex-wrap:wrap;gap:6px">
       <sc-if value="{{ it.ed.showIcon }}" hint-placeholder-val="{{ false }}"><button onClick="{{ it.ed.pk.toggle }}" title="Cambia icona" style="width:40px;height:40px;border-radius:5px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="{{ it.ed.pk.sel }}" style="font-size:16px;line-height:1"></i></button></sc-if>
       <input value="{{ it.ed.name }}" onChange="{{ it.ed.onName }}" placeholder="Nome" style="flex:2 1 180px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
-      <input type="number" value="{{ it.ed.amount }}" onChange="{{ it.ed.onAmount }}" placeholder="€" style="flex:0 1 110px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
+      <input type="text" inputmode="decimal" autocomplete="off" value="{{ it.ed.amount }}" onChange="{{ it.ed.onAmount }}" placeholder="€" style="flex:0 1 110px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
       <sc-if value="{{ it.ed.hasDate }}" hint-placeholder-val="{{ false }}"><input type="date" value="{{ it.ed.date }}" min="{{ it.ed.dateMin }}" max="{{ it.ed.dateMax }}" onChange="{{ it.ed.onDate }}" style="flex:0 1 170px;height:40px;min-width:0;padding:0 12px;border-radius:3px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0"></sc-if>
     </div>
 
@@ -529,7 +529,7 @@
           <div style="{{ b.formStyle }}">
             <sc-if value="{{ b.showIcon }}" hint-placeholder-val="{{ true }}"><button onClick="{{ b.pk.toggle }}" title="Scegli icona" style="height:36px;border-radius:5px;border:1px solid {{ b.rule }};background:{{ b.inputBg }};color:{{ b.inputFg }};cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="{{ b.pk.sel }}" style="font-size:16px;line-height:1"></i></button></sc-if>
             <input placeholder="{{ b.ph }}" value="{{ b.nameVal }}" onChange="{{ b.onName }}" style="height:36px;min-width:0;padding:0 10px;border-radius:3px;border:1px solid {{ b.rule }};background:{{ b.inputBg }};color:{{ b.inputFg }};font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
-            <input type="number" placeholder="€" value="{{ b.amtVal }}" onChange="{{ b.onAmt }}" style="height:36px;min-width:0;padding:0 10px;border-radius:3px;border:1px solid {{ b.rule }};background:{{ b.inputBg }};color:{{ b.inputFg }};font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
+            <input type="text" inputmode="decimal" autocomplete="off" placeholder="€" value="{{ b.amtVal }}" onChange="{{ b.onAmt }}" style="height:36px;min-width:0;padding:0 10px;border-radius:3px;border:1px solid {{ b.rule }};background:{{ b.inputBg }};color:{{ b.inputFg }};font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef">
             <button onClick="{{ b.onAdd }}" style="height:36px;border-radius:5px;border:0;background:{{ b.addBg }};color:{{ b.addFg }};font:500 18px/1 Inter,sans-serif;cursor:pointer">+</button>
           </div>
 <sc-if value="{{ b.pk.hasSuggest }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px"><span style="font:400 10px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">ICONE SUGGERITE</span><sc-for list="{{ b.pk.chips }}" as="io" hint-placeholder-count="3"><button onClick="{{ io.pick }}" style="{{ io.style }}"><i class="{{ io.cls }}" style="font-size:14px;line-height:1"></i><span style="{{ io.txtStyle }}">{{ io.txt }}</span><span>{{ io.label }}</span></button></sc-for></div></sc-if>
@@ -658,10 +658,10 @@
 
 <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
     <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:clamp(20px,6vw,48px);padding:16px;border-radius:12px;background:var(--n8)">
-      <button onClick="{{ toggleFormIcon }}" title="Scegli icona (facoltativa)" style="width:44px;flex:none;height:44px;border-radius:3px;border:1px solid var(--n8);background:var(--nW);color:var(--n0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="box-shadow:0 0 0 1px var(--n0)"><i class="{{ formIconSel }}" style="font-size:18px;line-height:1"></i></button>
-      <input ref="{{ nameRef }}" placeholder="Spesa quotidiana: es. supermercato, bar, cena…" value="{{ formName }}" onChange="{{ onFormName }}" style="flex:2 1 220px;height:44px;min-width:0;padding:0 16px;border-radius:3px;border:1px solid var(--n8);background:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
-      <input type="number" placeholder="€ 0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" style="flex:1 1 100px;height:44px;min-width:0;padding:0 16px;border-radius:3px;border:1px solid var(--n8);background:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
-      <input type="date" value="{{ formDate }}" min="{{ dateMin }}" max="{{ dateMax }}" onChange="{{ onFormDate }}" style="flex:1 1 150px;height:44px;padding:0 12px;border-radius:3px;border:1px solid var(--n8);background:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0">
+      <button onClick="{{ toggleFormIcon }}" title="Scegli icona (facoltativa)" style="width:44px;flex:none;height:44px;border-radius:10px;border:1px solid var(--n8);background:var(--nW);color:var(--n0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="box-shadow:0 0 0 1px var(--n0)"><i class="{{ formIconSel }}" style="font-size:18px;line-height:1"></i></button>
+      <input ref="{{ nameRef }}" placeholder="Spesa quotidiana: es. supermercato, bar, cena…" value="{{ formName }}" onChange="{{ onFormName }}" style="flex:2 1 220px;height:44px;min-width:0;padding:0 16px;border-radius:10px;border:1px solid var(--n8);background:var(--nW);color:var(--n0);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+      <input type="text" inputmode="decimal" autocomplete="off" placeholder="€ 0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" onKeyDown="{{ onFormKey }}" style="flex:1 1 100px;height:44px;min-width:0;padding:0 16px;border-radius:10px;border:1px solid var(--n8);background:var(--nW);color:var(--n0);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="box-shadow:0 0 0 2px #0052ef;border-color:transparent">
+      <input type="date" value="{{ formDate }}" min="{{ dateMin }}" max="{{ dateMax }}" onChange="{{ onFormDate }}" style="flex:1 1 150px;height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--n8);background:var(--nW);color:var(--n0);font:400 16px/1.5 Inter,sans-serif;outline:0">
       <button onClick="{{ addExpense }}" style="height:44px;padding:0 16px;border-radius:99px;border:0;background:var(--n0);color:var(--nW);font:500 16px/1.5 Inter,sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:var(--n4)">Aggiungi</button>
     </div>
 <sc-if value="{{ formPk.hasSuggest }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px"><span style="font:400 10px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">ICONE SUGGERITE</span><sc-for list="{{ formPk.chips }}" as="io" hint-placeholder-count="3"><button onClick="{{ io.pick }}" style="{{ io.style }}"><i class="{{ io.cls }}" style="font-size:14px;line-height:1"></i><span style="{{ io.txtStyle }}">{{ io.txt }}</span><span>{{ io.label }}</span></button></sc-for></div></sc-if>
@@ -1241,7 +1241,7 @@ class Component extends DCLogic {
     const upd = fn => this.setState(st => ({ months: st.months.map(m => m.id === mo.id ? fn(m) : m) }));
     const del = (list, id) => () => upd(m => ({ ...m, [list]: m[list].filter(x => x.id !== id) }));
     const pc = n => mo.salary ? Math.round(n / mo.salary * 100) : 0;
-    const addFor = (list, nk, ak, ik) => () => { const a = parseFloat(this.state[ak]); const nm = (this.state[nk] || '').trim(); if (!nm || !(a > 0)) return; const id = this.state.nextId; const icon = ik ? (this.state[ik] || (list === 'fixed' ? ((suggestIcons(nm)[0] || [])[1] || '') : '')) : ''; upd(m => ({ ...m, [list]: [...(m[list] || []), { id, name: nm, amount: a, icon }] })); this.setState({ nextId: id + 1, [nk]: '', [ak]: '', ...(ik ? { [ik]: '', picker: null } : {}) }); };
+    const addFor = (list, nk, ak, ik) => () => { const a = parseFloat(String(this.state[ak] || '').replace(/\s|€/g, '').replace(',', '.')); const nm = (this.state[nk] || '').trim(); if (!nm || !(a > 0)) return; const id = this.state.nextId; const icon = ik ? (this.state[ik] || (list === 'fixed' ? ((suggestIcons(nm)[0] || [])[1] || '') : '')) : ''; upd(m => ({ ...m, [list]: [...(m[list] || []), { id, name: nm, amount: a, icon }] })); this.setState({ nextId: id + 1, [nk]: '', [ak]: '', ...(ik ? { [ik]: '', picker: null } : {}) }); };
     const icls = n => n && !String(n).startsWith('b:') ? 'icon-' + n : '';
     const iconGroups = (ik, light) => [['', [['', 'Nessuna icona']]], ...ICON_GROUPS].map(([title, list]) => ({ title: title || 'NESSUNA', items: list.map(([n, label]) => {
       const on = (this.state[ik] || '') === n;
@@ -1270,7 +1270,7 @@ class Component extends DCLogic {
     const startEdit = (list, e) => this.setState({ ed: { list, id: e.id }, edName: e.name, edAmount: String(e.amount), edDate: e.date || '', edIcon: e.icon || '', picker: null, iconQ: '' });
     const cancelEdit = () => this.setState({ ed: null, picker: null });
     const saveEdit = () => {
-      const st = this.state; const a = parseFloat(st.edAmount); const n = (st.edName || '').trim();
+      const st = this.state; const a = parseFloat(String(st.edAmount || '').replace(/\s|€/g, '').replace(',', '.')); const n = (st.edName || '').trim();
       if (!st.ed || !n || !(a > 0)) return;
       const { list, id } = st.ed;
       this.setState(x => ({ months: x.months.map(m => ({ ...m, [list]: (m[list] || []).map(it => it.id === id ? { ...it, name: n, amount: a, icon: x.edIcon, ...(list === 'variable' && x.edDate ? { date: x.edDate } : {}) } : it) })), ed: null, picker: null }));
@@ -1539,9 +1539,10 @@ class Component extends DCLogic {
       onPStart: e => { const v = e.target.value; if (!v) return; upd(m => ({ ...m, pStart: v, pEnd: m.pEnd && m.pEnd < v ? v : (m.pEnd || isoOf(rg.end)) })); },
       onPEnd: e => { const v = e.target.value; if (!v) return; upd(m => ({ ...m, pStart: m.pStart || isoOf(rg.start), pEnd: v < (m.pStart || isoOf(rg.start)) ? (m.pStart || isoOf(rg.start)) : v })); },
       outCount: (mo.variable || []).filter(e => { const k = dkey(parseIso(e.date)); return k < rg.sK || k > rg.eK; }).length,
+      onFormKey: e => { if (e.key === 'Enter') { e.preventDefault(); setTimeout(() => this._addExp && this._addExp(), 0); } },
       onFormName: e => this.setState({ formName: e.target.value }), onFormAmount: e => this.setState({ formAmount: e.target.value }), onFormDate: e => this.setState({ formDate: e.target.value }),
-      addExpense: () => {
-        const amt = parseFloat(String(s.formAmount).replace(',', '.'));
+      addExpense: (this._addExp = () => {
+        const amt = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.'));
         if (!(amt > 0)) { const el = this.amountRef.current; if (el && s.sheetOpen) el.focus(); return; }
         if (!s.formName.trim()) { this.setState({ formName: (suggestIcons('')[0] || [])[2] || 'Spesa' }); }
         let date = s.formDate || defDate; const dk = dkey(parseIso(date)); if (dk < rg.sK || dk > rg.eK) date = defDate;
@@ -1550,7 +1551,7 @@ class Component extends DCLogic {
         upd(m => ({ ...m, variable: [...(m.variable || []), { id, name: nmV, amount: amt, date, icon: s.formIcon || ((suggestIcons(s.formName)[0] || [])[1]) || '' }] }));
         this.setState({ nextId: id + 1, formName: '', formAmount: '', formIcon: '', picker: null, sheetOpen: false, toast: `${nmV} · ${eur(amt)} aggiunta` });
         clearTimeout(this._toastT); this._toastT = setTimeout(() => this.setState({ toast: '' }), 2200);
-      },
+      }),
       rateMonthFmt: eur(c.rateMonth), rateDebtFmt: eur(rateDebt),
       noActiveRates: c.act.length === 0,
       rates: c.act.map(r => {
@@ -1567,7 +1568,7 @@ class Component extends DCLogic {
           ed: ing ? { name: s.edName, total: s.edAmount, count: s.edCount, paid: s.edPaid,
             onName: e => this.setState({ edName: e.target.value }), onTotal: e => this.setState({ edAmount: e.target.value }), onCount: e => this.setState({ edCount: e.target.value }), onPaid: e => this.setState({ edPaid: e.target.value }),
             cancel: cancelEdit,
-            save: () => { const st = this.state; const t = parseFloat(st.edAmount), n = parseInt(st.edCount, 10), p = parseInt(st.edPaid, 10) || 0, nm = (st.edName || '').trim(); if (!nm || !(t > 0) || !(n > 0) || p >= n) return; this.setState(x => ({ rates: x.rates.map(y => y.id === r.id ? { ...y, name: nm, total: t, count: n, paidBefore: p } : y), ed: null })); } } : null,
+            save: () => { const st = this.state; const t = parseFloat(String(st.edAmount || '').replace(/\s|€/g, '').replace(',', '.')), n = parseInt(st.edCount, 10), p = parseInt(st.edPaid, 10) || 0, nm = (st.edName || '').trim(); if (!nm || !(t > 0) || !(n > 0) || p >= n) return; this.setState(x => ({ rates: x.rates.map(y => y.id === r.id ? { ...y, name: nm, total: t, count: n, paidBefore: p } : y), ed: null })); } } : null,
         };
       }),
       rName: s.rName, rTotal: s.rTotal, rCount: s.rCount, rPaid: s.rPaid,
