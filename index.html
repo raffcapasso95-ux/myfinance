@@ -277,6 +277,10 @@
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--n3);font:400 15px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Rimasto nel mese</span><span style="white-space:nowrap;color:var(--nW);font-weight:500">{{ leftFmt }}</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--n3);font:400 15px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Riporto da {{ prevName }}</span><span style="white-space:nowrap;color:{{ carryColor }};font-weight:500">{{ carryFmt }}</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding:16px;border-radius:14px;background:var(--n2);border:1px solid var(--n4);margin-top:14px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font:500 15px/1.3 Inter,sans-serif">Totale disponibile</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Rimasto + riporto</span></div><span style="font:500 clamp(24px,6.5vw,30px)/1.1 Inter,sans-serif;letter-spacing:-0.02em;white-space:nowrap">{{ totalAvailFmt }}</span></div>
+      <sc-if value="{{ hasAvailFree }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:0;margin-top:8px;padding:4px 16px;border-radius:14px;border:1px dashed var(--n4)">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;font:400 14px/1.4 Inter,sans-serif"><span style="color:var(--n7);min-width:0">Budget variabili rimasto</span><span style="white-space:nowrap;font-weight:500">{{ availVarFmt }}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:10px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif"><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="color:var(--n7)">Extra fuori budget</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6);text-wrap:pretty">{{ availFreeNote }}</span></span><span style="white-space:nowrap;font-weight:500;color:{{ availFreeColor }}">{{ availFreeFmt }}</span></div>
+      </div></sc-if>
     </div>
   </div>
 
@@ -1465,6 +1469,16 @@ class Component extends DCLogic {
       ...(() => { const sp = curR ? curSpent : c.varSpent, bd = curR ? allowance : c.varBudget, pctH = bd ? Math.min(100, sp / bd * 100) : (sp ? 100 : 0);
         return { heroSpentFmt: eur(sp), heroBudgetFmt: eur(bd), heroBarStyle: { position: 'absolute', left: 0, top: 0, width: pctH + '%', height: '100%', borderRadius: 99, background: sp > bd + 0.5 ? '#dd0000' : 'var(--n0)', transition: 'width .3s' } }; })(),
       splitOpen: !!s.splitOpen, toggleSplit: () => this.setState(st => ({ splitOpen: !st.splitOpen })), splitBtnLabel: s.splitOpen ? 'Chiudi' : 'Modifica regola', prevName: prev ? MN[prev.month].toLowerCase() : 'mese precedente', carryFmt: (carry >= 0 ? '+ ' : '') + eur(carry), carryColor: carry >= 0 ? '#37cd84' : '#dd0000', totalAvailFmt: eur(c.left + carry),
+      ...(() => {
+        const varLeft = c.varBudget - c.varSpent, tot = c.left + carry, free = tot - varLeft;
+        const parts = [];
+        if (Math.abs(carry) >= 0.5) parts.push('riporto ' + eur(carry));
+        if (c.incExtra >= 0.5) parts.push('entrate extra ' + eur(c.incExtra));
+        const marg = mo.split ? c.fixedBudget - c.fixedTotal : 0; if (Math.abs(marg) >= 0.5) parts.push((marg >= 0 ? 'margine fisse ' : 'fisse oltre budget ') + eur(Math.abs(marg)));
+        if (c.extraSaved >= 0.5) parts.push('− extra risparmio ' + eur(c.extraSaved));
+        const vr = mo.split ? mo.salary * mo.split.var / 100 : null;
+        return { availVarFmt: eur(varLeft), availFreeFmt: (free >= 0 ? '+ ' : '− ') + eur(Math.abs(free)), availFreeColor: free < -0.5 ? '#dd0000' : '#37cd84', availFreeNote: parts.length ? parts.join(' · ') : 'Nessun extra questo mese', hasAvailFree: Math.abs(free) >= 0.5 };
+      })(),
       pFisseCalc: pc(c.fixedTotal), pVarCalc: pc(c.varBudget), varWarning: c.varRaw < 0,
       ...(() => {
         const sp = mo.split;
