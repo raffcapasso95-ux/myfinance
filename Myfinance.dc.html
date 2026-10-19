@@ -1093,7 +1093,7 @@ const mkId = (y, m) => `${y}-${pad(m + 1)}`;
 const idx = mo => mo.year * 12 + mo.month;
 const fromIdx = i => ({ year: Math.floor(i / 12), month: i % 12 });
 const newMonth = (y, m, salary = 1650, pSave = 20, fixed = [], savings = [], startDay = 1) => ({ id: mkId(y, m), year: y, month: m, startDay, salary, pSave, fixed, savings, variable: [], incomes: [], extraSave: [] });
-const EUR0 = new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+const EUR0 = { format: v => { const r = Math.round((+v || 0) * 100) / 100, d = Number.isInteger(r) ? 0 : 2; return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: d, maximumFractionDigits: d }).format(r); } };
 const haptic = () => { try { if (navigator.vibrate) { navigator.vibrate(10); return; } const l = document.createElement('label'), i = document.createElement('input'); i.type = 'checkbox'; i.setAttribute('switch', ''); l.style.display = 'none'; l.appendChild(i); document.body.appendChild(l); l.click(); l.remove(); } catch (e) {} };
 const CountUp = ({ value, animate }) => {
   const [v, setV] = React.useState(value); const cur = React.useRef(value), raf = React.useRef(0);
@@ -1106,7 +1106,7 @@ const CountUp = ({ value, animate }) => {
     const step = t => { const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3); cur.current = a + (b - a) * e; setV(cur.current); if (k < 1) raf.current = requestAnimationFrame(step); };
     raf.current = requestAnimationFrame(step); return () => cancelAnimationFrame(raf.current);
   }, [value]);
-  return React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, EUR0.format(Math.round(v)));
+  return React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, EUR0.format(v === value ? value : Math.round(v)));
 };
 const MF_DEFAULT = () => { const t = new Date(); return { months: [newMonth(t.getFullYear(), t.getMonth())], rates: [], nextId: 1, view: 'm:' + mkId(t.getFullYear(), t.getMonth()) }; };
 
@@ -1313,7 +1313,7 @@ class Component extends DCLogic {
       return { yearTabs: [], monthTabs: [], isMonth: false, isYear: false, nextMonthLabel: '', addMonth: () => {}, resetData: () => {} };
     }
     const s = this.state;
-    const eur = n => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+    const eur = n => EUR0.format(n);
     const months = [...s.months].sort((a, b) => idx(a) - idx(b));
     const years = [...new Set(months.map(m => m.year))];
     const isYear = s.view.startsWith('y:');
@@ -1339,7 +1339,7 @@ class Component extends DCLogic {
       const nm = { year: nxt.year, month: nxt.month };
       const nRates = s.rates.filter(r => { const k = this.rateK(r, nm); return k >= 1 && k <= r.count; }).length;
       const lr = this.range(last); const ns = new Date(lr.end.getTime() + 864e5);
-      const eurS = n => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+      const eurS = n => EUR0.format(n);
       ask(`Creare ${MN[nxt.month]} ${nxt.year}?`, `Porto con me lo stipendio (${eurS(last.salary)}), ${last.fixed.length} ${last.fixed.length === 1 ? 'spesa fissa' : 'spese fisse'}, la percentuale del salvadanaio (${last.pSave}%) e ${nRates} ${nRates === 1 ? 'rata in corso' : 'rate in corso'}. Il periodo partirà dal ${ns.getDate()} ${MN[ns.getMonth()].toLowerCase()}.`, 'Crea mese', false, doAddMonth);
     };
     const rateInfo = (r, ref) => {
@@ -1410,7 +1410,7 @@ class Component extends DCLogic {
       const all12 = Array.from({ length: 12 }, (_, i) => { const f = cs.find(x => x.m.month === i); return { i, f }; });
       const maxL = Math.max(1, ...cs.map(x => Math.abs(x.c.left)));
       const avgL = totLeft / n;
-      const k = v => (Math.abs(v) >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + 'k' : Math.round(v)) + '€';
+      const k = v => (Math.abs(v) >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + 'k' : String(Math.round(v * 100) / 100).replace('.', ',')) + '€';
       const stat = (label, value, dark) => ({ label, value, sub: dark ? '#0b0b0c' : 'var(--n7)', style: { padding: 'clamp(16px,4.5vw,32px)', borderRadius: 12, background: dark ? '#f36458' : 'var(--n2)', color: dark ? '#0b0b0c' : 'var(--nW)', border: dark ? 0 : '1px solid var(--n4)' } });
       const latest = months[months.length - 1];
       return {
@@ -1632,7 +1632,7 @@ class Component extends DCLogic {
       const style = s.chMode || this.props.chartStyle || 'Barre';
       const selIso = s.chSel && dkey(parseIso(s.chSel)) >= rg.sK && dkey(parseIso(s.chSel)) <= rg.eK ? s.chSel : ''; let selIsoEff = '';
       const pickDay = iso => () => { if (this.state.chSel !== iso) this.setState({ chSel: iso }); };
-      const short = v => v >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + 'k' : Math.round(v) + '€';
+      const short = v => v >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + 'k' : String(Math.round(v * 100) / 100).replace('.', ',') + '€';
       const lastI = inPeriod ? allDays.findIndex(d => dkey(d) === nowK) : (nowK > rg.eK ? DAYS - 1 : -1);
       const cum = []; dTot.reduce((a, v, i) => (cum[i] = a + v), 0);
       const res = {
