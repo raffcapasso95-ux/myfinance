@@ -1793,9 +1793,9 @@ class Component extends DCLogic {
       monthTitle: `${MN[M]} ${Y}`, monthShortName: MN[M].toLowerCase(), monthYear: Y,
       salary: mo.salary, pSave: mo.pSave, buckets, weeks, mw, mChips, mDays,
       heroLabel, heroValue, heroNote, ...mvVals, ...todayVals, leftRef: this.leftRef, rightRef: this.rightRef,
-      heroValueEl: React.createElement(CountUp, { value: Math.round(curR ? Math.max(0, weekLeft) : weeksLeft === ranges.length ? allowance : c.varBudget - c.varSpent), animate: this.props.animateNumbers !== false }),
-      totalAvailEl: React.createElement(CountUp, { value: Math.round(c.left + carry), animate: this.props.animateNumbers !== false }),
-      mwBigEl: React.createElement(CountUp, { value: Math.round(wr._cur || wr._past ? Math.abs(wr._diff) : wr._target), animate: this.props.animateNumbers !== false }),
+      heroValueEl: React.createElement(CountUp, { value: Math.round(100 * (curR ? Math.max(0, weekLeft) : weeksLeft === ranges.length ? allowance : c.varBudget - c.varSpent)) / 100, animate: this.props.animateNumbers !== false }),
+      totalAvailEl: React.createElement(CountUp, { value: Math.round((c.left + carry) * 100) / 100, animate: this.props.animateNumbers !== false }),
+      mwBigEl: React.createElement(CountUp, { value: Math.round((wr._cur || wr._past ? Math.abs(wr._diff) : wr._target) * 100) / 100, animate: this.props.animateNumbers !== false }),
       ...(() => {
         if (!curR) return { heroHasWeek: false };
         const dl = curR.filter(d => dkey(d) >= nowK).length || 1, el = curR.length - dl;
@@ -1879,8 +1879,8 @@ class Component extends DCLogic {
       addIncome: addFor('incomes', 'inName', 'inAmount', 'inIcon'),
       esName: s.esName, esAmount: s.esAmount, onEsName: e => this.setState({ esName: e.target.value }), onEsAmount: e => this.setState({ esAmount: e.target.value }),
       addExtraSave: () => { const st = this.state, a = parseFloat(String(st.svAmount || '').replace(',', '.')); if (!(a > 0)) return; if (!(st.svName || '').trim()) this.state.svName = 'Extra salvadanaio'; this.state.svAmount = String(a); addFor('extraSave', 'svName', 'svAmount')(); },
-      canSaveRest: c.left > 1, halfLeftFmt: eur(Math.floor(c.left / 2)),
-      saveRest: () => { const a = Math.floor(c.left / 2); if (a <= 0) return; const id = s.nextId; upd(m => ({ ...m, extraSave: [...(m.extraSave || []), { id, name: 'Metà del rimasto', amount: a }] })); this.setState({ nextId: id + 1 }); },
+      canSaveRest: c.left > 1, halfLeftFmt: eur(Math.floor(c.left * 50) / 100),
+      saveRest: () => { const a = Math.floor(c.left * 50) / 100; if (a <= 0) return; const id = s.nextId; upd(m => ({ ...m, extraSave: [...(m.extraSave || []), { id, name: 'Metà del rimasto', amount: a }] })); this.setState({ nextId: id + 1 }); },
       onSalary: e => upd(m => ({ ...m, salary: Math.max(0, +e.target.value || 0) })),
       varLeftFmt: eur(c.varBudget - c.varSpent), allowanceFmt: eur(allowance), avgWeekFmt: eur(avgWeek),
       nameRef: this.nameRef, formName: s.formName, formAmount: s.formAmount, formDate: s.formDate || defDate, dateMin: isoOf(rg.start), dateMax: isoOf(rg.end),
