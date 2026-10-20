@@ -978,75 +978,126 @@
 
 <sc-if value="{{ isYear }}" hint-placeholder-val="{{ false }}">
 <section style="background:var(--n0);color:var(--nW)">
-  <div style="max-width:1280px;margin:0 auto;padding:48px 24px 96px">
-    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--n7)">Resoconto annuale</div>
-    <h1 style="margin:8px 0 0;font:400 clamp(40px,11vw,112px)/1 Inter,sans-serif;letter-spacing:-0.045em">{{ yearTitle }}</h1>
-    <p style="margin:16px 0 0;max-width:620px;font:400 clamp(15px,4.2vw,18px)/1.5 Inter,sans-serif;color:var(--n7)">{{ yearLead }}</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:clamp(12px,3.5vw,24px);margin-top:clamp(20px,6vw,48px)">
-      <sc-for list="{{ yearStats }}" as="k" hint-placeholder-count="6">
-        <div style="{{ k.style }}"><div style="font:400 13px/1.5 Inter,sans-serif;color:{{ k.sub }}">{{ k.label }}</div><div style="font:400 clamp(26px,7vw,38px)/1.1 Inter,sans-serif;letter-spacing:-0.03em;margin-top:8px">{{ k.value }}</div></div>
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(24px,6vw,48px) 16px clamp(32px,8vw,72px);display:flex;flex-direction:column;gap:clamp(16px,4vw,24px)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">RESOCONTO ANNUALE</span>
+        <h1 style="margin:0;font:400 clamp(48px,13vw,112px)/.95 Inter,sans-serif;letter-spacing:-0.045em">{{ yearTitle }}</h1>
+        <p style="margin:4px 0 0;max-width:560px;font:400 clamp(14px,4vw,16px)/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">{{ yearLead }}</p>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onClick="{{ yearPrev }}" disabled="{{ yearNoPrev }}" aria-label="Anno precedente" style="{{ yearPrevStyle }}"><i class="icon-chevron-left" style="font-size:18px;line-height:1"></i></button>
+        <button onClick="{{ yearNext }}" disabled="{{ yearNoNext }}" aria-label="Anno successivo" style="{{ yearNextStyle }}"><i class="icon-chevron-right" style="font-size:18px;line-height:1"></i></button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(12px,3vw,20px)">
+      <div style="display:flex;flex-direction:column;gap:16px;padding:clamp(20px,4.5vw,28px);border-radius:20px;background:var(--n1);border:1px solid var(--n3)">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font:400 13px/1.4 Inter,sans-serif;color:var(--n7)">Entrate dell'anno</span><span style="font:425 clamp(32px,9vw,44px)/1.05 Inter,sans-serif;letter-spacing:-0.03em;font-variant-numeric:tabular-nums">{{ yearIncFmt }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">{{ yearIncSub }}</span></div>
+          <button onClick="{{ toggleHideInc }}" aria-label="{{ hideIncLabel }}" title="{{ hideIncLabel }}" style="width:32px;height:32px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);cursor:pointer;display:inline-flex;align-items:center;justify-content:center" style-hover="background:var(--n2);color:var(--nW)"><i class="{{ hideIncIcon }}" style="font-size:15px;line-height:1"></i></button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">DOVE SONO ANDATI</span>
+          <div style="display:flex;height:12px;gap:3px;border-radius:99px;overflow:hidden;background:var(--n3)"><sc-for list="{{ yearSegs }}" as="g" hint-placeholder-count="4"><div style="{{ g.style }}"></div></sc-for></div>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ yearSplit }}" as="p" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--n3);font:400 14px/1.4 Inter,sans-serif">
+              <span style="{{ p.dot }}"></span><span style="color:var(--n7)">{{ p.label }}</span><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:var(--n6)">{{ p.pct }}</span><span style="font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right;min-width:84px">{{ p.fmt }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,2.5vw,12px)">
+        <sc-for list="{{ yearKpis }}" as="k" hint-placeholder-count="4">
+          <div style="{{ k.style }}"><span style="font:400 13px/1.35 Inter,sans-serif;color:{{ k.sub }}">{{ k.label }}</span><span style="font:425 clamp(22px,6.5vw,34px)/1.1 Inter,sans-serif;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;margin-top:auto">{{ k.value }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:{{ k.sub }};text-wrap:pretty">{{ k.note }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(8px,2.5vw,12px)">
+      <sc-for list="{{ yearHighlights }}" as="x" hint-placeholder-count="3">
+        <button onClick="{{ x.go }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;border:1px solid var(--n3);background:var(--n1);color:var(--nW);text-align:left;cursor:pointer;min-width:0" style-hover="border-color:var(--n5)">
+          <span style="{{ x.chip }}"><i class="{{ x.icon }}" style="font-size:18px;line-height:1"></i></span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">{{ x.label }}</span><span style="font:500 16px/1.3 Inter,sans-serif;overflow-wrap:anywhere">{{ x.title }}</span><span style="font:400 13px/1.4 Inter,sans-serif;color:var(--n7)">{{ x.sub }}</span></span>
+          <i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6);flex:none"></i>
+        </button>
       </sc-for>
     </div>
   </div>
 </section>
 <section style="background:var(--n8);color:var(--n0)">
-  <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,8vw,96px) 16px">
-    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--n5)">Mese per mese</div>
-    <h2 style="margin:12px 0 0;font:400 clamp(24px,6.4vw,48px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Cosa ti è rimasto</h2>
-    <div style="padding:clamp(16px,4.5vw,32px);border-radius:12px;background:var(--nW);margin-top:clamp(20px,6vw,48px)">
-      <div style="display:flex;justify-content:space-between;font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)"><span>RIMASTO A FINE MESE</span><span>— — MEDIA {{ yearAvgLeftFmt }}</span></div>
-      <div style="display:flex;align-items:flex-end;gap:12px;height:220px;margin-top:24px;border-bottom:1px solid var(--n0);position:relative">
-        <div style="{{ avgLineStyle }}"></div>
-        <sc-for list="{{ yearBars }}" as="h" hint-placeholder-count="12">
-          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%">
-            <span style="font:400 11px/1.3 'IBM Plex Mono',monospace;color:var(--n5)">{{ h.short }}</span>
-            <div style="{{ h.barStyle }}"></div>
-          </div>
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,7vw,72px) 16px;display:flex;flex-direction:column;gap:clamp(12px,3vw,20px)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px 24px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n5)">MESE PER MESE</span><h2 style="margin:0;font:400 clamp(26px,6.4vw,44px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Andamento</h2></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ yearMetrics }}" as="m" hint-placeholder-count="4"><button onClick="{{ m.pick }}" style="{{ m.style }}">{{ m.label }}</button></sc-for></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;padding:clamp(16px,4.5vw,28px);border-radius:20px;background:var(--nW)">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;min-height:72px">
+        <div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n5)">{{ ySelName }}</span><span style="font:425 clamp(28px,8vw,40px)/1.05 Inter,sans-serif;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:{{ ySelColor }}">{{ ySelValue }}</span><span style="font:400 13px/1.45 Inter,sans-serif;color:var(--n5);text-wrap:pretty">{{ ySelSub }}</span></div>
+        <sc-if value="{{ ySelHas }}" hint-placeholder-val="{{ false }}"><button onClick="{{ ySelGo }}" style="height:36px;padding:0 16px;border-radius:99px;border:1px solid var(--n8);background:var(--n8);color:var(--n0);font:500 13px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px" style-hover="border-color:var(--n5)">Apri mese<i class="icon-arrow-right" style="font-size:14px;line-height:1"></i></button></sc-if>
+      </div>
+      <div style="position:relative;height:clamp(160px,40vw,220px);border-bottom:1px solid var(--n0)">
+        <div style="{{ yearAvgLine }}"></div>
+        <div style="display:flex;align-items:flex-end;gap:clamp(3px,1.2vw,12px);height:100%">
+          <sc-for list="{{ yearBars }}" as="b" hint-placeholder-count="12">
+            <button onClick="{{ b.pick }}" disabled="{{ b.empty }}" aria-label="{{ b.aria }}" style="flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;padding:0;border:0;background:transparent;cursor:pointer">
+              <sc-if value="{{ yearShowVals }}" hint-placeholder-val="{{ true }}"><span style="font:400 11px/1.2 'IBM Plex Mono',monospace;color:{{ b.valColor }};white-space:nowrap">{{ b.short }}</span></sc-if>
+              <span style="{{ b.barStyle }}"></span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;gap:clamp(3px,1.2vw,12px);margin-top:-12px">
+        <sc-for list="{{ yearBars }}" as="b" hint-placeholder-count="12"><span style="flex:1;min-width:0;text-align:center;font:400 clamp(9px,2.6vw,11px)/1.5 'IBM Plex Mono',monospace;color:{{ b.labelColor }}">{{ b.m }}</span></sc-for>
+      </div>
+      <span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">— — MEDIA {{ yearAvgFmt }} / MESE</span>
+    </div>
+    <div style="display:flex;flex-direction:column;padding:clamp(16px,4.5vw,28px);border-radius:20px;background:var(--nW)">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:12px"><span style="font:500 17px/1.3 Inter,sans-serif">Riepilogo dei mesi</span><span style="display:flex;gap:12px;flex-wrap:wrap;font:400 12px/1.4 Inter,sans-serif;color:var(--n5)"><sc-for list="{{ yearLegend }}" as="l" hint-placeholder-count="4"><span style="display:inline-flex;align-items:center;gap:6px"><span style="{{ l.dot }}"></span>{{ l.label }}</span></sc-for></span></div>
+      <sc-for list="{{ yearRows }}" as="r" hint-placeholder-count="3">
+        <button onClick="{{ r.go }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px 16px;padding:14px 0;border:0;border-top:1px solid var(--n8);background:transparent;color:var(--n0);text-align:left;cursor:pointer;width:100%" style-hover="background:rgba(127,127,127,.06)">
+          <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
+            <span style="font:500 16px/1.3 Inter,sans-serif">{{ r.name }}</span>
+            <span style="display:flex;height:6px;gap:2px;border-radius:99px;overflow:hidden;background:var(--n8);max-width:420px"><sc-for list="{{ r.segs }}" as="g" hint-placeholder-count="4"><span style="{{ g.style }}"></span></sc-for></span>
+            <span style="font:400 12px/1.45 Inter,sans-serif;color:var(--n5);text-wrap:pretty">{{ r.detail }}</span>
+          </span>
+          <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span style="font:400 10px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">RIMASTO</span><span style="font:500 17px/1.3 Inter,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums;color:{{ r.leftColor }}">{{ r.left }}</span></span>
+          <i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n5)"></i>
+        </button>
+      </sc-for>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:1px;margin-top:8px;border-radius:12px;overflow:hidden;background:var(--n8);border:1px solid var(--n8)">
+        <sc-for list="{{ yearTotals }}" as="t" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:14px;background:var(--nW)"><span style="font:400 10px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">{{ t.label }}</span><span style="font:500 17px/1.3 Inter,sans-serif;font-variant-numeric:tabular-nums;color:{{ t.color }}">{{ t.fmt }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n5)">media {{ t.avg }} / mese</span></div>
         </sc-for>
       </div>
-      <div style="display:flex;gap:12px;margin-top:8px">
-        <sc-for list="{{ yearBars }}" as="h" hint-placeholder-count="12"><button onClick="{{ h.go }}" style="flex:1;border:0;background:transparent;padding:4px 0;cursor:pointer;font:400 11px/1.5 'IBM Plex Mono',monospace;color:{{ h.labelColor }}">{{ h.m }}</button></sc-for>
-      </div>
-    </div>
-    <div style="padding:16px 32px 32px;border-radius:12px;background:var(--nW);margin-top:24px;overflow-x:auto">
-      <table style="width:100%;min-width:760px;border-collapse:collapse;font:400 15px/1.5 Inter,sans-serif;letter-spacing:-0.15px">
-        <thead><tr>
-          <th style="text-align:left;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">MESE</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">STIPENDIO</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">FISSE</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">QUOTIDIANE</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">SALVADANAIO</th>
-          <th style="text-align:right;padding:12px;border-bottom:1px solid var(--n0);font:400 11px/1.5 'IBM Plex Mono',monospace;color:var(--n6)">RIMASTO</th>
-          <th style="padding:12px;border-bottom:1px solid var(--n0)"></th>
-        </tr></thead>
-        <tbody>
-          <sc-for list="{{ yearRows }}" as="r" hint-placeholder-count="3">
-            <tr style="{{ r.rowStyle }}">
-              <td style="padding:12px;border-bottom:1px solid var(--n8)">{{ r.name }}</td>
-              <td style="padding:12px;border-bottom:1px solid var(--n8);text-align:right;color:var(--n5)">{{ r.inc }}</td>
-              <td style="padding:12px;border-bottom:1px solid var(--n8);text-align:right;color:var(--n5)">{{ r.fix }}</td>
-              <td style="padding:12px;border-bottom:1px solid var(--n8);text-align:right;color:var(--n5)">{{ r.vari }}</td>
-              <td style="padding:12px;border-bottom:1px solid var(--n8);text-align:right;color:var(--n5)">{{ r.sav }}</td>
-              <td style="padding:12px;border-bottom:1px solid var(--n8);text-align:right;color:{{ r.leftColor }}">{{ r.left }}</td>
-              <td style="padding:12px;border-bottom:1px solid var(--n8);text-align:right"><sc-if value="{{ r.go }}" hint-placeholder-val="{{ false }}"><button onClick="{{ r.go }}" style="height:28px;padding:0 10px;border-radius:99px;border:1px solid var(--n8);background:var(--nW);font:500 12px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--n8)">Apri →</button></sc-if></td>
-            </tr>
-          </sc-for>
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
 <section style="background:var(--n0);color:var(--nW)">
-  <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,8vw,96px) 16px">
-    <div style="font:400 13px/1.5 'IBM Plex Mono',monospace;color:var(--n7)">Rate</div>
-    <h2 style="margin:12px 0 0;font:400 clamp(24px,6.4vw,48px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Situazione delle rate</h2>
-    <div style="display:flex;flex-direction:column;margin-top:clamp(20px,6vw,48px)">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,7vw,72px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(24px,5vw,40px)">
+    <div style="display:flex;flex-direction:column;gap:clamp(12px,3vw,20px);min-width:0">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">SPESE QUOTIDIANE</span><h2 style="margin:0;font:400 clamp(26px,6.4vw,40px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Dove spendi di più</h2></div>
+      <div style="display:flex;flex-direction:column;padding:4px clamp(16px,4.5vw,24px);border-radius:20px;background:var(--n1);border:1px solid var(--n3)">
+        <sc-for list="{{ yearCats }}" as="c" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 0;border-top:1px solid {{ c.rule }}">
+            <span style="width:36px;height:36px;flex:none;border-radius:99px;background:var(--n3);display:inline-flex;align-items:center;justify-content:center"><sc-if value="{{ c.ico.cls }}" hint-placeholder-val="{{ true }}"><i class="{{ c.ico.cls }}" style="font-size:17px;line-height:1"></i></sc-if><sc-if value="{{ c.ico.txt }}" hint-placeholder-val="{{ false }}"><span style="{{ c.ico.txtStyle }}">{{ c.ico.txt }}</span></sc-if></span>
+            <span style="display:flex;flex-direction:column;gap:6px;min-width:0"><span style="display:flex;align-items:baseline;gap:8px;min-width:0"><span style="font:500 15px/1.3 Inter,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</span><span style="font:400 12px/1.3 Inter,sans-serif;color:var(--n6);white-space:nowrap">{{ c.count }}</span></span><span style="display:block;height:4px;border-radius:99px;background:var(--n3);overflow:hidden"><span style="{{ c.bar }}"></span></span></span>
+            <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums">{{ c.fmt }}</span><span style="font:400 11px/1.3 'IBM Plex Mono',monospace;color:var(--n6)">{{ c.pct }}</span></span>
+          </div>
+        </sc-for>
+        <sc-if value="{{ yearNoCats }}" hint-placeholder-val="{{ false }}"><div style="padding:20px 0;font:400 14px/1.5 Inter,sans-serif;color:var(--n6)">Nessuna spesa quotidiana registrata quest'anno.</div></sc-if>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:clamp(12px,3vw,20px);min-width:0">
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">RATE</span><h2 style="margin:0;font:400 clamp(26px,6.4vw,40px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Situazione delle rate</h2></div>
       <sc-for list="{{ yearRates }}" as="r" hint-placeholder-count="0">
-        <div style="display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:16px;padding:16px 0;border-top:1px solid var(--n4);font:400 15px/1.5 Inter,sans-serif">
-          <span style="font:400 clamp(18px,5vw,24px)/1.15 Inter,sans-serif;letter-spacing:-0.01em">{{ r.name }}</span><span style="color:var(--n7)">{{ r.rataFmt }} / mese</span><span style="color:var(--n7)">{{ r.leftLabel }}</span><span style="text-align:right">{{ r.endLabel }}</span>
+        <div style="display:flex;flex-direction:column;gap:10px;padding:clamp(16px,4.5vw,20px);border-radius:16px;background:var(--n1);border:1px solid var(--n3)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="font:500 16px/1.3 Inter,sans-serif;overflow-wrap:anywhere">{{ r.name }}</span><span style="font:500 15px/1.3 Inter,sans-serif;white-space:nowrap">{{ r.rataFmt }} <span style="font-weight:400;color:var(--n7)">/ mese</span></span></div>
+          <span style="display:block;height:6px;border-radius:99px;background:var(--n3);overflow:hidden"><span style="{{ r.bar }}"></span></span>
+          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:400 13px/1.4 Inter,sans-serif;color:var(--n7)"><span>{{ r.leftLabel }}</span><span>{{ r.endLabel }}</span></div>
         </div>
       </sc-for>
-      <sc-if value="{{ noRates }}" hint-placeholder-val="{{ false }}"><div style="padding:16px 0;border-top:1px solid var(--n4);font:400 15px/1.5 Inter,sans-serif;color:var(--n6)">Nessun acquisto a rate. Puoi aggiungerli dalla pagina di un mese.</div></sc-if>
+      <sc-if value="{{ noRates }}" hint-placeholder-val="{{ false }}"><div style="padding:20px;border-radius:16px;border:1px dashed var(--n4);font:400 14px/1.5 Inter,sans-serif;color:var(--n6)">Nessun acquisto a rate. Puoi aggiungerli dal Piano di un mese.</div></sc-if>
     </div>
   </div>
 </section>
@@ -1411,25 +1462,62 @@ class Component extends DCLogic {
       const maxL = Math.max(1, ...cs.map(x => Math.abs(x.c.left)));
       const avgL = totLeft / n;
       const k = v => (Math.abs(v) >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + 'k' : String(Math.round(v * 100) / 100).replace('.', ',')) + '€';
-      const stat = (label, value, dark) => ({ label, value, sub: dark ? '#0b0b0c' : 'var(--n7)', style: { padding: 'clamp(16px,4.5vw,32px)', borderRadius: 12, background: dark ? '#f36458' : 'var(--n2)', color: dark ? '#0b0b0c' : 'var(--nW)', border: dark ? 0 : '1px solid var(--n4)' } });
       const latest = months[months.length - 1];
+      const mobY = !!s.isMobile, hid = !!s.hideInc, mask = v => hid ? '€ •••' : eur(v);
+      const F = tot('fixedTotal'), V = tot('varSpent'), S = tot('savSpent') + tot('extraSaved'), sal = ym.reduce((a, m) => a + m.salary, 0), X = tot('incExtra');
+      const parts = [['Spese fisse', F, 'var(--nW)', 'var(--n0)'], ['Spese quotidiane', V, 'var(--n6)', 'var(--n5)'], ['Salvadanaio', S, '#f36458', '#f36458'], ['Rimasto', Math.max(0, totLeft), '#37cd84', '#37cd84']];
+      const pBase = Math.max(1, parts.reduce((a, p) => a + p[1], 0));
+      const dot = c => ({ width: 10, height: 10, borderRadius: 99, background: c, flex: 'none', display: 'inline-block' });
+      const segsOf = (vals, base, light) => vals.map((v, i) => ({ v, i })).filter(x => x.v > 0).map(x => ({ style: { display: 'block', width: (x.v / base * 100) + '%', background: parts[x.i][light ? 3 : 2], minWidth: 2 } }));
+      const saveRate = inc > 0 ? Math.round((S + Math.max(0, totLeft)) / inc * 100) : 0;
+      const kpi = (label, value, note, hot) => ({ label, value, note, sub: hot ? '#0b0b0c' : 'var(--n7)', style: { display: 'flex', flexDirection: 'column', gap: 6, minHeight: 132, padding: 'clamp(14px,4vw,20px)', borderRadius: 16, background: hot ? '#f36458' : 'var(--n1)', color: hot ? '#0b0b0c' : 'var(--nW)', border: hot ? '1px solid #f36458' : '1px solid var(--n3)' } });
+      const allVar = cs.flatMap(({ m }) => this.varIn(m).map(e => ({ ...e, mo: m })));
+      const big = allVar.reduce((a, e) => !a || e.amount > a.amount ? e : a, null);
+      const best = cs.reduce((a, x) => !a || x.c.left > a.c.left ? x : a, null);
+      const costly = cs.reduce((a, x) => !a || x.c.varSpent > a.c.varSpent ? x : a, null);
+      const chip = (bg, fg) => ({ width: 40, height: 40, flex: 'none', borderRadius: 12, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: bg, color: fg });
+      const fmtD = e => { const d = parseIso(e.date); return d.getDate() + ' ' + MN[d.getMonth()].toLowerCase(); };
+      const catMap = {}; allVar.forEach(e => { const key = (e.name || 'Spesa').trim().toLowerCase(); const c = catMap[key] || (catMap[key] = { name: (e.name || 'Spesa').trim(), icon: e.icon, n: 0, amt: 0 }); c.n++; c.amt += e.amount; if (!c.icon && e.icon) c.icon = e.icon; });
+      const cats = Object.values(catMap).sort((a, b) => b.amt - a.amt).slice(0, 8), catMax = Math.max(1, ...cats.map(c => c.amt));
+      const metric = s.yMetric || 'left';
+      const MET = { left: ['Rimasto', c => c.left], var: ['Quotidiane', c => c.varSpent], fix: ['Fisse', c => c.fixedTotal], sav: ['Salvadanaio', c => c.savSpent + c.extraSaved] };
+      const mv = MET[metric][1], vals = cs.map(x => mv(x.c)), mMax = Math.max(1, ...vals.map(Math.abs)), mAvg = vals.reduce((a, v) => a + v, 0) / n;
+      const selI = (s.ySel && s.ySel[y] != null && cs.some(x => x.m.month === s.ySel[y])) ? s.ySel[y] : (cs.length ? cs[cs.length - 1].m.month : -1);
+      const sel = cs.find(x => x.m.month === selI);
+      const pick = i => () => this.setState(st => ({ ySel: { ...(st.ySel || {}), [y]: i } }));
+      const navBtn = off => ({ width: 44, height: 44, borderRadius: 99, border: '1px solid var(--n4)', background: 'transparent', color: 'var(--nW)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: off ? 'default' : 'pointer', opacity: off ? .35 : 1 });
+      const hasP = years.includes(y - 1), hasN = years.includes(y + 1);
+      const detail = (m, c) => `Entrate ${mask(m.salary + c.incExtra)} · Fisse ${eur(c.fixedTotal)} · Quotidiane ${eur(c.varSpent)} · Salvadanaio ${eur(c.savSpent + c.extraSaved)}`;
       return {
-        ...base, yearTitle: String(y),
-        yearLead: `${cs.length} ${cs.length === 1 ? 'mese registrato' : 'mesi registrati'} nel ${y}. Tocca un mese nel grafico o nella tabella per aprirlo.`,
-        yearStats: [
-          stat('Totale nel salvadanaio', eur(tot('savSpent') + tot('extraSaved')), true), stat('Entrate totali (con extra)', eur(inc)), stat('Totale rimasto', eur(totLeft)),
-          stat('Media rimasta / mese', eur(avgL)), stat('Media spese fisse / mese', eur(tot('fixedTotal') / n)), stat('Media spese quotidiane / mese', eur(tot('varSpent') / n)),
-        ],
-        yearAvgLeftFmt: eur(avgL),
-        avgLineStyle: { position: 'absolute', left: 0, right: 0, bottom: Math.max(0, avgL / maxL * 180) + 'px', borderTop: '1px dashed var(--n6)' },
-        yearBars: all12.map(({ i, f }) => ({
-          m: MS[i], short: f ? k(f.c.left) : '', go: f ? go('m:' + f.m.id) : () => {}, labelColor: f ? 'var(--n0)' : 'var(--n7)',
-          barStyle: { width: '100%', maxWidth: 48, height: f ? Math.max(2, Math.abs(f.c.left) / maxL * 180) + 'px' : '0px', borderRadius: '4px 4px 0 0', background: f && f.c.left < 0 ? '#dd0000' : 'var(--n0)' },
-        })),
-        yearRows: [...cs.map(({ m, c }) => ({ name: MN[m.month], inc: eur(m.salary + c.incExtra), fix: eur(c.fixedTotal), vari: eur(c.varSpent), sav: eur(c.savSpent + c.extraSaved), left: eur(c.left), leftColor: c.left < 0 ? '#dd0000' : 'var(--n0)', go: go('m:' + m.id), rowStyle: {} })),
-          { name: 'Totale anno', inc: eur(inc), fix: eur(tot('fixedTotal')), vari: eur(tot('varSpent')), sav: eur(tot('savSpent') + tot('extraSaved')), left: eur(totLeft), leftColor: 'var(--n0)', go: null, rowStyle: { fontWeight: 500, background: 'var(--n8)' } },
-          { name: 'Media mensile', inc: eur(inc / n), fix: eur(tot('fixedTotal') / n), vari: eur(tot('varSpent') / n), sav: eur((tot('savSpent') + tot('extraSaved')) / n), left: eur(avgL), leftColor: 'var(--n0)', go: null, rowStyle: { color: 'var(--n5)' } }],
-        yearRates: s.rates.map(r => { const ri = rateInfo(r, latest); return { name: r.name, rataFmt: eur(ri.rata), leftLabel: ri.remaining > 0 ? `mancano ${ri.remaining} di ${r.count}` : 'saldato', endLabel: `fine ${ri.endLabel}` }; }),
+        ...base, yearTitle: String(y), hideIncIcon: hid ? 'icon-eye-off' : 'icon-eye', hideIncLabel: hid ? 'Mostra entrate' : 'Nascondi entrate', toggleHideInc: () => { const v = !this.state.hideInc; try { localStorage.setItem('mf-hide-inc', v ? '1' : '0'); } catch (e) {} this.setState({ hideInc: v }); },
+        yearLead: cs.length ? `${cs.length} ${cs.length === 1 ? 'mese registrato' : 'mesi registrati'}. Hai messo da parte il ${saveRate}% di quello che è entrato.` : 'Nessun mese registrato in questo anno.',
+        yearPrev: hasP ? go('y:' + (y - 1)) : () => {}, yearNext: hasN ? go('y:' + (y + 1)) : () => {}, yearNoPrev: !hasP, yearNoNext: !hasN, yearPrevStyle: navBtn(!hasP), yearNextStyle: navBtn(!hasN),
+        yearIncFmt: mask(inc), yearIncSub: hid ? 'Importi nascosti' : `Stipendi ${eur(sal)}${X > 0 ? ' · extra ' + eur(X) : ''}`,
+        yearSegs: segsOf(parts.map(p => p[1]), pBase, false),
+        yearSplit: parts.map(p => ({ label: p[0], fmt: eur(p[1]), pct: Math.round(p[1] / pBase * 100) + '%', dot: dot(p[2]) })),
+        yearKpis: [kpi('Nel salvadanaio', eur(S), 'messi da parte quest\'anno', true), kpi('Tasso di risparmio', saveRate + '%', 'salvadanaio + rimasto sulle entrate'), kpi('Rimasto in media', eur(avgL), 'a fine mese'), kpi('Quotidiane in media', eur(V / n), 'al mese · ' + eur(V / Math.max(1, n * 4.33)) + ' a settimana')],
+        yearHighlights: [
+          best && { label: 'MESE MIGLIORE', title: MN[best.m.month], sub: 'rimasti ' + eur(best.c.left), icon: 'icon-trophy', chip: chip('rgba(55,205,132,.16)', '#37cd84'), go: go('m:' + best.m.id) },
+          costly && costly.c.varSpent > 0 && { label: 'MESE PIÙ CARO', title: MN[costly.m.month], sub: eur(costly.c.varSpent) + ' di spese quotidiane', icon: 'icon-flame', chip: chip('rgba(243,100,88,.16)', '#f36458'), go: go('m:' + costly.m.id) },
+          big && { label: 'SPESA PIÙ GRANDE', title: (big.name || 'Spesa') + ' · ' + eur(big.amount), sub: fmtD(big), icon: 'icon-receipt', chip: chip('var(--n3)', 'var(--nW)'), go: go('m:' + big.mo.id) },
+        ].filter(Boolean),
+        yearMetrics: Object.entries(MET).map(([key, [label]]) => ({ label, pick: () => this.setState({ yMetric: key }), style: { height: 36, padding: '0 14px', borderRadius: 99, border: '1px solid ' + (key === metric ? 'var(--n0)' : 'var(--n7)'), background: key === metric ? 'var(--n0)' : 'transparent', color: key === metric ? 'var(--nW)' : 'var(--n0)', font: '500 13px/1 Inter,sans-serif', cursor: 'pointer' } })),
+        ySelName: sel ? (MN[sel.m.month] + ' · ' + MET[metric][0]).toUpperCase() : 'NESSUN MESE', ySelValue: sel ? eur(mv(sel.c)) : '—', ySelColor: sel && mv(sel.c) < 0 ? '#dd0000' : 'var(--n0)',
+        ySelSub: sel ? detail(sel.m, sel.c) : 'Aggiungi un mese per vedere l\'andamento.', ySelHas: !!sel, ySelGo: sel ? go('m:' + sel.m.id) : () => {},
+        yearShowVals: !mobY, yearAvgFmt: eur(mAvg),
+        yearAvgLine: { position: 'absolute', left: 0, right: 0, bottom: (Math.max(0, mAvg) / mMax * 82) + '%', borderTop: '1px dashed var(--n5)', pointerEvents: 'none' },
+        yearBars: all12.map(({ i, f }) => { const v = f ? mv(f.c) : 0, on = i === selI; return {
+          m: mobY ? MS[i].slice(0, 1) : MS[i], short: f ? k(v) : '', empty: !f, pick: f ? pick(i) : () => {}, aria: MN[i] + (f ? ' ' + eur(v) : ''),
+          labelColor: on ? '#f36458' : f ? 'var(--n0)' : 'var(--n7)', valColor: on ? 'var(--n0)' : 'var(--n5)',
+          barStyle: { display: 'block', width: '100%', maxWidth: 48, height: f ? Math.max(1.5, Math.abs(v) / mMax * 82) + '%' : '0%', borderRadius: '6px 6px 2px 2px', background: !f ? 'transparent' : v < 0 ? '#dd0000' : on ? '#f36458' : 'var(--n0)', opacity: f && !on ? .85 : 1, transition: 'height .3s cubic-bezier(.2,.8,.2,1), background .2s' } }; }),
+        yearLegend: parts.map(p => ({ label: p[0], dot: dot(p[3]) })),
+        yearRows: cs.map(({ m, c }) => ({ name: MN[m.month], left: eur(c.left), leftColor: c.left < 0 ? '#dd0000' : 'var(--n0)', go: go('m:' + m.id), detail: detail(m, c),
+          segs: segsOf([c.fixedTotal, c.varSpent, c.savSpent + c.extraSaved, Math.max(0, c.left)], Math.max(1, c.fixedTotal + c.varSpent + c.savSpent + c.extraSaved + Math.max(0, c.left)), true) })),
+        yearTotals: [['ENTRATE', inc, 'var(--n0)', true], ['FISSE', F, 'var(--n0)'], ['QUOTIDIANE', V, 'var(--n0)'], ['SALVADANAIO', S, '#f36458'], ['RIMASTO', totLeft, totLeft < 0 ? '#dd0000' : '#1a9e5f']].map(([label, v, color, m]) => ({ label, color, fmt: m ? mask(v) : eur(v), avg: m ? mask(v / n) : eur(v / n) })),
+        yearCats: cats.map((c, i) => ({ name: c.name, count: c.n === 1 ? '1 volta' : c.n + ' volte', fmt: eur(c.amt), pct: V > 0 ? Math.round(c.amt / V * 100) + '%' : '', ico: iconView(c.icon, 18), rule: i ? 'var(--n3)' : 'transparent',
+          bar: { display: 'block', height: '100%', width: (c.amt / catMax * 100) + '%', borderRadius: 99, background: i === 0 ? '#f36458' : 'var(--n6)' } })),
+        yearNoCats: cats.length === 0,
+        yearRates: s.rates.map(r => { const ri = rateInfo(r, latest); const paid = Math.max(0, r.count - ri.remaining); return { name: r.name, rataFmt: eur(ri.rata), leftLabel: ri.remaining > 0 ? `${paid} di ${r.count} pagate · mancano ${ri.remaining}` : 'Saldato', endLabel: 'fine ' + ri.endLabel, bar: { display: 'block', height: '100%', width: (paid / Math.max(1, r.count) * 100) + '%', borderRadius: 99, background: ri.remaining > 0 ? '#f36458' : '#37cd84' } }; }),
         noRates: s.rates.length === 0,
       };
     }
