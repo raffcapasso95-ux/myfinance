@@ -171,8 +171,8 @@
       </div>
       <span style="padding:4px 4px 0;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">ASPETTO</span>
       <div style="display:flex;gap:4px;padding:4px;border-radius:99px;background:var(--n2);border:1px solid var(--n4)"><sc-for list="{{ themeOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.pick }}" style="{{ o.style }}"><i class="{{ o.icon }}" style="font-size:15px;line-height:1"></i><span>{{ o.label }}</span></button></sc-for></div>
-      <span style="padding:4px 4px 0;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">SINCRONIZZAZIONE</span>
-      <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden"><button onClick="{{ stSync }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="{{ syncIcon }}" style="font-size:17px;line-height:1;color:{{ syncIconColor }}"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Telefono e computer</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">{{ syncStatusText }}</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button></div>
+      <span style="padding:4px 4px 0;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">ACCOUNT</span>
+      <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden"><button onClick="{{ stSync }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="{{ syncIcon }}" style="font-size:17px;line-height:1;color:{{ syncIconColor }}"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ acctEmail }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">{{ syncStatusText }}</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button><sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openUsers }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:10px 14px;border:0;border-top:1px solid var(--n3);background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-users" style="font-size:17px;line-height:1"></i></span><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif">Utenti</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6)">Crea e gestisci gli accessi</span></span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n6)"></i></button></sc-if></div>
       <sc-if value="{{ isMonth }}" hint-placeholder-val="{{ true }}">
       <div style="display:grid;gap:12px">
       <span style="padding:4px 4px 0;font:400 11px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">MESE</span>
@@ -185,24 +185,153 @@
     </div>
   </div>
 </sc-if>
+<sc-if value="{{ showLogin }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:200;background:var(--n0);color:var(--nW);overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));animation:mfFade 200ms ease-out">
+    <form onSubmit="{{ doLogin }}" style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="width:52px;height:52px;border-radius:14px;background:#0b0b0b;border:1px solid var(--n4);display:inline-flex;align-items:center;justify-content:center"><span style="width:22px;height:22px;border-radius:99px;background:#f36458"></span></span>
+        <div style="display:flex;flex-direction:column;gap:8px"><h1 style="margin:0;font:400 clamp(30px,8vw,38px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Accedi a Myfinance</h1><span style="font:400 15px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">Usa l'email e la password che hai ricevuto.</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <label style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">EMAIL</span><input type="email" name="email" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false" placeholder="nome@email.it" value="{{ lgEmail }}" onChange="{{ onLgEmail }}" style="height:52px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n1);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458"></label>
+        <label style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">PASSWORD</span><input type="password" name="password" autocomplete="current-password" placeholder="La tua password" value="{{ lgPw }}" onChange="{{ onLgPw }}" style="height:52px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n1);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458"></label>
+      </div>
+      <sc-if value="{{ hasLgErr }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:rgba(221,0,0,.12);color:#f36458;font:500 14px/1.4 Inter,sans-serif"><i class="icon-circle-alert" style="font-size:16px;line-height:1;flex:none"></i><span>{{ lgErr }}</span></div></sc-if>
+      <button type="submit" disabled="{{ lgBusy }}" style="height:52px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 16px/1 Inter,sans-serif;cursor:pointer">{{ lgBtn }}</button>
+      <span style="font:400 13px/1.5 Inter,sans-serif;color:var(--n6);text-align:center;text-wrap:pretty">Non hai un account? Chiedilo a chi ti ha invitato.</span>
+    </form>
+  </div>
+</sc-if>
+<sc-if value="{{ showOnboard }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:190;background:var(--n0);color:var(--nW);overflow-y:auto;overscroll-behavior:contain;animation:mfFade 200ms ease-out">
+    <div style="max-width:520px;min-height:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:28px;padding:calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom))">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--n6)">{{ obStepLabel }}</span><button onClick="{{ obSkip }}" style="height:36px;padding:0 12px;margin-right:-12px;border-radius:99px;border:0;background:transparent;color:var(--n7);font:500 14px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW)">Salta</button></div>
+        <div style="display:flex;gap:6px"><sc-for list="{{ obBars }}" as="b" hint-placeholder-count="3"><span style="{{ b.style }}"></span></sc-for></div>
+      </div>
+      <sc-if value="{{ obStep1 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:8px"><h1 style="margin:0;font:400 clamp(28px,7.5vw,38px)/1.1 Inter,sans-serif;letter-spacing:-0.035em;text-wrap:pretty">{{ obHello }}, quanto guadagni al mese?</h1><span style="font:400 15px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">Lo stipendio netto che ricevi sul conto. Potrai cambiarlo quando vuoi dal Piano.</span></div>
+          <label style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">STIPENDIO NETTO</span><span style="position:relative;display:block"><input data-big="1" inputmode="decimal" placeholder="1650" value="{{ obSalary }}" onChange="{{ onObSalary }}" style="width:100%;box-sizing:border-box;height:72px;padding:0 52px 0 20px;border-radius:16px;border:1px solid var(--n4);background:var(--n1);color:var(--nW);font:400 36px/1 Inter,sans-serif;letter-spacing:-0.03em;outline:0" style-focus="border-color:#f36458"><span style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font:400 24px/1 Inter,sans-serif;color:var(--n6);pointer-events:none">€</span></span></label>
+          <label style="display:flex;flex-direction:column;gap:8px"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">GIORNO IN CUI ARRIVA (1–28)</span><span style="display:flex;align-items:center;gap:12px"><input inputmode="numeric" value="{{ obDay }}" onChange="{{ onObDay }}" style="width:88px;flex:none;box-sizing:border-box;height:48px;padding:0 12px;text-align:center;border-radius:12px;border:1px solid var(--n4);background:var(--n1);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458"><span style="font:400 14px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">Il tuo mese parte da questo giorno.</span></span></label>
+        </div>
+      </sc-if>
+      <sc-if value="{{ obStep2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:8px"><h1 style="margin:0;font:400 clamp(28px,7.5vw,38px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Le tue spese fisse</h1><span style="font:400 15px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">Quelle che paghi ogni mese, come affitto, bollette e abbonamenti. Puoi anche aggiungerle dopo.</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ obChips }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.pick }}" style="height:36px;padding:0 14px;border-radius:99px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:500 14px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px" style-hover="border-color:var(--n6)"><i class="icon-plus" style="font-size:14px;line-height:1;color:var(--n6)"></i>{{ c.label }}</button></sc-for></div>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 104px 48px;gap:8px">
+            <input placeholder="Nome, es. Affitto" value="{{ obFxName }}" onChange="{{ onObFxName }}" style="min-width:0;box-sizing:border-box;height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--n4);background:var(--n1);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+            <input inputmode="decimal" placeholder="€" value="{{ obFxAmt }}" onChange="{{ onObFxAmt }}" onKeyDown="{{ obFxKey }}" ref="{{ obAmtRef }}" style="min-width:0;box-sizing:border-box;height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--n4);background:var(--n1);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+            <button onClick="{{ addObFx }}" aria-label="Aggiungi" style="height:48px;border-radius:12px;border:0;background:var(--nW);color:var(--n0);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-plus" style="font-size:20px;line-height:1"></i></button>
+          </div>
+          <sc-if value="{{ obHasFixed }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden">
+              <sc-for list="{{ obFixedRows }}" as="f" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:12px;padding:8px 6px 8px 14px;border-top:{{ f.rule }}">
+                  <span style="width:36px;height:36px;flex:none;border-radius:99px;background:var(--n3);display:inline-flex;align-items:center;justify-content:center"><sc-if value="{{ f.ico.cls }}" hint-placeholder-val="{{ true }}"><i class="{{ f.ico.cls }}" style="font-size:17px;line-height:1"></i></sc-if><sc-if value="{{ f.ico.txt }}" hint-placeholder-val="{{ false }}"><span style="{{ f.ico.txtStyle }}">{{ f.ico.txt }}</span></sc-if></span>
+                  <span style="flex:1;min-width:0;font:500 15px/1.3 Inter,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.name }}</span>
+                  <span style="font:500 15px/1.3 Inter,sans-serif;white-space:nowrap">{{ f.fmt }}</span>
+                  <button onClick="{{ f.del }}" aria-label="Rimuovi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:transparent;color:var(--n6);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:#dd0000"><i class="icon-x" style="font-size:16px;line-height:1"></i></button>
+                </div>
+              </sc-for>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:14px;border-top:1px solid var(--n3);font:500 15px/1.3 Inter,sans-serif"><span style="color:var(--n7)">Totale fisse</span><span>{{ obFxFmt }}</span></div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{ obStep3 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:8px"><h1 style="margin:0;font:400 clamp(28px,7.5vw,38px)/1.1 Inter,sans-serif;letter-spacing:-0.035em">Quanto vuoi mettere da parte?</h1><span style="font:400 15px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">Questa parte dello stipendio va nel salvadanaio appena arriva. Il resto copre le spese fisse e quelle di tutti i giorni.</span></div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px"><sc-for list="{{ obSaveOpts }}" as="o" hint-placeholder-count="6"><button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for></div>
+          <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden">
+            <div style="display:flex;justify-content:space-between;gap:12px;padding:14px;font:400 15px/1.3 Inter,sans-serif"><span style="color:var(--n7)">Stipendio</span><span style="font-weight:500">{{ obSalFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;padding:14px;border-top:1px solid var(--n3);font:400 15px/1.3 Inter,sans-serif"><span style="color:var(--n7)">Spese fisse</span><span style="font-weight:500">− {{ obFxFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;padding:14px;border-top:1px solid var(--n3);font:400 15px/1.3 Inter,sans-serif"><span style="display:inline-flex;align-items:center;gap:8px;color:var(--n7)"><i class="icon-piggy-bank" style="font-size:16px;line-height:1;color:#f36458"></i>Salvadanaio</span><span style="font-weight:500">− {{ obSaveFmt }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;padding:16px 14px;border-top:1px solid var(--n3);background:var(--n2)"><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">PER LE SPESE QUOTIDIANE</span><span style="font:400 34px/1.1 Inter,sans-serif;letter-spacing:-0.03em">{{ obQFmt }}</span><span style="font:400 13px/1.4 Inter,sans-serif;color:var(--n7)">{{ obWeekLabel }}</span></div>
+          </div>
+          <sc-if value="{{ obNeg }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:rgba(221,0,0,.12);color:#f36458;font:500 14px/1.4 Inter,sans-serif"><i class="icon-triangle-alert" style="font-size:16px;line-height:1.3;flex:none"></i><span style="text-wrap:pretty">Spese fisse e salvadanaio superano lo stipendio. Abbassa la percentuale o rivedi le fisse.</span></div></sc-if>
+        </div>
+      </sc-if>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-top:8px">
+        <sc-if value="{{ hasObErr }}" hint-placeholder-val="{{ false }}"><span style="font:500 14px/1.4 Inter,sans-serif;color:#f36458">{{ obErr }}</span></sc-if>
+        <div style="display:flex;gap:8px">
+          <sc-if value="{{ obCanBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ obBack }}" style="flex:1;height:52px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--nW);font:500 16px/1 Inter,sans-serif;cursor:pointer">Indietro</button></sc-if>
+          <button onClick="{{ obNext }}" style="flex:2;height:52px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 16px/1 Inter,sans-serif;cursor:pointer">{{ obNextLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ usersOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeUsers }}" style="position:fixed;inset:0;z-index:110;background:rgba(11,11,11,.72);display:flex;align-items:center;justify-content:center;padding:16px;animation:mfFade 180ms ease-out">
+    <div onClick="{{ stopProp }}" style="width:100%;max-width:480px;max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;display:flex;flex-direction:column;gap:20px;padding:24px;animation:mfPop 200ms cubic-bezier(.23,1,.32,1);border-radius:20px;background:var(--n0);color:var(--nW);border:1px solid var(--n4);box-shadow:0 24px 64px rgba(0,0,0,.5)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;flex:none;border-radius:12px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-users" style="font-size:20px;line-height:1"></i></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 18px/1.25 Inter,sans-serif">Utenti</span><span style="font:400 13px/1.4 Inter,sans-serif;color:var(--n7)">Ognuno vede solo i propri dati</span></div></div>
+        <button onClick="{{ closeUsers }}" aria-label="Chiudi" style="width:40px;height:40px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:18px;line-height:1"></i></button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6);overflow-wrap:anywhere">{{ uFormTitle }}</span>
+        <sc-if value="{{ uIsCreate }}" hint-placeholder-val="{{ true }}">
+          <input placeholder="Nome" value="{{ uName }}" onChange="{{ onUName }}" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+          <input type="email" inputmode="email" autocapitalize="none" spellcheck="false" autocomplete="off" placeholder="Email" value="{{ uEmail }}" onChange="{{ onUEmail }}" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+        </sc-if>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px"><input autocomplete="new-password" autocapitalize="none" spellcheck="false" placeholder="Password (almeno 8 caratteri)" value="{{ uPw }}" onChange="{{ onUPw }}" style="min-width:0;height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 'IBM Plex Mono',monospace;outline:0" style-focus="border-color:#f36458"><button onClick="{{ genPw }}" style="height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:500 14px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><i class="icon-dices" style="font-size:16px;line-height:1"></i>Genera</button></div>
+        <sc-if value="{{ hasUErr }}" hint-placeholder-val="{{ false }}"><span style="font:500 13px/1.4 Inter,sans-serif;color:#f36458">{{ uErr }}</span></sc-if>
+        <div style="display:flex;gap:8px">
+          <sc-if value="{{ uIsReset }}" hint-placeholder-val="{{ false }}"><button onClick="{{ cancelReset }}" style="flex:1;height:48px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 15px/1 Inter,sans-serif;cursor:pointer">Annulla</button></sc-if>
+          <button onClick="{{ saveUser }}" disabled="{{ uBusy }}" style="flex:2;height:48px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 15px/1 Inter,sans-serif;cursor:pointer">{{ uBtn }}</button>
+        </div>
+      </div>
+      <sc-if value="{{ uDone }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:16px;background:rgba(55,205,132,.1);border:1px solid rgba(55,205,132,.3)">
+          <span style="display:flex;align-items:center;gap:8px;font:500 15px/1.3 Inter,sans-serif;color:#37cd84"><i class="icon-circle-check" style="font-size:16px;line-height:1"></i>Accesso pronto: invialo alla persona</span>
+          <span style="font:400 13px/1.6 'IBM Plex Mono',monospace;color:var(--nW);white-space:pre-wrap;overflow-wrap:anywhere">{{ uDoneText }}</span>
+          <button onClick="{{ copyCreds }}" style="height:44px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 14px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px"><i class="icon-copy" style="font-size:15px;line-height:1"></i>{{ copyLabel }}</button>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">{{ uCountLabel }}</span>
+        <sc-if value="{{ noUsers }}" hint-placeholder-val="{{ false }}"><div style="padding:16px;border-radius:16px;border:1px dashed var(--n4);font:400 14px/1.5 Inter,sans-serif;color:var(--n6)">{{ uEmptyText }}</div></sc-if>
+        <sc-if value="{{ hasUsers }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden">
+            <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;border-top:{{ u.rule }}">
+                <span style="width:36px;height:36px;flex:none;border-radius:99px;background:var(--n3);display:inline-flex;align-items:center;justify-content:center;font:500 15px/1 Inter,sans-serif">{{ u.initial }}</span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:500 15px/1.3 Inter,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ u.title }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n6);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ u.sub }}</span></span>
+                <button onClick="{{ u.reset }}" aria-label="Nuova password" title="Nuova password" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:transparent;color:var(--n7);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:var(--nW);background:var(--n3)"><i class="icon-key-round" style="font-size:17px;line-height:1"></i></button>
+                <sc-if value="{{ u.confirming }}" hint-placeholder-val="{{ false }}"><button onClick="{{ u.del }}" style="height:36px;padding:0 12px;flex:none;border-radius:99px;border:0;background:#dd0000;color:#fff;font:500 13px/1 Inter,sans-serif;cursor:pointer">Elimina dati</button></sc-if>
+                <sc-if value="{{ u.idle }}" hint-placeholder-val="{{ true }}"><button onClick="{{ u.del }}" aria-label="Elimina utente" title="Elimina utente" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:transparent;color:var(--n7);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:#dd0000;background:var(--n3)"><i class="icon-trash-2" style="font-size:17px;line-height:1"></i></button></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</sc-if>
 <sc-if value="{{ syncOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeSync }}" style="position:fixed;inset:0;z-index:110;background:rgba(11,11,11,.72);display:flex;align-items:center;justify-content:center;padding:16px;animation:mfFade 180ms ease-out">
     <div onClick="{{ stopProp }}" style="width:100%;max-width:440px;display:flex;flex-direction:column;gap:16px;padding:24px;animation:mfPop 200ms cubic-bezier(.23,1,.32,1);border-radius:20px;background:var(--n0);color:var(--nW);border:1px solid var(--n4);box-shadow:0 24px 64px rgba(0,0,0,.5)">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-        <div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;flex:none;border-radius:12px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="{{ syncIcon }}" style="font-size:20px;line-height:1;color:{{ syncIconColor }}"></i></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 18px/1.25 Inter,sans-serif">Sincronizzazione</span><span style="font:400 13px/1.4 Inter,sans-serif;color:{{ syncIconColor }}">{{ syncStatusText }}</span></div></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;flex:none;border-radius:12px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="{{ syncIcon }}" style="font-size:20px;line-height:1;color:{{ syncIconColor }}"></i></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 18px/1.25 Inter,sans-serif">Il tuo account</span><span style="font:400 13px/1.4 Inter,sans-serif;color:{{ syncIconColor }}">{{ syncStatusText }}</span></div></div>
         <button onClick="{{ closeSync }}" aria-label="Chiudi" style="width:40px;height:40px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:18px;line-height:1"></i></button>
       </div>
-      <span style="font:400 14px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty">Collega ogni dispositivo (telefono, computer, app dalla Home) con lo stesso codice: i dati restano uguali ovunque e si aggiornano da soli.</span>
-      <sc-if value="{{ syncDisconnected }}" hint-placeholder-val="{{ true }}">
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n6)">CODICE DI SINCRONIZZAZIONE</span>
-          <input type="password" autocomplete="current-password" placeholder="Il tuo codice personale" value="{{ syncInput }}" onChange="{{ onSyncInput }}" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
-          <button onClick="{{ connectSync }}" style="height:48px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 15px/1 Inter,sans-serif;cursor:pointer">Collega questo dispositivo</button>
-        </div>
-      </sc-if>
+      <span style="font:400 14px/1.5 Inter,sans-serif;color:var(--n7);text-wrap:pretty;overflow-wrap:anywhere">Sei collegato come <strong style="font-weight:500;color:var(--nW)">{{ acctEmail }}</strong>. I tuoi dati sono salvati nel tuo account e restano uguali su ogni dispositivo in cui accedi.</span>
+      <div style="display:flex;flex-direction:column;border-radius:16px;background:var(--n1);border:1px solid var(--n3);overflow:hidden">
+        <button onClick="{{ togglePw }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 14px;border:0;background:transparent;color:var(--nW);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--n3)"><span style="width:36px;height:36px;flex:none;border-radius:10px;background:var(--n2);display:inline-flex;align-items:center;justify-content:center"><i class="icon-key-round" style="font-size:17px;line-height:1"></i></span><span style="flex:1;font:500 15px/1.3 Inter,sans-serif">Cambia password</span><i class="{{ pwChevron }}" style="font-size:16px;line-height:1;color:var(--n6)"></i></button>
+        <sc-if value="{{ pwOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:8px;padding:0 14px 14px">
+            <input type="password" autocomplete="current-password" placeholder="Password attuale" value="{{ pwCur }}" onChange="{{ onPwCur }}" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+            <input type="password" autocomplete="new-password" placeholder="Nuova password (almeno 8 caratteri)" value="{{ pwNew }}" onChange="{{ onPwNew }}" style="height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--n4);background:var(--n2);color:var(--nW);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:#f36458">
+            <sc-if value="{{ hasPwMsg }}" hint-placeholder-val="{{ false }}"><span style="font:500 13px/1.4 Inter,sans-serif;color:#f36458">{{ pwMsg }}</span></sc-if>
+            <button onClick="{{ savePw }}" disabled="{{ pwBusy }}" style="height:46px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 15px/1 Inter,sans-serif;cursor:pointer">{{ pwBtn }}</button>
+          </div>
+        </sc-if>
+      </div>
       <sc-if value="{{ syncConnected }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;gap:8px">
-          <button onClick="{{ disconnectSync }}" style="flex:1;height:48px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 15px/1 Inter,sans-serif;cursor:pointer" style-hover="color:#dd0000;border-color:#dd0000">Scollega</button>
+          <button onClick="{{ doLogout }}" style="flex:1;height:48px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 15px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px" style-hover="color:#dd0000;border-color:#dd0000"><i class="icon-log-out" style="font-size:16px;line-height:1"></i>Esci</button>
           <button onClick="{{ syncNow }}" style="flex:1.4;height:48px;border-radius:99px;border:0;background:var(--nW);color:var(--n0);font:500 15px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px"><i class="icon-refresh-cw" style="font-size:16px;line-height:1"></i>Sincronizza ora</button>
         </div>
       </sc-if>
@@ -1159,13 +1288,15 @@ const CountUp = ({ value, animate }) => {
   }, [value]);
   return React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, EUR0.format(v === value ? value : Math.round(v)));
 };
+const MF_UKEY = a => MF_KEY + ':' + a.email;
+const MF_READ = a => { if (!a) return null; try { return JSON.parse(localStorage.getItem(MF_UKEY(a))) || (a.admin ? JSON.parse(localStorage.getItem(MF_KEY)) : null); } catch (e) { return null; } };
 const MF_DEFAULT = () => { const t = new Date(); return { months: [newMonth(t.getFullYear(), t.getMonth())], rates: [], nextId: 1, view: 'm:' + mkId(t.getFullYear(), t.getMonth()) }; };
 
 class Component extends DCLogic {
   constructor(p) {
     super(p);
-    let saved = null;
-    try { saved = JSON.parse(localStorage.getItem(MF_KEY)); } catch (e) {}
+    let auth = null; try { auth = JSON.parse(localStorage.getItem('mf-auth')); } catch (e) {} if (!auth || !auth.token || !auth.email) auth = null; this.auth = auth;
+    const saved = MF_READ(auth);
     const def = MF_DEFAULT();
     const okM = saved && Array.isArray(saved.months) && saved.months.length && saved.months.every(m => typeof m.year === 'number' && typeof m.month === 'number' && Array.isArray(m.fixed) && Array.isArray(m.variable) && Array.isArray(m.savings));
     const clean = okM ? {
@@ -1180,7 +1311,9 @@ class Component extends DCLogic {
     this.amountRef = React.createRef();
     try { this.state.hideInc = localStorage.getItem('mf-hide-inc') === '1'; } catch (e) {}
     this.leftRef = React.createRef(); this.rightRef = React.createRef();
-    try { this.syncKey = localStorage.getItem('mf-sync-key') || ''; } catch (e) { this.syncKey = ''; }
+    this.syncKey = auth ? auth.token : '';
+    this.state.authed = !!auth; this.state.lgErr = ''; this.obAmtRef = React.createRef();
+    try { this.state.lgErr = sessionStorage.getItem('mf-login-msg') || ''; sessionStorage.removeItem('mf-login-msg'); this.state.lgEmail = localStorage.getItem('mf-last-email') || ''; } catch (e) {}
     this.dataAt = (saved && saved.dataAt) || 0;
     this._lastData = JSON.stringify({ months: this.state.months, rates: this.state.rates, nextId: this.state.nextId });
     this.state.sync = { status: this.syncKey ? 'idle' : 'off', at: null };
@@ -1198,7 +1331,7 @@ class Component extends DCLogic {
     let y0 = null, d = 0, armed = false, ind = null;
     const hide = () => { if (!ind) return; ind.style.transition = 'transform 300ms cubic-bezier(.23,1,.32,1), opacity 300ms'; ind.style.opacity = '0'; ind.style.transform = 'translateY(-64px)'; };
     const mk = () => { ind = document.createElement('div'); Object.assign(ind.style, { position: 'fixed', left: '50%', top: 'calc(8px + env(safe-area-inset-top))', marginLeft: '-20px', zIndex: '130', width: '40px', height: '40px', borderRadius: '99px', background: 'var(--n2)', border: '1px solid var(--n4)', color: 'var(--nW)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0,0,0,.35)', transform: 'translateY(-64px)', opacity: '0', pointerEvents: 'none' }); ind.innerHTML = '<i class="icon-refresh-cw" style="font-size:18px;line-height:1;display:block"></i>'; document.body.appendChild(ind); };
-    const busy = () => { const s = this.state; return !s.isMobile || s.sheetOpen || s.settingsOpen || s.syncOpen || s.modal || s.rp || s.picker; };
+    const busy = () => { const s = this.state; return !s.isMobile || s.sheetOpen || s.settingsOpen || s.syncOpen || s.usersOpen || s.onboard || !s.authed || s.modal || s.rp || s.picker; };
     this._ptrS = e => { if (busy() || window.scrollY > 0 || e.touches.length > 1) { y0 = null; return; } y0 = e.touches[0].clientY; d = 0; armed = false; if (!ind) mk(); ind.style.transition = 'none'; };
     this._ptrM = e => { if (y0 == null) return; d = e.touches[0].clientY - y0; if (d <= 0 || window.scrollY > 0) { ind.style.opacity = '0'; ind.style.transform = 'translateY(-64px)'; armed = false; return; }
       const y = Math.min(80, d * 0.5); ind.style.opacity = String(Math.min(1, d / 80)); ind.style.transform = `translateY(${y - 44}px) rotate(${Math.round(d * 2)}deg)`;
@@ -1211,13 +1344,121 @@ class Component extends DCLogic {
       Promise.resolve(this.pull()).finally(() => setTimeout(() => { done(); const st = (this.state.sync || {}).status; this.toast(st === 'error' ? 'Sincronizzazione non riuscita' : 'Dati aggiornati'); }, 400)); };
     window.addEventListener('touchstart', this._ptrS, { passive: true }); window.addEventListener('touchmove', this._ptrM, { passive: true }); window.addEventListener('touchend', this._ptrE); window.addEventListener('touchcancel', this._ptrE);
   }
+  api(path, body) { return fetch(path, { method: body ? 'POST' : 'GET', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + this.syncKey }, body: body ? JSON.stringify(body) : undefined }); }
+  async login(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const s = this.state, email = (s.lgEmail || '').trim(), password = s.lgPw || '';
+    if (!email || !password) return this.setState({ lgErr: 'Inserisci email e password' });
+    this.setState({ lgBusy: true, lgErr: '' });
+    try {
+      const r = await fetch('/api/auth', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'login', email, password }) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.token) return this.setState({ lgBusy: false, lgErr: r.status === 401 ? 'Email o password non corretti' : r.status === 429 ? 'Troppi tentativi. Riprova tra 15 minuti' : r.status === 500 ? 'Accesso non ancora configurato sul server' : 'Qualcosa non va, riprova' });
+      localStorage.setItem('mf-auth', JSON.stringify({ token: d.token, email: d.email, name: d.name || '', admin: !!d.admin }));
+      try { localStorage.setItem('mf-last-email', d.email); localStorage.removeItem('mf-sync-key'); } catch (x) {}
+      location.reload();
+    } catch (x) { this.setState({ lgBusy: false, lgErr: 'Nessuna connessione' }); }
+  }
+  async logout() {
+    if (this._pushPending) { try { await this.push(); } catch (e) {} }
+    if (this._pushPending) return this.toast('Modifiche non ancora salvate: riprova quando sei online');
+    try { await this.api('/api/auth', { action: 'logout' }); } catch (e) {}
+    const a = this.auth; this.auth = null; this.syncKey = '';
+    try { localStorage.removeItem(MF_UKEY(a)); if (a.admin) localStorage.removeItem(MF_KEY); localStorage.removeItem('mf-auth'); } catch (e) {}
+    location.reload();
+  }
+  expire() { this.auth = null; this.syncKey = ''; try { localStorage.removeItem('mf-auth'); sessionStorage.setItem('mf-login-msg', 'Sessione scaduta: accedi di nuovo'); } catch (e) {} location.reload(); }
+  async changePw() {
+    const s = this.state; if ((s.pwNew || '').length < 8) return this.setState({ pwMsg: 'La nuova password deve avere almeno 8 caratteri' });
+    this.setState({ pwBusy: true, pwMsg: '' });
+    try { const r = await this.api('/api/auth', { action: 'password', current: s.pwCur || '', next: s.pwNew }); if (r.ok) { this.setState({ pwBusy: false, pwOpen: false, pwCur: '', pwNew: '' }); this.toast('Password aggiornata'); } else this.setState({ pwBusy: false, pwMsg: r.status === 403 ? 'La password attuale non è corretta' : 'Non riuscito, riprova' }); }
+    catch (e) { this.setState({ pwBusy: false, pwMsg: 'Nessuna connessione' }); }
+  }
+  async loadUsers() {
+    this.setState({ uLoading: true });
+    try { const r = await this.api('/api/users'); const d = await r.json().catch(() => ({})); this.setState({ users: r.ok ? d.users || [] : [], uLoading: false, uErr: r.ok ? '' : 'Impossibile caricare gli utenti' }); }
+    catch (e) { this.setState({ uLoading: false, uErr: 'Nessuna connessione' }); }
+  }
+  async saveUser() {
+    const s = this.state, reset = s.uMode === 'reset', email = (s.uEmail || '').trim().toLowerCase(), name = (s.uName || '').trim(), password = s.uPw || '';
+    if (!reset && !name) return this.setState({ uErr: 'Inserisci il nome' });
+    if (!/^\S+@\S+\.\S+$/.test(email)) return this.setState({ uErr: 'Email non valida' });
+    if (password.length < 8) return this.setState({ uErr: 'La password deve avere almeno 8 caratteri' });
+    this.setState({ uBusy: true, uErr: '' });
+    try {
+      const r = await this.api('/api/users', { action: reset ? 'reset' : 'create', email, name, password });
+      if (!r.ok) return this.setState({ uBusy: false, uErr: r.status === 409 ? 'Esiste già un utente con questa email' : r.status === 400 ? 'Dati non validi' : 'Non riuscito, riprova' });
+      this.setState({ uBusy: false, uName: '', uEmail: '', uPw: '', uMode: 'create', uDone: { email, password, reset }, copied: false });
+      this.loadUsers();
+    } catch (e) { this.setState({ uBusy: false, uErr: 'Nessuna connessione' }); }
+  }
+  async delUser(email) {
+    this.setState({ uDel: null });
+    try { const r = await this.api('/api/users', { action: 'delete', email }); if (r.ok) { this.toast('Utente eliminato'); this.loadUsers(); } else this.setState({ uErr: 'Eliminazione non riuscita' }); }
+    catch (e) { this.setState({ uErr: 'Nessuna connessione' }); }
+  }
+  authVals() {
+    const s = this.state, a = this.auth || {};
+    const num = x => parseFloat(String(x || '').replace(/\s|€/g, '').replace(',', '.')) || 0;
+    const st = s.obStep || 1, sal = num(s.obSalary), fx = s.obFixed || [], fxT = fx.reduce((t, f) => t + f.amount, 0), ps = s.obSave == null ? 20 : s.obSave, sv = sal * ps / 100, q = sal - fxT - sv;
+    const first = (a.name || '').trim().split(/\s+/)[0];
+    const addFx = () => { const n = (s.obFxName || '').trim(), am = num(s.obFxAmt); if (!n || !(am > 0)) return this.setState({ obErr: !n ? 'Scrivi il nome della spesa' : 'Inserisci un importo' }); this.setState({ obFixed: [...fx, { name: n, amount: Math.round(am * 100) / 100, icon: (suggestIcons(n)[0] || [])[1] || '' }], obFxName: '', obFxAmt: '', obErr: '' }); };
+    const finish = () => {
+      const day = Math.min(28, Math.max(1, parseInt(s.obDay, 10) || 1)), t = new Date(); let y = t.getFullYear(), m = t.getMonth();
+      if (t.getDate() < day) { m--; if (m < 0) { m = 11; y--; } }
+      const fixed = fx.map((f, i) => ({ id: i + 1, ...f }));
+      const mo = newMonth(y, m, Math.round(sal * 100) / 100, ps, fixed, [], day);
+      this.setState({ months: [mo], rates: [], nextId: fixed.length + 1, view: 'm:' + mo.id, onboard: false, mTab: 'home' });
+      window.scrollTo(0, 0); this.toast('Il tuo mese è pronto');
+    };
+    const ur = s.users || [], reset = s.uMode === 'reset', done = s.uDone;
+    const doneText = done ? `Accedi a Myfinance\n${location.origin}\nEmail: ${done.email}\nPassword: ${done.password}` : '';
+    const canShare = !!navigator.share && !!s.isMobile;
+    return {
+      showLogin: !s.authed, lgEmail: s.lgEmail || '', lgPw: s.lgPw || '', lgErr: s.lgErr || '', hasLgErr: !!s.lgErr, lgBusy: !!s.lgBusy, lgBtn: s.lgBusy ? 'Accesso in corso…' : 'Accedi',
+      onLgEmail: e => this.setState({ lgEmail: e.target.value, lgErr: '' }), onLgPw: e => this.setState({ lgPw: e.target.value, lgErr: '' }), doLogin: e => this.login(e),
+      acctEmail: a.email || '', isAdmin: !!a.admin, doLogout: () => this.logout(),
+      pwOpen: !!s.pwOpen, pwChevron: s.pwOpen ? 'icon-chevron-up' : 'icon-chevron-down', togglePw: () => this.setState({ pwOpen: !s.pwOpen, pwMsg: '' }),
+      pwCur: s.pwCur || '', pwNew: s.pwNew || '', onPwCur: e => this.setState({ pwCur: e.target.value }), onPwNew: e => this.setState({ pwNew: e.target.value }),
+      savePw: () => this.changePw(), pwBusy: !!s.pwBusy, pwBtn: s.pwBusy ? 'Salvo…' : 'Salva nuova password', pwMsg: s.pwMsg || '', hasPwMsg: !!s.pwMsg,
+      showOnboard: !!s.authed && !!s.onboard, obStep1: st === 1, obStep2: st === 2, obStep3: st === 3, obStepLabel: `PASSO ${st} DI 3`,
+      obBars: [1, 2, 3].map(i => ({ style: { flex: 1, height: 4, borderRadius: 99, background: i <= st ? '#f36458' : 'var(--n3)', transition: 'background .3s' } })),
+      obHello: first ? `Ciao ${first}` : 'Ciao',
+      obSalary: s.obSalary || '', onObSalary: e => this.setState({ obSalary: e.target.value, obErr: '' }),
+      obDay: s.obDay == null ? '1' : s.obDay, onObDay: e => this.setState({ obDay: e.target.value.replace(/\D/g, '').slice(0, 2) }),
+      obChips: ['Affitto', 'Bollette', 'Telefono', 'Internet', 'Abbonamenti', 'Assicurazione', 'Palestra'].filter(c => !fx.some(f => f.name.toLowerCase() === c.toLowerCase())).map(label => ({ label, pick: () => { this.setState({ obFxName: label, obErr: '' }); setTimeout(() => this.obAmtRef.current && this.obAmtRef.current.focus(), 30); } })),
+      obFxName: s.obFxName || '', obFxAmt: s.obFxAmt || '', obAmtRef: this.obAmtRef,
+      onObFxName: e => this.setState({ obFxName: e.target.value, obErr: '' }), onObFxAmt: e => this.setState({ obFxAmt: e.target.value, obErr: '' }),
+      obFxKey: e => { if (e.key === 'Enter') { e.preventDefault(); addFx(); } }, addObFx: addFx,
+      obHasFixed: fx.length > 0, obFixedRows: fx.map((f, i) => ({ name: f.name, fmt: EUR0.format(f.amount), ico: iconView(f.icon, 26), rule: i ? '1px solid var(--n3)' : '0', del: () => this.setState({ obFixed: fx.filter((_, j) => j !== i) }) })),
+      obFxFmt: EUR0.format(fxT), obSalFmt: EUR0.format(sal), obSaveFmt: EUR0.format(sv), obQFmt: EUR0.format(Math.max(0, q)), obWeekLabel: q > 0 ? `Circa ${EUR0.format(Math.floor(q / 4.33))} a settimana` : 'Nessun margine per le spese quotidiane', obNeg: q < 0,
+      obSaveOpts: [0, 10, 15, 20, 25, 30].map(p => ({ label: p + '%', pick: () => this.setState({ obSave: p }), style: { height: 48, borderRadius: 12, cursor: 'pointer', font: '500 16px/1 Inter,sans-serif', border: '1px solid ' + (p === ps ? 'var(--nW)' : 'var(--n4)'), background: p === ps ? 'var(--nW)' : 'var(--n1)', color: p === ps ? 'var(--n0)' : 'var(--nW)' } })),
+      obErr: s.obErr || '', hasObErr: !!s.obErr, obCanBack: st > 1, obBack: () => this.setState({ obStep: st - 1, obErr: '' }),
+      obNextLabel: st === 3 ? 'Inizia a usare Myfinance' : 'Continua',
+      obNext: () => { if (st === 1 && !(sal > 0)) return this.setState({ obErr: 'Inserisci il tuo stipendio netto' }); if (st === 2 && (s.obFxName || '').trim() && num(s.obFxAmt) > 0) addFx(); if (st < 3) { this.setState({ obStep: st + 1, obErr: '' }); window.scrollTo(0, 0); } else finish(); },
+      obSkip: () => { this._lastData = ''; this.setState({ onboard: false }); },
+      usersOpen: !!s.usersOpen, openUsers: () => { this.setState({ settingsOpen: false, usersOpen: true, uDone: null, uErr: '', uMode: 'create', uDel: null }); this.loadUsers(); }, closeUsers: () => this.setState({ usersOpen: false, uDel: null }),
+      uIsCreate: !reset, uIsReset: reset, uFormTitle: reset ? `NUOVA PASSWORD PER ${(s.uEmail || '').toUpperCase()}` : 'NUOVO UTENTE', uBtn: s.uBusy ? 'Salvo…' : reset ? 'Imposta password' : 'Crea accesso', uBusy: !!s.uBusy,
+      uName: s.uName || '', uEmail: s.uEmail || '', uPw: s.uPw || '',
+      onUName: e => this.setState({ uName: e.target.value, uErr: '' }), onUEmail: e => this.setState({ uEmail: e.target.value, uErr: '' }), onUPw: e => this.setState({ uPw: e.target.value, uErr: '' }),
+      genPw: () => { const c = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = new Uint32Array(10); crypto.getRandomValues(r); this.setState({ uPw: Array.from(r, x => c[x % c.length]).join(''), uErr: '' }); },
+      saveUser: () => this.saveUser(), cancelReset: () => this.setState({ uMode: 'create', uEmail: '', uName: '', uPw: '', uErr: '' }),
+      uErr: s.uErr || '', hasUErr: !!s.uErr, uDone: !!done, uDoneText: doneText, copyLabel: s.copied ? 'Copiato' : canShare ? 'Condividi' : 'Copia testo',
+      copyCreds: () => { if (canShare) { navigator.share({ text: doneText }).catch(() => {}); return; } try { navigator.clipboard.writeText(doneText).then(() => this.setState({ copied: true })); } catch (e) {} },
+      uCountLabel: s.uLoading && !ur.length ? 'CARICAMENTO…' : `PERSONE CON ACCESSO · ${ur.length}`, noUsers: !s.uLoading && !ur.length, hasUsers: ur.length > 0,
+      uEmptyText: 'Nessun utente ancora. Crea il primo qui sopra.',
+      userRows: ur.map((u, i) => ({ title: u.name || u.email, sub: u.name ? u.email : 'Senza nome', initial: (u.name || u.email || '?').trim()[0].toUpperCase(), rule: i ? '1px solid var(--n3)' : '0', confirming: s.uDel === u.email, idle: s.uDel !== u.email,
+        reset: () => this.setState({ uMode: 'reset', uEmail: u.email, uName: u.name || '', uPw: '', uErr: '', uDone: null, uDel: null }),
+        del: () => s.uDel === u.email ? this.delUser(u.email) : this.setState({ uDel: u.email }) })),
+    };
+  }
   setSync(o) { this.setState(st => ({ sync: { ...st.sync, ...o } })); }
   syncPayload() { const { months, rates, nextId } = this.state; return { dataAt: this.dataAt, months, rates, nextId }; }
   schedulePush(delay = 1200) { if (!this.syncKey) return; clearTimeout(this._pushT); this._pushPending = true; this._pushT = setTimeout(() => this.push(), delay); }
   async syncFetch(method, body, keepalive) {
-    return fetch('/api/data', { method, keepalive: !!keepalive, headers: { 'content-type': 'application/json', 'x-sync-key': this.syncKey }, body: body ? JSON.stringify(body) : undefined });
+    return fetch('/api/data', { method, keepalive: !!keepalive, headers: { 'content-type': 'application/json', authorization: 'Bearer ' + this.syncKey }, body: body ? JSON.stringify(body) : undefined });
   }
-  syncErr(res) { this.setSync({ status: 'error', err: res && res.status === 401 ? 'Codice non valido' : res && res.status === 500 ? 'Sincronizzazione non configurata sul server' : 'Nessuna connessione: riprovo più tardi' }); }
+  syncErr(res) { if (res && res.status === 401 && this.auth) return this.expire(); this.setSync({ status: 'error', err: res && res.status === 401 ? 'Codice non valido' : res && res.status === 500 ? 'Sincronizzazione non configurata sul server' : 'Nessuna connessione: riprovo più tardi' }); }
   async push(keepalive) {
     if (!this.syncKey) return; clearTimeout(this._pushT); this._pushPending = false;
     this.setSync({ status: 'syncing' });
@@ -1235,6 +1476,7 @@ class Component extends DCLogic {
       const res = await this.syncFetch('GET');
       if (!res.ok) return this.syncErr(res);
       const d = await res.json();
+      if (d.empty && !this.dataAt) { this.setSync({ status: 'ok', at: new Date(), err: '' }); if (!this.state.onboard) this.setState({ onboard: true, obStep: 1 }); return; }
       if (d.empty || (d.dataAt || 0) < this.dataAt || this._pushPending) { if (!this.dataAt) this.dataAt = Date.now(); await this.push(); }
       else if (d.dataAt > this.dataAt) this.applyRemote(d);
       else this.setSync({ status: 'ok', at: new Date(), err: '' });
@@ -1252,11 +1494,12 @@ class Component extends DCLogic {
     });
   }
   persist() {
+    if (!this.auth) return;
     const { months, rates, nextId, view } = this.state;
     if (!Array.isArray(months) || !months.length) return;
     const ds = JSON.stringify({ months, rates, nextId });
     if (ds !== this._lastData) { this._lastData = ds; this.dataAt = Date.now(); this.schedulePush(); }
-    try { localStorage.setItem(MF_KEY, JSON.stringify({ months, rates, nextId, view, savedAt: Date.now(), dataAt: this.dataAt })); this.savedOk = true; this.savedAt = new Date(); } catch (e) { this.savedOk = false; }
+    try { localStorage.setItem(MF_UKEY(this.auth), JSON.stringify({ months, rates, nextId, view, savedAt: Date.now(), dataAt: this.dataAt })); this.savedOk = true; this.savedAt = new Date(); } catch (e) { this.savedOk = false; }
   }
   componentDidMount() {
     try { this._mq = window.matchMedia('(max-width: 760px)'); this._mqH = e => this.setState({ isMobile: e.matches }); this._mq.addEventListener ? this._mq.addEventListener('change', this._mqH) : this._mq.addListener(this._mqH); this.setState({ isMobile: this._mq.matches }); } catch (e) {}
@@ -1319,8 +1562,8 @@ class Component extends DCLogic {
       hasUndo: !!s.hasUndo, undo: () => { const f = this._undoFn; this._undoFn = null; clearTimeout(this._toastT); this.setState({ toast: '', hasUndo: false }); if (f) { f(); haptic(); } },
       stOverlay: { animation: 'mfFade 200ms ease-out', position: 'fixed', inset: 0, zIndex: 105, background: 'rgba(11,11,11,.55)', WebkitBackdropFilter: 'blur(2px)', backdropFilter: 'blur(2px)', display: 'flex', alignItems: s.isMobile ? 'flex-end' : 'stretch', justifyContent: s.isMobile ? 'center' : 'flex-end' },
       stPanel: s.isMobile
-        ? { animation: 'mfUp 320ms cubic-bezier(.32,.72,0,1)', width: '100%', maxHeight: '90dvh', overflowY: 'auto', WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', alignContent: 'start', gap: 12, padding: '16px 16px calc(24px + env(safe-area-inset-bottom))', borderRadius: '24px 24px 0 0', background: 'var(--n0)', color: 'var(--nW)', borderTop: '1px solid var(--n4)', boxShadow: '0 -16px 48px rgba(0,0,0,.35)', animation: 'mfUp .28s cubic-bezier(.2,.8,.2,1)' }
-        : { animation: 'mfSide 280ms cubic-bezier(.32,.72,0,1)', width: 420, maxWidth: '100%', height: '100%', overflowY: 'auto', overscrollBehavior: 'contain', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', alignContent: 'start', gap: 12, padding: '24px 20px 32px', background: 'var(--n0)', color: 'var(--nW)', borderLeft: '1px solid var(--n4)', boxShadow: '-24px 0 64px rgba(0,0,0,.35)', animation: 'mfSide .28s cubic-bezier(.2,.8,.2,1)' },
+        ? { animation: 'mfUp 320ms cubic-bezier(.32,.72,0,1)', width: '100%', maxHeight: '90dvh', overflowY: 'auto', WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gridAutoRows: 'max-content', alignContent: 'start', gap: 12, padding: '16px 16px calc(24px + env(safe-area-inset-bottom))', borderRadius: '24px 24px 0 0', background: 'var(--n0)', color: 'var(--nW)', borderTop: '1px solid var(--n4)', boxShadow: '0 -16px 48px rgba(0,0,0,.35)', animation: 'mfUp .28s cubic-bezier(.2,.8,.2,1)' }
+        : { animation: 'mfSide 280ms cubic-bezier(.32,.72,0,1)', width: 420, maxWidth: '100%', height: '100%', overflowY: 'auto', overscrollBehavior: 'contain', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gridAutoRows: 'max-content', alignContent: 'start', gap: 12, padding: '24px 20px 32px', background: 'var(--n0)', color: 'var(--nW)', borderLeft: '1px solid var(--n4)', boxShadow: '-24px 0 64px rgba(0,0,0,.35)', animation: 'mfSide .28s cubic-bezier(.2,.8,.2,1)' },
       ...(() => {
         if (!v.bucketCards) return {};
         const go = (id, tab) => () => { if ((this.state.mTab || 'home') !== tab) { this.setState({ mTab: tab }); setTimeout(() => go(id, tab)(), 80); return; } const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - (s.isMobile ? 76 : 84), behavior: 'smooth' }); };
@@ -1336,6 +1579,7 @@ class Component extends DCLogic {
         ].filter(Boolean).map(t => ({ ...t, go: go(t.id, t.id === 'box-var' ? 'week' : 'rate') }));
         return { boxTiles: tiles, bucketCards: v.bucketCards.map((b, i) => ({ ...b, boxId: i === 0 ? 'box-fisse' : 'box-var', show: i === 0 ? !!v.tabPiano : !!v.tabMese })) };
       })(),
+      ...this.authVals(),
       settingsOpen: !!s.settingsOpen, openSettings: () => this.setState({ settingsOpen: true }), closeSettings: () => this.setState(close),
       themeOpts: [tOpt('dark', 'Scuro', 'icon-moon'), tOpt('light', 'Chiaro', 'icon-sun'), tOpt('auto', 'Auto', 'icon-sun-moon')],
       themeIcon: (s.themeResolved || 'dark') === 'light' ? 'icon-moon' : 'icon-sun',
