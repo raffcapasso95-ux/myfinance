@@ -11,8 +11,12 @@ module.exports = async (req, res) => {
 
     if (req.method === 'GET') {
       const emails = (await L.cmd('SMEMBERS', 'myfinance:users')) || [];
-      const users = (await Promise.all(emails.filter(e => e !== L.adminEmail()).map(L.getUser))).filter(Boolean)
-        .map(u => ({ email: u.email, name: u.name || '', createdAt: u.createdAt || 0 })).sort((a, b) => a.createdAt - b.createdAt);
+      const users = (await Promise.all(emails.filter(e => e !== L.adminEmail()).map(async e => {
+        const x = await L.getUser(e); if (!x) return null;
+        let d = null; try { const raw = await L.cmd('GET', L.dataKey(e)); d = raw ? JSON.parse(raw) : null; } catch (err) {}
+        const months = d && Array.isArray(d.months) ? d.months : [];
+        return { email: x.email, name: x.name || '', createdAt: x.createdAt || 0, lastLogin: x.lastLogin || 0, dataAt: (d && d.dataAt) || 0, months: months.length, entries: months.reduce((t, m) => t + (m.variable || []).length, 0) };
+      }))).filter(Boolean).sort((a, b) => a.createdAt - b.createdAt);
       return res.status(200).json({ users });
     }
     if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });

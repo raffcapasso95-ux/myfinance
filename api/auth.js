@@ -23,6 +23,7 @@ module.exports = async (req, res) => {
       if (!ok && email === L.adminEmail()) ok = L.eq(pw, process.env.ADMIN_PASSWORD);
       if (!ok) { await L.cmd('INCR', fk); await L.cmd('EXPIRE', fk, 900); return res.status(401).json({ error: 'invalid' }); }
       await L.cmd('DEL', fk);
+      if (u) await L.saveUser({ ...u, lastLogin: Date.now() });
       const token = L.crypto.randomBytes(32).toString('hex');
       await L.cmd('SET', 'myfinance:session:' + token, email, 'EX', L.SESSION_TTL);
       return res.status(200).json({ token, email, name: (u && u.name) || '', admin: email === L.adminEmail() });
