@@ -36,10 +36,10 @@
 </sc-if>
 <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeSheet }}" style="position:fixed;inset:0;z-index:95;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
-    <div role="dialog" aria-modal="true" aria-label="Nuova spesa" onClick="{{ stopProp }}" onKeyDown="{{ onSheetKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
+    <div role="dialog" aria-modal="true" aria-label="{{ sheetTitle }}" onClick="{{ stopProp }}" onKeyDown="{{ onSheetKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div></sc-if>
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-        <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><h2 style="margin:0;font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">Nuova spesa</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ heroLabel }}: {{ heroValue }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><h2 style="margin:0;font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">{{ sheetTitle }}</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ sheetSub }}</span></div>
         <button onClick="{{ closeSheet }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--mf-surface-hover)"><i class="icon-x" style="font-size:20px;line-height:1"></i></button>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -52,8 +52,9 @@
       </div>
       <div style="display:flex;gap:8px">
         <button onClick="{{ sheetPk.toggle }}" aria-label="Icona" style="width:48px;height:48px;flex:none;border-radius:12px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--mf-surface-hover)"><i class="{{ formIconSel }}" style="font-size:20px;line-height:1"></i><span style="{{ formIconTxtStyle }}">{{ formIconTxt }}</span></button>
-        <input data-name="1" aria-label="Cosa hai comprato" placeholder="Cosa hai comprato?" value="{{ formName }}" onChange="{{ onFormName }}" style="flex:1;min-width:0;height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--mf-input-border);background:var(--mf-surface);color:var(--mf-text);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:var(--mf-focus);box-shadow:0 0 0 1px var(--mf-focus)">
+        <input ref="{{ nameRef }}" data-name="1" aria-label="Cosa hai comprato" aria-invalid="{{ sheetNameErrOn }}" placeholder="Cosa hai comprato?" value="{{ formName }}" onChange="{{ onFormName }}" style="flex:1;min-width:0;height:48px;padding:0 16px;border-radius:12px;border:1px solid {{ sheetNameLine }};background:var(--mf-surface);color:var(--mf-text);font:400 16px/1.5 Inter,sans-serif;outline:0" style-focus="border-color:var(--mf-focus);box-shadow:0 0 0 1px var(--mf-focus)">
       </div>
+<sc-if value="{{ sheetNameErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;align-items:center;gap:8px;margin-top:-6px;font:500 13px/18px Inter,sans-serif;color:var(--mf-danger)"><i class="icon-triangle-alert" style="font-size:16px;line-height:1;flex:none"></i><span>{{ sheetNameErr }}</span></div></sc-if>
 <sc-if value="{{ sheetPk.open }}" hint-placeholder-val="{{ false }}">
   <div style="display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:16px;background:var(--mf-background);border:1px solid var(--mf-border);color:var(--mf-text)">
     <div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border-radius:99px;background:var(--mf-surface);border:1px solid var(--mf-border)"><i class="icon-search" style="font-size:16px;line-height:1;color:var(--mf-text-muted)"></i><input aria-label="Cerca icona" placeholder="Cerca icona o servizio…" value="{{ sheetPk.q }}" onChange="{{ sheetPk.onQ }}" style="flex:1;min-width:0;border:0;background:transparent;outline:0;color:var(--mf-text);font:400 16px/1.5 Inter,sans-serif"></div>
@@ -74,7 +75,41 @@
         <input type="date" aria-label="Data della spesa" value="{{ formDate }}" min="{{ dateMin }}" max="{{ dateMax }}" onChange="{{ onFormDate }}" style="flex:1 1 150px;min-width:0;height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text);font:400 16px/1 Inter,sans-serif;outline:0" style-focus="border-color:var(--mf-focus)">
         <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span style="flex:1 1 150px;font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted);text-wrap:pretty">Invio per aggiungere · Esc per chiudere</span></sc-if>
       </div>
-      <button onClick="{{ addExpense }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-brand);color:var(--mf-on-brand);font:600 16px/1 Inter,sans-serif;cursor:pointer">Aggiungi spesa</button>
+      <button onClick="{{ addExpense }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-brand);color:var(--mf-on-brand);font:600 16px/1 Inter,sans-serif;cursor:pointer">{{ sheetCta }}</button>
+      <sc-if value="{{ sheetEditing }}" hint-placeholder-val="{{ false }}"><button onClick="{{ sheetDelete }}" style="height:44px;border-radius:99px;border:0;background:transparent;color:var(--mf-danger);font:600 15px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><i class="icon-trash-2" style="font-size:16px;line-height:1"></i>Elimina spesa</button></sc-if>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ nmOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ nmClose }}" style="position:fixed;inset:0;z-index:96;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
+    <div role="dialog" aria-modal="true" aria-label="Nuovo mese" onClick="{{ stopProp }}" onKeyDown="{{ nmKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div></sc-if>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><h2 style="margin:0;font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">Nuovo mese</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ nmSub }}</span></div><button onClick="{{ nmClose }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:20px;line-height:1"></i></button></div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:16px;background:var(--mf-surface-raised)"><span style="font:400 12px/18px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--mf-text-muted)">Periodo</span><span style="font:500 24px/30px Inter,sans-serif;letter-spacing:-0.01em">{{ nmPeriod }}</span><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ nmDays }}</span></div>
+      <div style="display:flex;flex-direction:column">
+        <button role="switch" aria-checked="{{ nmFixedOn }}" onClick="{{ nmToggleFixed }}" style="display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 0;border:0;border-top:1px solid var(--mf-border);background:transparent;color:var(--mf-text);cursor:pointer;text-align:left;font:inherit"><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:600 16px/22px Inter,sans-serif">{{ nmFixedTitle }}</span><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ nmFixedSub }}</span></span><span aria-hidden="true" style="position:relative;flex:none;width:52px;height:32px;border-radius:99px;background:{{ nmFixedBg }};transition:background 160ms"><span style="position:absolute;top:4px;left:{{ nmFixedLeft }};width:24px;height:24px;border-radius:99px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left 160ms"></span></span></button>
+        <button role="switch" aria-checked="{{ nmCarryOn }}" onClick="{{ nmToggleCarry }}" style="display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 0;border:0;border-top:1px solid var(--mf-border);background:transparent;color:var(--mf-text);cursor:pointer;text-align:left;font:inherit"><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:600 16px/22px Inter,sans-serif">{{ nmCarryTitle }}</span><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ nmCarrySub }}</span></span><span aria-hidden="true" style="position:relative;flex:none;width:52px;height:32px;border-radius:99px;background:{{ nmCarryBg }};transition:background 160ms"><span style="position:absolute;top:4px;left:{{ nmCarryLeft }};width:24px;height:24px;border-radius:99px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left 160ms"></span></span></button>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:6px"><span style="font:400 12px/18px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--mf-text-muted)">Stipendio</span><span style="position:relative;display:block"><span aria-hidden="true" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--mf-text-muted);font:400 16px/1 Inter,sans-serif">€</span><input data-nm="1" inputmode="decimal" autocomplete="off" aria-invalid="{{ nmErrOn }}" value="{{ nmSalary }}" onChange="{{ onNmSalary }}" style="width:100%;box-sizing:border-box;height:48px;padding:0 16px 0 36px;border-radius:12px;border:1px solid var(--mf-input-border);background:var(--mf-surface);color:var(--mf-text);font:400 16px/1.5 Inter,sans-serif;text-align:right;outline:0" style-focus="border-color:var(--mf-focus);box-shadow:0 0 0 1px var(--mf-focus)"></span></label>
+      <sc-if value="{{ nmErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;align-items:center;gap:8px;font:500 13px/18px Inter,sans-serif;color:var(--mf-danger)"><i class="icon-triangle-alert" style="font-size:16px;line-height:1;flex:none"></i><span>{{ nmErr }}</span></div></sc-if>
+      <button onClick="{{ nmCreate }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-brand);color:var(--mf-on-brand);font:600 16px/1 Inter,sans-serif;cursor:pointer">{{ nmCta }}</button>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ cmOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeCm }}" style="position:fixed;inset:0;z-index:96;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
+    <div role="dialog" aria-modal="true" aria-label="Cambia mese" onClick="{{ stopProp }}" onKeyDown="{{ cmKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div></sc-if>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><h2 style="margin:0;font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">Cambia mese</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">Scegli il periodo da vedere</span></div><button onClick="{{ closeCm }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:20px;line-height:1"></i></button></div>
+      <div role="list" style="display:flex;flex-direction:column">
+        <sc-for list="{{ cmItems }}" as="it" hint-placeholder-count="4"><button role="listitem" onClick="{{ it.go }}" aria-current="{{ it.cur }}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 0;border:0;border-top:1px solid var(--mf-border);background:transparent;color:var(--mf-text);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--mf-surface-raised)">
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font:600 16px/22px Inter,sans-serif">{{ it.title }}</span><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ it.sub }}</span></span>
+          <sc-if value="{{ it.badge }}" hint-placeholder-val="{{ false }}"><span style="flex:none;display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:99px;background:var(--mf-brand-soft);color:var(--mf-brand-text);font:500 13px/1 Inter,sans-serif">{{ it.badge }}</span></sc-if>
+          <sc-if value="{{ it.amt }}" hint-placeholder-val="{{ false }}"><span style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px"><b style="font:600 16px/22px Inter,sans-serif;white-space:nowrap">{{ it.amt }}</b><span style="font:400 12px/16px Inter,sans-serif;color:var(--mf-text-muted)">{{ it.amtLbl }}</span></span></sc-if>
+          <sc-if value="{{ it.on }}" hint-placeholder-val="{{ false }}"><i class="icon-circle-check" style="font-size:20px;line-height:1;flex:none;color:var(--mf-positive)"></i></sc-if>
+        </button></sc-for>
+      </div>
+      <button onClick="{{ cmNew }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);font:600 16px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="background:var(--mf-surface-hover)"><i class="icon-calendar-plus" style="font-size:18px;line-height:1"></i>Crea nuovo mese</button>
     </div>
   </div>
 </sc-if>
@@ -372,12 +407,7 @@
 <aside aria-label="Navigazione" style="position:sticky;top:0;height:100dvh;width:232px;flex:none;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;padding:24px 16px;border-right:1px solid var(--mf-border);background:var(--mf-nav-bg);color:var(--mf-text);overflow-y:auto;z-index:10">
   <div style="display:flex;align-items:center;gap:10px;padding:0 8px 20px"><img src="/brand/Myfinance_Simbolo_Corallo.png" alt="" width="38" height="32" style="flex:none;width:38px;height:auto"><span style="font:600 20px/26px Inter,sans-serif;letter-spacing:-.02em">Myfinance</span></div>
   <button onClick="{{ openSheetAny }}" style="width:100%;height:48px;margin-bottom:12px;border-radius:99px;border:0;background:var(--mf-brand);color:var(--mf-on-brand);font:600 15px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><i class="icon-plus" style="font-size:20px;line-height:1"></i><span>Nuova spesa</span></button>
-  <sc-if value="{{ isYear }}" hint-placeholder-val="{{ false }}"><div style="position:relative;margin:0 0 8px">
-    <select value="{{ mobileSel }}" onChange="{{ onMobileSel }}" aria-label="Scegli il mese" style="appearance:none;-webkit-appearance:none;width:100%;height:44px;padding:0 34px 0 12px;border-radius:12px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 14px/1 Inter,sans-serif;outline:0;cursor:pointer">
-      <sc-for list="{{ mobileOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
-    </select>
-    <i class="icon-chevron-down" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--mf-text-muted);font-size:16px;line-height:1"></i>
-  </div></sc-if>
+  <sc-if value="{{ isYear }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openCm }}" aria-label="Cambia mese" style="display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;height:44px;margin:0 0 8px;padding:0 14px 0 12px;border-radius:12px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 14px/1 Inter,sans-serif;cursor:pointer"><span>{{ mobileSelLabel }}</span><i class="icon-chevron-down" style="color:var(--mf-text-muted);font-size:16px;line-height:1"></i></button></sc-if>
   <sc-for list="{{ mNav }}" as="t" hint-placeholder-count="4"><button onClick="{{ t.go }}" aria-current="{{ t.current }}" style="{{ t.dStyle }}" style-hover="background:var(--mf-surface-raised);color:var(--mf-text)"><i class="{{ t.icon }}" style="font-size:20px;line-height:1"></i><span>{{ t.label }}</span></button></sc-for>
   <sc-if value="{{ isYear }}" hint-placeholder-val="{{ false }}"><button onClick="{{ addMonth }}" style="width:100%;height:44px;padding:0 12px;border-radius:12px;border:0;background:transparent;color:var(--mf-text-secondary);font:500 15px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px;text-align:left;margin-top:6px;height:52px;border:1px dashed var(--mf-border)" style-hover="color:var(--mf-text);border-color:var(--mf-text-muted)"><i class="icon-calendar-plus" style="font-size:20px;line-height:1;flex:none"></i><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span>Nuovo mese</span><span style="font:400 12px/14px Inter,sans-serif;color:var(--mf-text-muted)">{{ nextMonthLabel }}</span></span></button></sc-if>
   <div style="flex:1;min-height:20px"></div>
@@ -393,9 +423,7 @@
   <img src="/brand/Myfinance_Simbolo_Corallo.png" alt="Myfinance" width="36" height="31" style="flex:none;width:36px;height:auto">
   <div style="position:relative;min-width:0;display:flex;align-items:center">
     <span style="display:flex;align-items:center;gap:6px;height:44px;min-width:0;font:600 20px/26px Inter,sans-serif;letter-spacing:-.01em"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ mobileSelLabel }}</span><i class="icon-chevron-down" style="font-size:20px;line-height:1;flex:none;color:var(--mf-text-muted)"></i></span>
-    <select value="{{ mobileSel }}" onChange="{{ onMobileSel }}" aria-label="Cambia mese" style="appearance:none;-webkit-appearance:none;position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;background:transparent;font-size:16px;cursor:pointer">
-      <sc-for list="{{ mobileOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
-    </select>
+    <button onClick="{{ openCm }}" aria-label="Cambia mese" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;background:transparent;cursor:pointer"></button>
   </div>
   <div style="flex:1"></div>
   <button onClick="{{ addMonth }}" aria-label="Nuovo mese" style="width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:20px;line-height:1"></i></button>
@@ -405,7 +433,7 @@
 
 <sc-if value="{{ isMonth }}" hint-placeholder-val="{{ true }}">
 <div style="position:relative;display:flex;align-items:flex-start"><sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;top:54px;right:20px;z-index:5"><div style="display:flex;align-items:center;gap:10px;flex:none">
-        <div style="position:relative"><select value="{{ mobileSel }}" onChange="{{ onMobileSel }}" aria-label="Scegli il mese" style="appearance:none;-webkit-appearance:none;height:44px;padding:0 42px 0 18px;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 15px/1 Inter,sans-serif;outline:0;cursor:pointer"><sc-for list="{{ mobileOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select><i class="icon-chevron-down" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--mf-text-muted);font-size:16px;line-height:1"></i></div>
+        <button onClick="{{ openCm }}" aria-label="Cambia mese" style="display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 16px 0 18px;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 15px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--mf-surface-raised)"><span>{{ mobileSelLabel }}</span><i class="icon-chevron-down" style="color:var(--mf-text-muted);font-size:16px;line-height:1"></i></button>
         <button onClick="{{ addMonth }}" aria-label="Nuovo mese" style="width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:20px;line-height:1"></i></button>
         <button onClick="{{ openSettings }}" aria-label="Impostazioni" style="position:relative;width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-sliders-horizontal" style="font-size:20px;line-height:1"></i><span style="{{ syncDot }}"></span></button>
       </div></div></sc-if><div style="flex:1;min-width:0;padding-bottom:40px">
@@ -427,7 +455,7 @@
         </div>
       </div>
       <sc-if value="{{ deskNoRail }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:10px;flex:none">
-        <div style="position:relative"><select value="{{ mobileSel }}" onChange="{{ onMobileSel }}" aria-label="Scegli il mese" style="appearance:none;-webkit-appearance:none;height:44px;padding:0 42px 0 18px;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 15px/1 Inter,sans-serif;outline:0;cursor:pointer"><sc-for list="{{ mobileOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select><i class="icon-chevron-down" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--mf-text-muted);font-size:16px;line-height:1"></i></div>
+        <button onClick="{{ openCm }}" aria-label="Cambia mese" style="display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 16px 0 18px;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 15px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--mf-surface-raised)"><span>{{ mobileSelLabel }}</span><i class="icon-chevron-down" style="color:var(--mf-text-muted);font-size:16px;line-height:1"></i></button>
         <button onClick="{{ addMonth }}" aria-label="Nuovo mese" style="width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:20px;line-height:1"></i></button>
         <button onClick="{{ openSettings }}" aria-label="Impostazioni" style="position:relative;width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-sliders-horizontal" style="font-size:20px;line-height:1"></i><span style="{{ syncDot }}"></span></button>
       </div></sc-if>
@@ -1561,6 +1589,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     try { this._mq = window.matchMedia('(max-width: 760px)'); this._mqH = e => this.setState({ isMobile: e.matches }); this._mq.addEventListener ? this._mq.addEventListener('change', this._mqH) : this._mq.addListener(this._mqH); this.setState({ isMobile: this._mq.matches }); } catch (e) {}
+    try { this._escH = e => { if (e.key !== 'Escape') return; const st = this.state; if (st.modal) return; if (st.nmOpen) this.setState({ nmOpen: false, nmErr: '' }); else if (st.cmOpen) this.setState({ cmOpen: false }); else if (st.sheetOpen && this._closeSheet) this._closeSheet(); }; document.addEventListener('keydown', this._escH); } catch (e) {}
     try { this._wq = window.matchMedia('(min-width: 1180px)'); this._wqH = e => this.setState({ isWide: e.matches }); this._wq.addEventListener('change', this._wqH); this.setState({ isWide: this._wq.matches }); } catch (e) {}
     this._onHide = () => this.persist();
     window.addEventListener('pagehide', this._onHide);
@@ -1679,22 +1708,22 @@ class Component extends DCLogic {
     const last = months[months.length - 1];
     const nxt = fromIdx(idx(last) + 1);
     const ask = (title, text, ok, danger, fn) => { this._modalFn = fn; this.setState({ modal: { title, text, ok, danger } }); };
+    const parseNum = v => parseFloat(String(v || '').replace(/\s|€/g, '').replace(',', '.'));
+    const fmtIn = n => (r2 => Number.isInteger(r2) ? String(r2) : r2.toFixed(2))(Math.round(n * 100) / 100).replace('.', ',');
     const doAddMonth = () => this.setState(st => {
+      const sal = parseNum(st.nmSalary);
+      if (!(sal > 0)) return { nmErr: 'Inserisci uno stipendio maggiore di 0' };
       let id = st.nextId;
       const copy = arr => arr.map(e => ({ ...e, id: id++ }));
-      const nm = newMonth(nxt.year, nxt.month, last.salary, last.pSave, copy(last.fixed), copy(last.savings), last.startDay || 1);
+      const nm = newMonth(nxt.year, nxt.month, Math.round(sal * 100) / 100, last.pSave, st.nmFixed === false ? [] : copy(last.fixed), copy(last.savings), last.startDay || 1);
+      if (st.nmCarry === false) nm.noCarry = true;
       const lr = this.range(last); const ns = new Date(lr.end.getTime() + 864e5);
       nm.split = last.split || null; nm.pStart = isoOf(ns); nm.pEnd = isoOf(new Date(ns.getFullYear(), ns.getMonth() + 1, ns.getDate() - 1));
       const fixLast = st.months.map(m => m.id === last.id && !m.pEnd ? { ...m, pStart: isoOf(lr.start), pEnd: isoOf(lr.end) } : m);
-      return { months: [...fixLast, nm], nextId: id, view: 'm:' + nm.id };
+      this.toast(`${MN[nxt.month]} ${nxt.year} creato`);
+      return { months: [...fixLast, nm], nextId: id, view: 'm:' + nm.id, nmOpen: false, nmErr: '', cmOpen: false };
     });
-    const addMonth = () => {
-      const nm = { year: nxt.year, month: nxt.month };
-      const nRates = s.rates.filter(r => { const k = this.rateK(r, nm); return k >= 1 && k <= r.count; }).length;
-      const lr = this.range(last); const ns = new Date(lr.end.getTime() + 864e5);
-      const eurS = n => EUR0.format(n);
-      ask(`Creare ${MN[nxt.month]} ${nxt.year}?`, `Porto con me lo stipendio (${eurS(last.salary)}), ${last.fixed.length} ${last.fixed.length === 1 ? 'spesa fissa' : 'spese fisse'}, la percentuale del salvadanaio (${last.pSave}%) e ${nRates} ${nRates === 1 ? 'rata in corso' : 'rate in corso'}. Il periodo partirà dal ${ns.getDate()} ${MN[ns.getMonth()].toLowerCase()}.`, 'Crea mese', false, doAddMonth);
-    };
+    const addMonth = () => this.setState({ nmOpen: true, nmFixed: true, nmCarry: true, nmSalary: fmtIn(last.salary), nmErr: '', cmOpen: false });
     const rateInfo = (r, ref) => {
       const k = this.rateK(r, ref), rata = this.rataOf(r);
       const endI = r.startIdx + (r.count - r.paidBefore) - 1, end = fromIdx(endI);
@@ -1709,6 +1738,29 @@ class Component extends DCLogic {
       ipStyle: { width: 56, height: 30, borderRadius: 99, display: 'grid', placeItems: 'center', background: on ? 'var(--mf-surface-hover)' : 'transparent' },
       dotStyle: { width: 4, height: 4, borderRadius: 99, background: on ? '#f36458' : 'transparent' },
       dStyle: { display: 'flex', alignItems: 'center', gap: 12, width: '100%', height: 44, padding: '0 12px', borderRadius: 12, border: 0, background: on ? 'var(--mf-surface-hover)' : 'transparent', color: on ? 'var(--mf-text)' : 'var(--mf-text-secondary)', font: '500 15px/1 Inter,sans-serif', cursor: 'pointer', textAlign: 'left' } }; };
+    const nowMK = dkey(new Date()), fm = d => `${d.getDate()} ${MSH[d.getMonth()]}`;
+    const carryUp = m => { if (m.noCarry) return 0; const p = months.filter(x => idx(x) < idx(m)).pop(); if (!p) return 0; const pc = this.calc(p); return pc.left + pc.extraSaved + carryUp(p); };
+    const mgmt = (() => {
+        const lr = this.range(last), ns = new Date(lr.end.getTime() + 864e5), ne = new Date(ns.getFullYear(), ns.getMonth() + 1, ns.getDate() - 1), days = Math.round((ne - ns) / 864e5) + 1;
+        const lc = this.calc(last), carryAmt = lc.left + lc.extraSaved + carryUp(last), fxTot = last.fixed.reduce((t, x) => t + x.amount, 0);
+        const nRt = s.rates.filter(r => { const k = this.rateK(r, { year: nxt.year, month: nxt.month }); return k >= 1 && k <= r.count; }).length;
+        const sw = on => ({ bg: on ? 'var(--mf-positive)' : 'var(--mf-surface-hover)', left: on ? '24px' : '4px' });
+        const f = sw(s.nmFixed !== false), cr = sw(s.nmCarry !== false);
+        const names = last.fixed.map(x => x.name).join(', ');
+        const cur = mo.id, curIdx = idx(mo);
+        const items = [{ key: 'new', title: `${MN[nxt.month]} ${nxt.year}`, sub: `${fm(ns)} → ${fm(ne)}`, badge: 'Da creare', amt: '', on: false, go: () => this.setState({ cmOpen: false }, () => addMonth()) },
+          ...months.slice().reverse().map(m => { const rr = this.range(m), cc = this.calc(m), on = !isYear && m.id === cur; return { key: m.id, title: `${MN[m.month]} ${m.year}`, sub: (nowMK >= dkey(rr.start) && nowMK <= dkey(rr.end) ? 'Mese corrente · ' : '') + `${fm(rr.start)} → ${fm(rr.end)}`, badge: '', amt: eur(cc.left), amtLbl: 'rimasto', on, cur: on ? 'true' : undefined, go: () => { this.setState({ view: 'm:' + m.id, formDate: '', cmOpen: false }); window.scrollTo(0, 0); } }; }),
+          ...years.slice().reverse().map(y => ({ key: 'y' + y, title: `Resoconto ${y}`, sub: 'Anno intero', badge: '', amt: '', on: isYear && s.view === 'y:' + y, go: () => { this.setState({ view: 'y:' + y, cmOpen: false }); window.scrollTo(0, 0); } }))];
+        return {
+          nmOpen: !!s.nmOpen, nmClose: () => this.setState({ nmOpen: false, nmErr: '' }), nmSub: 'Crea il mese dopo ' + MN[last.month].toLowerCase(), nmPeriod: `${fm(ns)} → ${fm(ne)}`, nmDays: `${days} giorni · ${nRt} ${nRt === 1 ? 'rata in corso' : 'rate in corso'}`,
+          nmFixedTitle: 'Copia le spese fisse', nmFixedSub: last.fixed.length ? `${names} · ${eur(fxTot)}` : 'Nessuna spesa fissa nel mese precedente', nmFixedOn: s.nmFixed !== false, nmFixedBg: f.bg, nmFixedLeft: f.left, nmToggleFixed: () => this.setState({ nmFixed: s.nmFixed === false }),
+          nmCarryTitle: 'Porta avanti il rimasto', nmCarrySub: `${eur(carryAmt)} da ${MN[last.month].toLowerCase()} vanno nel mese nuovo`, nmCarryOn: s.nmCarry !== false, nmCarryBg: cr.bg, nmCarryLeft: cr.left, nmToggleCarry: () => this.setState({ nmCarry: s.nmCarry === false }),
+          nmSalary: s.nmSalary || '', onNmSalary: e => this.setState({ nmSalary: e.target.value, nmErr: '' }), nmErr: s.nmErr || '', nmCta: 'Crea ' + MN[nxt.month].toLowerCase(), nmCreate: doAddMonth,
+          nmKey: e => { if (e.key === 'Escape') { e.stopPropagation(); this.setState({ nmOpen: false, nmErr: '' }); } else if (e.key === 'Enter' && e.target && e.target.dataset && e.target.dataset.nm) { e.preventDefault(); doAddMonth(); } },
+          nmErrOn: !!s.nmErr, cmOpen: !!s.cmOpen, openCm: () => this.setState({ cmOpen: true }), closeCm: () => this.setState({ cmOpen: false }), cmItems: items, cmNew: () => this.setState({ cmOpen: false }, () => addMonth()),
+          cmKey: e => { if (e.key === 'Escape') { e.stopPropagation(); this.setState({ cmOpen: false }); } },
+        };
+      })();
     const base = {
       ...(() => {
         const sy = s.sync || { status: 'off' }, st = sy.status;
@@ -1732,6 +1784,7 @@ class Component extends DCLogic {
       pageTitle: mTab === 'week' ? 'Conto di ' + MN[mo.month].toLowerCase() : mTab === 'rate' ? 'Piano del mese' : MN[mo.month] + (mo.year !== new Date().getFullYear() ? ' ' + mo.year : ''), tabOggi: mTab === 'home', tabMese: mTab === 'week', tabPiano: mTab === 'rate', showContoInline: (mob || !s.isWide) && mTab === 'week', showRail: !mob && !!s.isWide,
       mNav: [tabBtn('home', 'sun', 'Oggi'), tabBtn('week', 'wallet', 'Mese'), tabBtn('rate', 'sliders-horizontal', 'Piano'), tabBtn('year', 'trending-up', 'Anno')],
       mNavA: [tabBtn('home', 'sun', 'Oggi'), tabBtn('week', 'wallet', 'Mese')], mNavB: [tabBtn('rate', 'sliders-horizontal', 'Piano'), tabBtn('year', 'trending-up', 'Anno')],
+      ...mgmt,
       mobileSel: s.view, mobileSelLabel: (([...months.slice().reverse().map(m => ({ value: 'm:' + m.id, label: `${MN[m.month]} ${m.year}` })), ...years.slice().reverse().map(y => ({ value: 'y:' + y, label: `Resoconto ${y}` }))].find(o => o.value === s.view)) || {}).label || '',
       mobileOpts: [...months.slice().reverse().map(m => ({ value: 'm:' + m.id, label: `${MN[m.month]} ${m.year}` })), ...years.slice().reverse().map(y => ({ value: 'y:' + y, label: `Resoconto ${y}` }))],
       onMobileSel: e => { const v = e.target.value; this.setState({ view: v, sheetOpen: false }); window.scrollTo(0, 0); },
@@ -1888,9 +1941,16 @@ class Component extends DCLogic {
       const { list, id } = st.ed;
       this.setState(x => ({ months: x.months.map(m => ({ ...m, [list]: (m[list] || []).map(it => it.id === id ? { ...it, name: n, amount: a, icon: x.edIcon, ...(list === 'variable' && x.edDate ? { date: x.edDate } : {}) } : it) })), ed: null, picker: null }));
     };
+    const whenLbl = iso => { const d = parseIso(iso), k = dkey(d), y = dkey(new Date(now.getTime() - 864e5)); return k === nowK ? 'oggi' : k === y ? 'ieri' : `${DOWS[d.getDay()].toLowerCase()} ${d.getDate()} ${MSH[d.getMonth()].toLowerCase()}`; };
+    const delVarAsk = e => () => {
+      const d = parseIso(e.date), k = dkey(d), wk = ranges.find(r => dkey(r[0]) <= k && k <= dkey(r[r.length - 1]));
+      const effect = wk && wk === curR ? `Il budget della settimana torna a ${eur(Math.max(0, weekLeft) + e.amount)}.` : `Il budget del mese torna a ${eur(c.varBudget - c.varSpent + e.amount)}.`;
+      ask('Eliminare questa spesa?', `${e.name} · ${eur(e.amount)} · ${whenLbl(e.date)}. ${effect} Potrai annullare per qualche secondo.`, 'Elimina', true, delAny('variable', e.id));
+    };
+    const openEditExp = e => { this._prefilled = false; this.setState({ sheetOpen: true, editExp: e.id, formName: e.name, formAmount: fmtIn(e.amount), formIcon: e.icon || '', formDate: e.date || '', picker: null, formErr: '', formErrN: '', formLast: '' }); setTimeout(() => { const el = this.amountRef.current; if (el) { el.focus(); try { el.select(); } catch (er) {} } }, 80); };
     const item = (list, e, o = {}) => {
       const ing = !!(s.ed && s.ed.list === list && s.ed.id === e.id);
-      const br = brandOf(e.icon); return { name: e.name, icon: br ? '' : (icls(e.icon) || o.defIcon || 'icon-receipt'), brand: br, fmt: (o.prefix || '') + eur(e.amount), sub: o.sub || '', del: delAny(list, e.id), edit: () => startEdit(list, e), viewing: !ing, editing: ing,
+      const br = brandOf(e.icon); return { name: e.name, icon: br ? '' : (icls(e.icon) || o.defIcon || 'icon-receipt'), brand: br, fmt: (o.prefix || '') + eur(e.amount), sub: o.sub || '', del: list === 'variable' ? delVarAsk(e) : delAny(list, e.id), edit: list === 'variable' ? () => openEditExp(e) : () => startEdit(list, e), viewing: !ing, editing: ing,
         ed: ing ? { name: s.edName, amount: s.edAmount, date: s.edDate, onName: ev => this.setState({ edName: ev.target.value }), onAmount: ev => this.setState({ edAmount: ev.target.value }), onDate: ev => this.setState({ edDate: ev.target.value }), dateLabel: (() => { if (!s.edDate) return 'Scegli data'; const d = parseIso(s.edDate); return `${DOWS[d.getDay()]} ${d.getDate()} ${MSH[d.getMonth()]}`; })(), openDate: () => { const d = s.edDate ? parseIso(s.edDate) : new Date(); this.setState({ dp: { v: s.edDate || isoOf(d), y: d.getFullYear(), m: d.getMonth(), min: isoOf(rg.start), max: isoOf(rg.end) } }); },
           showIcon: o.showIcon !== false, hasDate: !!o.hasDate, dateMin: isoOf(rg.start), dateMax: isoOf(rg.end), pk: { toggle: () => this.setState(st => ({ picker: st.picker === 'edit' ? null : 'edit', iconQ: '' })), sel: icls(s.edIcon) || 'icon-smile-plus' }, save: saveEdit, cancel: cancelEdit } : null };
     };
@@ -1988,7 +2048,7 @@ class Component extends DCLogic {
       const diff = target - spent;
       return {
         _cur: cur, _past: past, _over: over, _diff: diff, _target: target, _used: used,
-        mgroups: dayInfo.filter(x => x.list.length).map(x => ({ label: `${DOWS[x.dt.getDay()]} ${x.dt.getDate()} ${MSH[x.dt.getMonth()]}`.toUpperCase(), totalFmt: eur(x.tot), entries: x.list.map(e => ({ rule: 'var(--n8)', muted: 'var(--n6)', amtColor: 'var(--n0)', badgeBg: 'var(--n8)', iconColor: 'inherit', rowBg: 'var(--nW)', ...item('variable', e, { hasDate: true }), sw: swipe(delAny('variable', e.id)) })) })),
+        mgroups: dayInfo.filter(x => x.list.length).map(x => ({ label: `${DOWS[x.dt.getDay()]} ${x.dt.getDate()} ${MSH[x.dt.getMonth()]}`.toUpperCase(), totalFmt: eur(x.tot), entries: x.list.map(e => ({ rule: 'var(--n8)', muted: 'var(--n6)', amtColor: 'var(--n0)', badgeBg: 'var(--n8)', iconColor: 'inherit', rowBg: 'var(--nW)', ...item('variable', e, { hasDate: true }), sw: swipe(delVarAsk(e)) })) })),
         title: `SETTIMANA ${i + 1}`, range: rLabel(r), groups, empty: groups.length === 0, spentFmt: eur(spent), targetFmt: eur(target), days,
         diffLabel: diff >= 0 ? `restano ${eur(diff)}` : `oltre di ${eur(-diff)}`,
         status: cur ? 'IN CORSO' : past ? (over ? 'SFORATA' : 'OK') : 'PREVISTA',
@@ -2034,7 +2094,7 @@ class Component extends DCLogic {
         mvHasDay: !!dayOk, mvDayLabel: dayOk ? (() => { const d = parseIso(dayOk); return `${DOWS[d.getDay()]} ${d.getDate()} ${MSH[d.getMonth()]}`; })() : '', clearMvDay: () => this.setState({ mvDay: '' }),
         mvChips: [chip('all', 'Tutte'), ...(curR ? [chip('week', 'Questa settimana')] : []), ...Object.entries(cats).sort((a, b) => b[1] - a[1]).map(([g, t]) => chip('c:' + g, catName(g), eur(t)))],
         mvGroups: gs.map(g => { const d = parseIso(g.date), k = dkey(d); return { label: ((k === nowK ? 'Oggi · ' : k === yK ? 'Ieri · ' : '') + `${DOWS[d.getDay()]} ${d.getDate()} ${MSH[d.getMonth()]}`).toUpperCase(), totalFmt: eur(sum(g.list)),
-          entries: g.list.map(e => ({ rule: 'var(--n3)', muted: 'var(--n7)', amtColor: 'var(--nW)', badgeBg: 'var(--n3)', iconColor: 'inherit', rowBg: 'var(--n1)', ...item('variable', e, { hasDate: true }), sw: swipe(delAny('variable', e.id)) })) }; }),
+          entries: g.list.map(e => ({ rule: 'var(--n3)', muted: 'var(--n7)', amtColor: 'var(--nW)', badgeBg: 'var(--n3)', iconColor: 'inherit', rowBg: 'var(--n1)', ...item('variable', e, { hasDate: true }), sw: swipe(delVarAsk(e)) })) }; }),
         mvNoData: vlist.length === 0, mvNoMatch: vlist.length > 0 && fl.length === 0,
         mvReset: () => this.setState({ mvQ: '', mvF: 'all', mvDay: '' }),
         mvMore: fl.length > shown.length, mvMoreLabel: `Mostra altre ${fl.length - shown.length}`, mvShowMore: () => this.setState({ mvAll: true }),
@@ -2133,12 +2193,12 @@ class Component extends DCLogic {
         todayQuick: top.map(([l, ic]) => ({ label: l, amt: ((a) => { if (!a) return ''; const n = parseFloat(a.replace(',', '.')); return Number.isInteger(n) ? a : n.toFixed(2).replace('.', ','); })(lastAmt(l)), ...iconView(ic, 20), pick: openWith(l, ic) })),
         todayGroups: (() => { const eur2 = v => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(Math.round(v * 100) / 100); const gs = []; rec.forEach(e => { let g = gs[gs.length - 1]; if (!g || g.date !== e.date) { g = { date: e.date, list: [] }; gs.push(g); } g.list.push(e); });
           return gs.map((g, gi) => { const d = parseIso(g.date), k = dkey(d); return { label: ((k === nowK ? 'Oggi · ' : k === yK ? 'Ieri · ' : '') + `${DOWS[d.getDay()]} ${d.getDate()} ${MSH[d.getMonth()]}`).toUpperCase(), total: eur2(g.list.reduce((t, e) => t + e.amount, 0)), hdStyle: gi ? '1px solid var(--mf-border)' : '0',
-            items: g.list.map((e, ei) => ({ rule: ei ? 'var(--mf-border)' : 'transparent', muted: 'var(--mf-text-muted)', amtColor: 'var(--mf-text)', badgeBg: 'var(--mf-surface-raised)', iconColor: 'var(--mf-text-secondary)', rowBg: 'var(--mf-surface)', ...item('variable', e, { hasDate: true, sub: '' }), fmt: eur2(e.amount), sw: swipe(delAny('variable', e.id)) })) }; }); })(),
+            items: g.list.map((e, ei) => ({ rule: ei ? 'var(--mf-border)' : 'transparent', muted: 'var(--mf-text-muted)', amtColor: 'var(--mf-text)', badgeBg: 'var(--mf-surface-raised)', iconColor: 'var(--mf-text-secondary)', rowBg: 'var(--mf-surface)', ...item('variable', e, { hasDate: true, sub: '' }), fmt: eur2(e.amount), sw: swipe(delVarAsk(e)) })) }; }); })(),
         noRecent: rec.length === 0, goMese: () => { this.setState({ mTab: 'week' }); window.scrollTo(0, 0); },
       };
     })();
     const prev = months.filter(m => idx(m) < idx(mo)).pop();
-    const carryOf = m => { const p = months.filter(x => idx(x) < idx(m)).pop(); if (!p) return 0; const pc2 = this.calc(p); return pc2.left + pc2.extraSaved + carryOf(p); };
+    const carryOf = m => { if (m.noCarry) return 0; const p = months.filter(x => idx(x) < idx(m)).pop(); if (!p) return 0; const pc2 = this.calc(p); return pc2.left + pc2.extraSaved + carryOf(p); };
     const carry = carryOf(mo);
     let heroLabel, heroValue, heroNote;
     if (curR) { heroLabel = 'Puoi spendere questa settimana'; heroValue = eur(Math.max(0, weekLeft)); const lastD = curR[curR.length - 1]; const dl = curR.filter(d => dkey(d) >= nowK).length || 1; heroNote = weekLeft >= 0 ? 'Fino a ' + DOWS[lastD.getDay()].toLowerCase() + ' ' + fmtD(lastD) + '. Quello che non spendi passa alle settimane successive.' : 'Hai superato il budget della settimana di ' + eur(-weekLeft) + ': le prossime settimane avranno un po\' meno.'; }
@@ -2264,17 +2324,21 @@ class Component extends DCLogic {
       formPk: picker('form', 'formIcon', true, s.formName),
       amountRef: this.amountRef, sheetOpen: s.sheetOpen, toast: s.toast, sheetPk: picker('sheet', 'formIcon', false, s.formName),
       openSheet: () => { this.setState({ sheetOpen: true, picker: null, formDate: '' }); setTimeout(() => { const el = this.amountRef.current; if (el) el.focus(); }, 60); },
-      closeSheet: (this._closeSheet = () => { const pf = this._prefilled; this._prefilled = false; this.setState(pf ? { sheetOpen: false, formAmount: '', formName: '', formIcon: '', formErr: '' } : { sheetOpen: false, formErr: '' }); }), stopProp: e => e.stopPropagation(),
+      closeSheet: (this._closeSheet = () => { const pf = this._prefilled; this._prefilled = false; this.setState(pf || s.editExp != null ? { sheetOpen: false, formAmount: '', formName: '', formIcon: '', formDate: '', formErr: '', formErrN: '', editExp: null } : { sheetOpen: false, formErr: '', formErrN: '' }); }), stopProp: e => e.stopPropagation(),
       onSheetKey: e => { if (e.key === 'Escape') { e.stopPropagation(); this._closeSheet(); } else if (e.key === 'Enter' && !this.state.isMobile && e.target && e.target.dataset && (e.target.dataset.big || e.target.dataset.name)) { e.preventDefault(); setTimeout(() => this._addExp && this._addExp(), 0); } },
+      sheetTitle: s.editExp != null ? 'Modifica spesa' : 'Nuova spesa', sheetCta: s.editExp != null ? 'Salva modifiche' : 'Aggiungi spesa', sheetEditing: s.sheetOpen && s.editExp != null,
+      sheetSub: (() => { const ed = s.editExp != null ? vlist.find(x => x.id === s.editExp) : null; return ed ? `${ed.name} · ${whenLbl(ed.date)}` : `${heroLabel}: ${heroValue}`; })(),
+      sheetDelete: () => { const ed = vlist.find(x => x.id === s.editExp); if (!ed) return; this._closeSheet(); delVarAsk(ed)(); },
+      sheetNameErr: s.sheetOpen ? (s.formErrN || '') : '', sheetNameErrOn: !!(s.sheetOpen && s.formErrN), sheetNameLine: s.sheetOpen && s.formErrN ? 'var(--mf-danger)' : 'var(--mf-input-border)',
       sheetErr: s.sheetOpen ? (s.formErr || '') : '', sheetErrOn: !!(s.sheetOpen && s.formErr), sheetLine: s.sheetOpen && s.formErr ? 'var(--mf-danger)' : 'var(--mf-brand)',
       sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetMax: mob ? '520px' : '560px', sheetRadius: mob ? '24px 24px 0 0' : '24px', sheetAnim: mob ? 'mfUp 280ms cubic-bezier(.32,.72,0,1)' : 'mfPop 200ms ease-out',
       sheetFs: (() => { const L = String(s.formAmount || '').length; const t = mob ? [64, 56, 48, 40] : [72, 64, 56, 48]; return t[L <= 6 ? 0 : L <= 7 ? 1 : L <= 8 ? 2 : 3] + 'px'; })(),
-      ...(() => { const num = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.')); const nm = String(s.formName || '').trim().toLowerCase(); const last = !!s.formLast && nm === String(s.formLast).toLowerCase() && s.formAmount === s.formLastAmt; const pre = last ? 'Ultimo importo per ' + s.formName.trim() + ' · dopo ti restano ' : 'Dopo ti restano ';
+      ...(() => { if (s.editExp != null) return { sheetHint: 'Modifichi una spesa di ' + whenLbl(s.formDate || defDate) + ' · il budget si aggiorna', sheetHintAmt: '', sheetHintIcon: 'icon-circle-check', sheetHintColor: 'var(--mf-positive)' }; const num = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.')); const nm = String(s.formName || '').trim().toLowerCase(); const last = !!s.formLast && nm === String(s.formLast).toLowerCase() && s.formAmount === s.formLastAmt; const pre = last ? 'Ultimo importo per ' + s.formName.trim() + ' · dopo ti restano ' : 'Dopo ti restano ';
         if (curR && num > 0) { const after = weekLeft - num; return after >= 0 ? { sheetHint: pre, sheetHintAmt: eur(after), sheetHintIcon: 'icon-circle-check', sheetHintColor: 'var(--mf-positive)' } : { sheetHint: 'Superi il budget della settimana di ', sheetHintAmt: eur(-after), sheetHintIcon: 'icon-triangle-alert', sheetHintColor: 'var(--mf-warning)' }; }
         return last ? { sheetHint: 'Ultimo importo per ' + s.formName.trim(), sheetHintAmt: '', sheetHintIcon: 'icon-circle-check', sheetHintColor: 'var(--mf-positive)' } : { sheetHint: '' }; })(),
       formIconTxt: iconView(s.formIcon, 26).txt, formIconTxtStyle: iconView(s.formIcon, 26).txtStyle,
       showQuick: true,
-      quickNames: [['Spesa', 'shopping-cart'], ['Bar', 'coffee'], ['Drink', 'martini'], ['Pranzo', 'sandwich'], ['Ristorante', 'utensils'], ["McDonald's", 'b:mcdonalds'], ['Benzina', 'fuel'], ['Farmacia', 'pill'], ['Amazon', 'b:amazon'], ['Shopping', 'shopping-bag']].map(([l, ic]) => { const on = String(s.formName || '').trim().toLowerCase() === l.toLowerCase(); return { label: l, on, ...iconView(ic, 20), pick: () => this.setState({ formName: l, formIcon: ic }), style: { display: 'inline-flex', alignItems: 'center', gap: 8, height: 44, padding: '0 16px 0 12px', borderRadius: 99, border: '1px solid ' + (on ? 'var(--mf-text)' : 'var(--mf-border)'), background: on ? 'var(--mf-text)' : 'transparent', color: on ? 'var(--mf-background)' : 'var(--mf-text)', font: '500 14px/1 Inter,sans-serif', cursor: 'pointer' } }; }),
+      quickNames: [['Spesa', 'shopping-cart'], ['Bar', 'coffee'], ['Drink', 'martini'], ['Pranzo', 'sandwich'], ['Ristorante', 'utensils'], ["McDonald's", 'b:mcdonalds'], ['Benzina', 'fuel'], ['Farmacia', 'pill'], ['Amazon', 'b:amazon'], ['Shopping', 'shopping-bag']].map(([l, ic]) => { const on = String(s.formName || '').trim().toLowerCase() === l.toLowerCase(); return { label: l, on, ...iconView(ic, 20), pick: () => this.setState({ formName: l, formIcon: ic, formErrN: '' }), style: { display: 'inline-flex', alignItems: 'center', gap: 8, height: 44, padding: '0 16px 0 12px', borderRadius: 99, border: '1px solid ' + (on ? 'var(--mf-text)' : 'var(--mf-border)'), background: on ? 'var(--mf-text)' : 'transparent', color: on ? 'var(--mf-background)' : 'var(--mf-text)', font: '500 14px/1 Inter,sans-serif', cursor: 'pointer' } }; }),
       dateChips: (() => { const t = isoOf(now); const y = isoOf(new Date(now.getTime() - 864e5)); const curD = s.formDate || defDate; return [['Oggi', t], ['Ieri', y]].filter(([, v]) => { const k = dkey(parseIso(v)); return k >= rg.sK && k <= rg.eK; }).map(([l, v]) => ({ label: l, on: curD === v, pick: () => this.setState({ formDate: v }), style: { position: 'relative', flex: 1, minWidth: 72, height: '100%', padding: '0 16px', borderRadius: 99, border: 0, background: curD === v ? 'var(--mf-text)' : 'transparent', color: curD === v ? 'var(--mf-background)' : 'var(--mf-text-secondary)', font: '500 14px/1 Inter,sans-serif', cursor: 'pointer' } })); })(), edPk: s.picker === 'edit' ? picker('edit', 'edIcon', false, s.edName) : { open: false }, edPkOpen: s.picker === 'edit', toggleFormIcon: () => this.setState(st => ({ picker: st.picker === 'form' ? null : 'form', iconQ: '' })), formIconSel: icls(s.formIcon) || 'icon-smile-plus',
       hasIncExtra: c.incExtra > 0, incExtraFmt: s.hideInc ? '€ •••' : eur(c.incExtra), hasExtraSave: c.extraSaved > 0, extraSaveFmt: eur(c.extraSaved),
       incomes: (mo.incomes || []).map(e => { const r = { rule: 'var(--n4)', muted: 'var(--n7)', amtColor: 'var(--mf-positive)', badgeBg: 'var(--mf-positive-soft)', iconColor: 'var(--mf-positive)', ...item('incomes', e, { prefix: '+ ', defIcon: 'icon-banknote' }) }; if (s.hideInc) r.fmt = '+ € •••'; return r; }),
@@ -2369,16 +2433,25 @@ class Component extends DCLogic {
       onPEnd: e => { const v = e.target.value; if (!v) return; upd(m => ({ ...m, pStart: m.pStart || isoOf(rg.start), pEnd: v < (m.pStart || isoOf(rg.start)) ? (m.pStart || isoOf(rg.start)) : v })); },
       outCount: (mo.variable || []).filter(e => { const k = dkey(parseIso(e.date)); return k < rg.sK || k > rg.eK; }).length,
       onFormKey: e => { if (e.key === 'Enter') { e.preventDefault(); setTimeout(() => this._addExp && this._addExp(), 0); } },
-      onFormName: e => this.setState({ formName: e.target.value }), onFormAmount: e => this.setState({ formAmount: e.target.value, formErr: '' }), onFormDate: e => this.setState({ formDate: e.target.value }),
+      onFormName: e => this.setState({ formName: e.target.value, formErrN: '' }), onFormAmount: e => this.setState({ formAmount: e.target.value, formErr: '' }), onFormDate: e => this.setState({ formDate: e.target.value }),
       addExpense: (this._addExp = () => {
         const amt = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.'));
-        if (!(amt > 0)) { if (s.sheetOpen) this.setState({ formErr: 'Scrivi un importo maggiore di 0' }); const el = this.amountRef.current; if (el && s.sheetOpen) el.focus(); return; }
-        if (!s.formName.trim()) { this.setState({ formName: (suggestIcons('')[0] || [])[2] || 'Spesa' }); }
+        const editing = s.editExp != null, needName = s.sheetOpen && !(s.formName || '').trim();
+        if (!(amt > 0) || needName) {
+          if (s.sheetOpen) this.setState({ formErr: !(amt > 0) ? 'Scrivi un importo maggiore di 0' : '', formErrN: needName ? 'Scegli una voce o scrivi un nome' : '' });
+          const el = !(amt > 0) ? this.amountRef.current : this.nameRef.current; if (el && s.sheetOpen) el.focus(); return;
+        }
+        if (!(s.formName || '').trim()) { this.setState({ formName: (suggestIcons('')[0] || [])[2] || 'Spesa' }); }
         let date = s.formDate || defDate; const dk = dkey(parseIso(date)); if (dk < rg.sK || dk > rg.eK) date = defDate;
+        const nmV = (s.formName || '').trim() || 'Spesa';
+        if (editing) {
+          const eid = s.editExp;
+          upd(m => ({ ...m, variable: (m.variable || []).map(x => x.id === eid ? { ...x, name: nmV, amount: amt, date, icon: s.formIcon || '' } : x) }));
+          this.setState({ formName: '', formAmount: '', formIcon: '', formDate: '', formErr: '', formErrN: '', editExp: null, picker: null, sheetOpen: false }); this.toast(`${nmV} · ${eur(amt)} aggiornata`); haptic(); return;
+        }
         const id = s.nextId;
-        const nmV = s.formName.trim() || 'Spesa';
         upd(m => ({ ...m, variable: [...(m.variable || []), { id, name: nmV, amount: amt, date, icon: s.formIcon || ((suggestIcons(s.formName)[0] || [])[1]) || '' }] }));
-        this.setState({ nextId: id + 1, formName: '', formAmount: '', formIcon: '', picker: null, sheetOpen: false }); this.toast(`${nmV} · ${eur(amt)} aggiunta`); haptic();
+        this.setState({ nextId: id + 1, formName: '', formAmount: '', formIcon: '', formErr: '', formErrN: '', picker: null, sheetOpen: false }); this.toast(`${nmV} · ${eur(amt)} aggiunta`); haptic();
       }),
       rateMonthFmt: eur(c.rateMonth), rateDebtFmt: eur(rateDebt),
       noActiveRates: c.act.length === 0,
