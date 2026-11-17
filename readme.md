@@ -58,3 +58,15 @@ The source defines no icon set, icon font or SVG assets. The system is type-driv
 ### Intentional additions
 - **Eyebrow**, **DisplayLockup**, **Section** — direct encodings of the spec's "Editorial Display + Mono Eyebrow" and "marketing-section-*" components.
 - **Textarea** lives with TextInput (spec `textarea`).
+
+
+## Sito pubblico e richieste di informazioni
+
+- `/` e' la pagina di presentazione (`index.html`); l'app e' su `/app` (`app.html`).
+- Il modulo "Richiedi informazioni" invia a `/api/request` (funzione Node, protetta: stesso sito,
+  campo trappola, tempo minimo di compilazione, 5 richieste/ora per IP, lunghezze massime).
+- Variabili su Vercel: `RESEND_API_KEY` (per inoltrare le richieste via email; account Resend con
+  l'email di destinazione), `REQUEST_TO` (opzionale, default raffcapasso95@gmail.com),
+  `REQUEST_FROM` (opzionale, default `Myfinance <onboarding@resend.dev>`).
+- Le richieste vengono anche salvate in Redis (lista `myfinance:requests`); l'admin le legge con
+  `GET /api/request` (Authorization: Bearer <token di sessione>).
