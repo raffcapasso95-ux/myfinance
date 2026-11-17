@@ -37,7 +37,7 @@
   </nav>
 </sc-if>
 <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
-  <div onClick="{{ closeSheet }}" style="position:fixed;top:var(--mf-vvt,0px);left:0;right:0;height:var(--mf-vvh,100dvh);z-index:95;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
+  <div onPointerDown="{{ ovDown }}" onClick="{{ closeSheetBg }}" style="position:fixed;top:var(--mf-vvt,0px);left:0;right:0;height:var(--mf-vvh,100dvh);z-index:95;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
     <div data-mf-sheet="1" role="dialog" aria-modal="true" aria-label="{{ sheetTitle }}" onClick="{{ stopProp }}" onKeyDown="{{ onSheetKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:calc(100% - 12px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px 0;display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div></sc-if>
@@ -89,7 +89,7 @@
       <div style="flex:none;padding:8px 16px 0;display:flex;flex-direction:column;gap:6px">
         <div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px">
-          <div style="display:flex;flex-direction:column;gap:1px;min-width:0"><h2 style="margin:0;font:600 20px/26px Inter,sans-serif;letter-spacing:-0.01em">{{ sheetTitle }}</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ sheetSub }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:1px;min-width:0"><h2 style="margin:0;font:600 20px/26px Inter,sans-serif;letter-spacing:-0.01em">{{ sheetTitle }}</h2><sc-if value="{{ notCompact }}" hint-placeholder-val="{{ true }}"><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ sheetSub }}</span></sc-if></div>
           <button onClick="{{ closeSheet }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:20px;line-height:1"></i></button>
         </div>
       </div>
@@ -122,10 +122,12 @@
 </sc-if>
       <sc-if value="{{ showQuick }}" hint-placeholder-val="{{ true }}"><div role="group" aria-label="Voci frequenti" class="mf-hs" style="display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity"><sc-for list="{{ quickNames }}" as="io" hint-placeholder-count="8"><button onClick="{{ io.pick }}" aria-pressed="{{ io.on }}" style="{{ io.style }}"><i class="{{ io.cls }}" style="font-size:18px;line-height:1"></i><span style="{{ io.txtStyle }}">{{ io.txt }}</span><span>{{ io.label }}</span></button></sc-for></div></sc-if>
       <sc-if value="{{ sheetPk.hasSuggest }}" hint-placeholder-val="{{ false }}"><div class="mf-hs" style="display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px 2px;align-items:center;scrollbar-width:none;-webkit-overflow-scrolling:touch"><span style="flex:none;font:400 12px/18px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--mf-text-muted)">Icona</span><sc-for list="{{ sheetPk.chips }}" as="io" hint-placeholder-count="3"><button onClick="{{ io.pick }}" style="{{ io.style }}"><i class="{{ io.cls }}" style="font-size:16px;line-height:1"></i><span style="{{ io.txtStyle }}">{{ io.txt }}</span><span>{{ io.label }}</span></button></sc-for></div></sc-if>
+      <sc-if value="{{ notCompact }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <div role="group" aria-label="Data" style="display:flex;gap:4px;padding:4px;box-sizing:border-box;height:44px;border-radius:99px;background:var(--mf-surface-raised)"><sc-for list="{{ dateChips }}" as="dc" hint-placeholder-count="2"><button onClick="{{ dc.pick }}" aria-pressed="{{ dc.on }}" style="{{ dc.style }}"><span aria-hidden="true" style="position:absolute;inset:-4px 0"></span>{{ dc.label }}</button></sc-for></div>
         <input type="date" aria-label="Data della spesa" value="{{ formDate }}" min="{{ dateMin }}" max="{{ dateMax }}" onChange="{{ onFormDate }}" onFocus="{{ kbOn }}" onBlur="{{ kbOff }}" style="flex:1 1 150px;min-width:0;height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text);font:400 16px/1 Inter,sans-serif;outline:0" style-focus="border-color:var(--mf-focus)">
       </div>
+      </sc-if>
       </div>
       <div style="flex:none;padding:8px 16px calc(12px + env(safe-area-inset-bottom));background:var(--mf-surface);border-top:1px solid var(--mf-border);display:flex;flex-direction:column;gap:8px">
         <sc-if value="{{ kpShow }}" hint-placeholder-val="{{ true }}"><div role="group" aria-label="Tastierino" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"><sc-for list="{{ kpKeys }}" as="k" hint-placeholder-count="12"><button class="mf-key" onClick="{{ k.tap }}" onPointerDown="{{ k.down }}" onPointerUp="{{ k.up }}" onPointerLeave="{{ k.up }}" onPointerCancel="{{ k.up }}" aria-label="{{ k.aria }}" style="height:46px;border-radius:14px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);font:500 22px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="{{ k.icon }}" style="font-size:22px;line-height:1"></i><span>{{ k.label }}</span></button></sc-for></div></sc-if>
@@ -1720,7 +1722,7 @@ class Component extends DCLogic {
     try { this._wq = window.matchMedia('(min-width: 1280px)'); this._wqH = e => this.setState({ isWide: e.matches }); this._wq.addEventListener('change', this._wqH); this.setState({ isWide: this._wq.matches }); } catch (e) {}
     try { const vv = window.visualViewport, de = document.documentElement; if (vv) { this._vvH = () => { de.style.setProperty('--mf-vvh', Math.round(vv.height) + 'px'); de.style.setProperty('--mf-vvt', Math.round(vv.offsetTop) + 'px'); }; vv.addEventListener('resize', this._vvH); vv.addEventListener('scroll', this._vvH); this._vvH(); } } catch (e) {}
     try { this._pop = () => { if (!this._hist) return; this._hist = false; const st = this.state; if (st.nmOpen || st.cmOpen || st.sheetOpen) document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); }; window.addEventListener('popstate', this._pop); } catch (e) {}
-    try { this._fi = e => { const t = e.target; if (t && t.closest && t.closest('[data-mf-sheet]') && /INPUT|TEXTAREA|SELECT/.test(t.tagName)) setTimeout(() => { try { t.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (x) {} }, 280); }; document.addEventListener('focusin', this._fi); } catch (e) {}
+    try { this._fi = e => { const t = e.target; if (t && t.closest && t.closest('[data-mf-sheet]') && /INPUT|TEXTAREA|SELECT/.test(t.tagName)) setTimeout(() => { try { t.scrollIntoView({ block: t.dataset && t.dataset.name ? 'start' : 'center', behavior: 'smooth' }); } catch (x) {} }, 280); }; document.addEventListener('focusin', this._fi); } catch (e) {}
     try {
       let sh = null, y0 = 0, t0 = 0, dy = 0;
       this._swS = e => { if (!this.state.isMobile || e.touches.length !== 1) return; const d = e.target.closest && e.target.closest('[data-mf-sheet]'); if (!d) return; const r = d.getBoundingClientRect(); const y = e.touches[0].clientY; if (y - r.top > 84) return; if (e.target.closest('button,input,a') && y - r.top > 28) return; sh = d; y0 = y; t0 = Date.now(); dy = 0; d.style.transition = 'none'; };
@@ -2502,7 +2504,7 @@ class Component extends DCLogic {
       sheetNameErr: s.sheetOpen ? (s.formErrN || '') : '', sheetNameErrOn: !!(s.sheetOpen && s.formErrN), sheetNameLine: s.sheetOpen && s.formErrN ? 'var(--mf-danger)' : 'var(--mf-input-border)',
       sheetErr: s.sheetOpen ? (s.formErr || '') : '', sheetErrOn: !!(s.sheetOpen && s.formErr), sheetLine: s.sheetOpen && s.formErr ? 'var(--mf-danger)' : 'var(--mf-brand)',
       sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetMax: mob ? '520px' : '560px', sheetRadius: mob ? '24px 24px 0 0' : '24px', sheetAnim: mob ? 'mfUp 280ms cubic-bezier(.32,.72,0,1)' : 'mfPop 200ms ease-out',
-      sheetFs: (() => { const L = String(s.formAmount || '').length; const t = mob ? [64, 56, 48, 40] : [72, 64, 56, 48]; return t[L <= 6 ? 0 : L <= 7 ? 1 : L <= 8 ? 2 : 3] + 'px'; })(),
+      sheetFs: (() => { const L = String(s.formAmount || '').length; const t = mob ? (s.kpOff ? [40, 40, 36, 32] : [64, 56, 48, 40]) : [72, 64, 56, 48]; return t[L <= 6 ? 0 : L <= 7 ? 1 : L <= 8 ? 2 : 3] + 'px'; })(),
       ...(() => { if (s.editExp != null) return { sheetHint: 'Modifichi una spesa di ' + whenLbl(s.formDate || defDate) + ' · il budget si aggiorna', sheetHintAmt: '', sheetHintIcon: 'icon-circle-check', sheetHintColor: 'var(--mf-positive)' }; const num = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.')); const nm = String(s.formName || '').trim().toLowerCase(); const last = !!s.formLast && nm === String(s.formLast).toLowerCase() && s.formAmount === s.formLastAmt; const pre = last ? 'Ultimo importo per ' + s.formName.trim() + ' · dopo ti restano ' : 'Dopo ti restano ';
         if (curR && num > 0) { const after = weekLeft - num; return after >= 0 ? { sheetHint: pre, sheetHintAmt: eur(after), sheetHintIcon: 'icon-circle-check', sheetHintColor: 'var(--mf-positive)' } : { sheetHint: 'Superi il budget della settimana di ', sheetHintAmt: eur(-after), sheetHintIcon: 'icon-triangle-alert', sheetHintColor: 'var(--mf-warning)' }; }
         return last ? { sheetHint: 'Ultimo importo per ' + s.formName.trim(), sheetHintAmt: '', sheetHintIcon: 'icon-circle-check', sheetHintColor: 'var(--mf-positive)' } : { sheetHint: '' }; })(),
@@ -2604,8 +2606,9 @@ class Component extends DCLogic {
       outCount: (mo.variable || []).filter(e => { const k = dkey(parseIso(e.date)); return k < rg.sK || k > rg.eK; }).length,
       onFormKey: e => { if (e.key === 'Enter') { e.preventDefault(); setTimeout(() => this._addExp && this._addExp(), 0); } },
       onFormName: e => this.setState({ formName: e.target.value, formErrN: '' }), onFormAmount: e => this.setState({ formAmount: e.target.value, formErr: '' }),
+      ovDown: e => { this._ovD = e.target === e.currentTarget; }, closeSheetBg: e => { const ok = this._ovD && e.target === e.currentTarget; this._ovD = false; if (ok && this._closeSheet) this._closeSheet(); },
       kbOn: () => { clearTimeout(this._kbT); if (!this.state.kpOff) this.setState({ kpOff: true }); }, kbOff: () => { clearTimeout(this._kbT); this._kbT = setTimeout(() => this.setState({ kpOff: false }), 160); },
-      kpShow: !!s.isMobile && !s.kpOff,
+      kpShow: !!s.isMobile && !s.kpOff, notCompact: !(s.isMobile && s.kpOff),
       kpKeys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', 'b'].map(k => ({
         label: k === 'b' ? '' : k, icon: k === 'b' ? 'icon-delete' : '', aria: k === 'b' ? 'Cancella' : k === ',' ? 'Virgola' : k,
         tap: () => {
