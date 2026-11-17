@@ -45,11 +45,13 @@ section{padding:96px 0}
 .lnk:hover{color:var(--tx)}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 26px;border-radius:99px;background:var(--br);color:var(--onbr);font-weight:600;font-size:16px;transition:transform 140ms var(--ease)}
 .cta.s{height:44px;padding:0 20px;font-size:15px}
-.me{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:4px 14px 4px 4px;border-radius:99px;background:var(--s2);color:var(--tx);font-weight:600;font-size:15px}
+.me{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:5px 16px 5px 5px;border-radius:99px;background:var(--s2);border:1px solid var(--br);color:var(--tx);font-weight:600;font-size:15px;transition:transform 140ms var(--ease)}
 [hidden]{display:none!important}
-.me .av{width:36px;height:36px;border-radius:99px;background:var(--br);color:var(--onbr);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
-.me .nm{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media (max-width:560px){.me{padding:4px}.me .nm{display:none}.top{gap:12px}.links{gap:10px}.top .cta.s{padding:0 14px}}
+.me .av{width:38px;height:38px;border-radius:99px;background:var(--br);color:var(--onbr);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.me .nm{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me .go{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;padding-left:10px;border-left:1px solid var(--bd,rgba(255,255,255,.18));color:var(--t2);font-weight:500}
+@media (max-width:380px){.me .gl{display:none}.me{padding-right:10px}}
+@media (max-width:560px){.me{padding:4px 12px 4px 4px;gap:8px}.me .nm{display:none}.me .go{border-left:0;padding-left:0}.top{gap:12px}.links{gap:10px}}
 .cta.ghost{background:var(--s2);color:var(--tx)}
 .cta:active{transform:scale(.97)}
 /* hero */
@@ -185,8 +187,8 @@ footer{border-top:1px solid var(--bd);padding:28px 0}
   <a class="brand" href="/" aria-label="Myfinance, inizio pagina"><img src="/brand/Myfinance_Simbolo_Corallo.png" alt="" width="34" height="29">Myfinance</a>
   <nav class="links" aria-label="Sezioni della pagina">
     <a class="lnk" href="#come">Come funziona</a><a class="lnk" href="#anteprima">Anteprima</a><a class="lnk" href="#sezioni">Sezioni</a><a class="lnk" href="#domande">Domande</a><a class="lnk" href="#richiesta">Richiedi informazioni</a>
-    <a class="me" id="me" href="/app" hidden aria-label="Sei connesso, apri l'app"><span class="av" id="av" aria-hidden="true"></span><span class="nm" id="nm"></span></a>
-    <a class="cta s" href="/app" data-login data-short="Apri app">Accedi</a>
+    <a class="me" id="me" href="/app" hidden aria-label="Sei connesso, apri l'app"><span class="av" id="av" aria-hidden="true"></span><span class="nm" id="nm"></span><span class="go"><span class="gl">Apri l'app</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a class="cta s" href="/app" data-login data-hide-logged>Accedi</a>
   </nav>
 </header>
 <main>
@@ -295,12 +297,12 @@ footer{border-top:1px solid var(--bd);padding:28px 0}
     var n = name(x), me = document.getElementById('me');
     document.getElementById('av').textContent = n.charAt(0).toUpperCase(); document.getElementById('nm').textContent = n; me.hidden = false;
     me.setAttribute('aria-label', 'Sei connesso come ' + n + ', apri l\'app');
-    q('[data-login]').forEach(function (e) { if (!e.dataset.old) e.dataset.old = e.textContent; e.textContent = e.dataset.short && window.innerWidth < 760 ? e.dataset.short : 'Apri l\'app'; });
+    q('[data-login]').forEach(function (e) { if (e.hasAttribute('data-hide-logged')) { e.hidden = true; return; } if (!e.dataset.old) e.dataset.old = e.textContent; e.textContent = 'Apri l\'app'; });
     q('[data-guest]').forEach(function (e) { e.hidden = true; });
   }
   function hide() {
     document.getElementById('me').hidden = true;
-    q('[data-login]').forEach(function (e) { if (e.dataset.old) e.textContent = e.dataset.old; });
+    q('[data-login]').forEach(function (e) { e.hidden = false; if (e.dataset.old) e.textContent = e.dataset.old; });
     q('[data-guest]').forEach(function (e) { e.hidden = false; });
   }
   function go() {
