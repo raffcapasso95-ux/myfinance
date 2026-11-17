@@ -38,7 +38,7 @@
 </sc-if>
 <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeSheet }}" style="position:fixed;inset:0;z-index:95;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
-    <div role="dialog" aria-modal="true" aria-label="{{ sheetTitle }}" onClick="{{ stopProp }}" onKeyDown="{{ onSheetKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
+    <div role="dialog" aria-modal="true" aria-label="{{ sheetTitle }}" onClick="{{ stopProp }}" onKeyDown="{{ onSheetKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px 0;display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div></sc-if>
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
         <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><h2 style="margin:0;font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">{{ sheetTitle }}</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ sheetSub }}</span></div>
@@ -77,14 +77,16 @@
         <input type="date" aria-label="Data della spesa" value="{{ formDate }}" min="{{ dateMin }}" max="{{ dateMax }}" onChange="{{ onFormDate }}" style="flex:1 1 150px;min-width:0;height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text);font:400 16px/1 Inter,sans-serif;outline:0" style-focus="border-color:var(--mf-focus)">
         <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><span style="flex:1 1 150px;font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted);text-wrap:pretty">Invio per aggiungere · Esc per chiudere</span></sc-if>
       </div>
+      <div style="position:sticky;bottom:0;z-index:2;display:flex;flex-direction:column;gap:8px;margin:0 -20px;padding:12px 20px calc(16px + env(safe-area-inset-bottom));background:var(--mf-surface);border-top:1px solid var(--mf-border)">
       <button onClick="{{ addExpense }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-brand);color:var(--mf-on-brand);font:600 16px/1 Inter,sans-serif;cursor:pointer">{{ sheetCta }}</button>
       <sc-if value="{{ sheetEditing }}" hint-placeholder-val="{{ false }}"><button onClick="{{ sheetDelete }}" style="height:44px;border-radius:99px;border:0;background:transparent;color:var(--mf-danger);font:600 16px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><i class="icon-trash-2" style="font-size:16px;line-height:1"></i>Elimina spesa</button></sc-if>
+      </div>
     </div>
   </div>
 </sc-if>
 <sc-if value="{{ nmOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ nmClose }}" style="position:fixed;inset:0;z-index:96;background:var(--mf-scrim);display:flex;align-items:{{ sheetAlign }};justify-content:center;padding:{{ sheetPad }};box-sizing:border-box;animation:mfFade 200ms ease-out">
-    <div role="dialog" aria-modal="true" aria-label="Nuovo mese" onClick="{{ stopProp }}" onKeyDown="{{ nmKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
+    <div role="dialog" aria-modal="true" aria-label="Nuovo mese" onClick="{{ stopProp }}" onKeyDown="{{ nmKey }}" style="width:100%;max-width:{{ sheetMax }};max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;animation:{{ sheetAnim }};background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:{{ sheetRadius }};padding:12px 20px 0;display:flex;flex-direction:column;gap:14px;box-sizing:border-box">
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--mf-border);align-self:center"></div></sc-if>
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><h2 style="margin:0;font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">Nuovo mese</h2><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ nmSub }}</span></div><button onClick="{{ nmClose }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" style="font-size:20px;line-height:1"></i></button></div>
       <div style="display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:16px;background:var(--mf-surface-raised)"><span style="font:400 12px/18px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--mf-text-muted)">Periodo</span><span style="font:500 24px/30px Inter,sans-serif;letter-spacing:-0.01em">{{ nmPeriod }}</span><span style="font:400 13px/18px Inter,sans-serif;color:var(--mf-text-muted)">{{ nmDays }}</span></div>
@@ -94,7 +96,9 @@
       </div>
       <label style="display:flex;flex-direction:column;gap:6px"><span style="font:400 12px/18px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--mf-text-muted)">Stipendio</span><span style="position:relative;display:block"><span aria-hidden="true" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--mf-text-muted);font:400 16px/1 Inter,sans-serif">€</span><input data-nm="1" inputmode="decimal" autocomplete="off" aria-invalid="{{ nmErrOn }}" value="{{ nmSalary }}" onChange="{{ onNmSalary }}" style="width:100%;box-sizing:border-box;height:48px;padding:0 16px 0 36px;border-radius:12px;border:1px solid var(--mf-input-border);background:var(--mf-surface);color:var(--mf-text);font:400 16px/1.5 Inter,sans-serif;text-align:right;outline:0" style-focus="border-color:var(--mf-focus);box-shadow:0 0 0 1px var(--mf-focus)"></span></label>
       <sc-if value="{{ nmErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;align-items:center;gap:8px;font:500 13px/18px Inter,sans-serif;color:var(--mf-danger)"><i class="icon-triangle-alert" style="font-size:16px;line-height:1;flex:none"></i><span>{{ nmErr }}</span></div></sc-if>
+      <div style="position:sticky;bottom:0;z-index:2;display:flex;flex-direction:column;gap:8px;margin:0 -20px;padding:12px 20px calc(16px + env(safe-area-inset-bottom));background:var(--mf-surface);border-top:1px solid var(--mf-border)">
       <button onClick="{{ nmCreate }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-brand);color:var(--mf-on-brand);font:600 16px/1 Inter,sans-serif;cursor:pointer">{{ nmCta }}</button>
+      </div>
     </div>
   </div>
 </sc-if>
@@ -649,7 +653,7 @@
             </sc-for>
           </div>
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-top:14px;border-top:1px solid var(--n4)">
-            <sc-for list="{{ splitPresets }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.pick }}" style="height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 12px/1 Inter,sans-serif;cursor:pointer;white-space:nowrap" style-hover="color:var(--nW);border-color:var(--mf-text-muted)">{{ p.label }}</button></sc-for>
+            <sc-for list="{{ splitPresets }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.pick }}" style="height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 12px/1 Inter,sans-serif;cursor:pointer;white-space:nowrap" style-hover="color:var(--nW);border-color:var(--mf-text-muted)">{{ p.label }}</button></sc-for>
             <span style="margin-left:auto;font:500 13px/1.4 Inter,sans-serif;color:{{ splitTotalColor }}">{{ splitTotalLabel }}</span>
           </div>
         </div>
@@ -1151,7 +1155,8 @@
 </sc-if>
 </div>
 <sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}">
-<aside style="align-self:stretch;width:320px;flex:none;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:118px 20px 40px;border-left:1px solid var(--mf-border);background:var(--mf-background);color:var(--mf-text)">
+<aside style="align-self:stretch;width:320px;flex:none;box-sizing:border-box;border-left:1px solid var(--mf-border);background:var(--mf-background);color:var(--mf-text)">
+<div style="position:sticky;top:-94px;max-height:calc(100dvh + 94px);overflow-y:auto;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:118px 20px 24px">
     <div style="display:flex;flex-direction:column;padding:20px;border-radius:20px;background:var(--n1);border:1px solid var(--n3)">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:500 16px/1.3 Inter,sans-serif">Conto del mese</span><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;color:var(--mf-text-muted)">{{ monthTitle }}</span></div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0 4px"><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--mf-text-muted)">ENTRATE</span><span style="display:flex;align-items:center;gap:6px"><button onClick="{{ goEntrate }}" style="height:32px;padding:0 12px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--nW);font:500 13px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px" style-hover="background:var(--n2)"><i class="icon-pencil" style="font-size:13px;line-height:1"></i>Modifica</button><button onClick="{{ toggleHideInc }}" aria-label="{{ hideIncLabel }}" title="{{ hideIncLabel }}" style="width:32px;height:32px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);cursor:pointer;display:inline-flex;align-items:center;justify-content:center" style-hover="background:var(--n2);color:var(--nW)"><i class="{{ hideIncIcon }}" style="font-size:15px;line-height:1"></i></button></span></div>
@@ -1172,7 +1177,7 @@
       </div></sc-if>
       </div></div>
     </div>
-</aside>
+</div></aside>
 </sc-if>
 </div>
 </sc-if>
@@ -2355,7 +2360,7 @@ class Component extends DCLogic {
       savMonths: (() => { const vals = Array.from({ length: 12 }, (_, i) => { const m = months.find(x => x.year === Y && x.month === i); if (!m) return null; const cc = this.calc(m); return cc.saveBudget + cc.extraSaved; }); const mx = Math.max(1, ...vals.filter(v => v != null)); return vals.map((v, i) => ({ l: MS[i].charAt(0), title: v == null ? MN[i] + ': nessun dato' : MN[i] + ': ' + eur(v), lblStyle: { color: i === M ? 'var(--n0)' : 'var(--n5)' }, style: { height: v == null ? 4 : Math.max(6, v / mx * 56), borderRadius: 4, background: v == null ? 'var(--n8)' : i === M ? '#f36458' : 'var(--n0)', opacity: v == null ? 1 : i === M ? 1 : 0.85, transition: 'height .3s cubic-bezier(.23,1,.32,1)' } })); })(),
       savYearFmt: eur(months.filter(m => m.year === Y && idx(m) <= idx(mo)).reduce((a, m) => { const cc = this.calc(m); return a + cc.saveBudget + cc.extraSaved; }, 0)),
       svName: s.svName, svAmount: s.svAmount, onSvName: e => this.setState({ svName: e.target.value }), onSvAmount: e => this.setState({ svAmount: e.target.value }),
-      incPresets: [['Tredicesima', 'gift'], ['Quattordicesima', 'sun'], ['Bonus', 'trophy'], ['Lavoro extra', 'briefcase'], ['Rimborso', 'rotate-ccw'], ['Vendita', 'tag']].map(([l, ic]) => ({ label: l, icon: 'icon-' + ic, pick: () => this.setState({ inName: l, inIcon: ic }), style: { display: 'inline-flex', alignItems: 'center', gap: 6, height: 30, padding: '0 10px', borderRadius: 99, border: '1px solid var(--n4)', background: s.inName === l ? 'var(--nW)' : 'var(--n0)', color: s.inName === l ? 'var(--n0)' : 'var(--n7)', font: '500 12px/1 Inter,sans-serif', cursor: 'pointer' } })),
+      incPresets: [['Tredicesima', 'gift'], ['Quattordicesima', 'sun'], ['Bonus', 'trophy'], ['Lavoro extra', 'briefcase'], ['Rimborso', 'rotate-ccw'], ['Vendita', 'tag']].map(([l, ic]) => ({ label: l, icon: 'icon-' + ic, pick: () => this.setState({ inName: l, inIcon: ic }), style: { display: 'inline-flex', alignItems: 'center', gap: 6, height: 40, padding: '0 14px', borderRadius: 99, border: '1px solid var(--n4)', background: s.inName === l ? 'var(--nW)' : 'var(--n0)', color: s.inName === l ? 'var(--n0)' : 'var(--n7)', font: '500 12px/1 Inter,sans-serif', cursor: 'pointer' } })),
       inName: s.inName, inAmount: s.inAmount, onInName: e => this.setState({ inName: e.target.value }), onInAmount: e => this.setState({ inAmount: e.target.value }),
       addIncome: addFor('incomes', 'inName', 'inAmount', 'inIcon'),
       esName: s.esName, esAmount: s.esAmount, onEsName: e => this.setState({ esName: e.target.value }), onEsAmount: e => this.setState({ esAmount: e.target.value }),
