@@ -45,6 +45,19 @@ section{padding:96px 0}
 .lnk:hover{color:var(--tx)}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 26px;border-radius:99px;background:var(--br);color:var(--onbr);font-weight:600;font-size:16px;transition:transform 140ms var(--ease)}
 .cta.s{height:44px;padding:0 20px;font-size:15px}
+[hidden]{display:none!important}
+.me{position:relative;display:inline-flex;align-items:center}
+.me .av{width:34px;height:34px;border-radius:99px;background:var(--br);color:var(--onbr);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:none}
+.me-b{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px 0 5px;border-radius:99px;border:1px solid var(--bd);background:transparent;color:var(--tx);font-family:inherit;font-weight:600;font-size:15px;line-height:1;cursor:pointer}
+.me-b:hover{background:var(--s2)}
+.me-b .nm{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me-b svg{color:var(--t2);transition:transform 160ms var(--ease)}.me-b[aria-expanded=true] svg{transform:rotate(180deg)}
+.me-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:180px;padding:6px;border-radius:16px;background:var(--s1);border:1px solid var(--bd);box-shadow:0 16px 40px rgba(0,0,0,.28);z-index:30;display:flex;flex-direction:column}
+.me-menu a{display:flex;align-items:center;min-height:44px;padding:0 14px;border-radius:10px;font-weight:500;font-size:15px;color:var(--tx)}
+.me-menu a:hover{background:var(--s2)}
+.me-m{display:none;position:relative;width:44px;height:44px;align-items:center;justify-content:center}
+.me-m .dot{position:absolute;right:3px;bottom:5px;width:11px;height:11px;border-radius:99px;background:#4ddba2;border:2px solid var(--bg)}
+@media (max-width:760px){.me-d{display:none}.me-m{display:inline-flex}.top{gap:12px}.links{gap:10px}}
 .cta.ghost{background:var(--s2);color:var(--tx)}
 .cta:active{transform:scale(.97)}
 /* hero */
@@ -180,7 +193,14 @@ footer{border-top:1px solid var(--bd);padding:28px 0}
   <a class="brand" href="/" aria-label="Myfinance, inizio pagina"><img src="/brand/Myfinance_Simbolo_Corallo.png" alt="" width="34" height="29">Myfinance</a>
   <nav class="links" aria-label="Sezioni della pagina">
     <a class="lnk" href="#come">Come funziona</a><a class="lnk" href="#anteprima">Anteprima</a><a class="lnk" href="#sezioni">Sezioni</a><a class="lnk" href="#domande">Domande</a><a class="lnk" href="#richiesta">Richiedi informazioni</a>
-    <a class="cta s" href="/app">Accedi</a>
+    <div class="me" id="me" hidden>
+      <a class="me-m" id="me-m" href="/app" aria-label="Sei connesso, apri l'app"><span class="av" id="av-m" aria-hidden="true"></span><i class="dot" aria-hidden="true"></i></a>
+      <div class="me-d">
+        <button type="button" class="me-b" id="me-b" aria-haspopup="menu" aria-expanded="false" aria-controls="me-menu"><span class="av" id="av" aria-hidden="true"></span><span class="nm" id="nm"></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="me-menu" id="me-menu" role="menu" hidden><a role="menuitem" href="/app">Apri l'app</a><a role="menuitem" href="/app?esci=1">Esci</a></div>
+      </div>
+    </div>
+    <a class="cta s" href="/app" data-login data-hide-logged>Accedi</a>
   </nav>
 </header>
 <main>
@@ -189,7 +209,7 @@ footer{border-top:1px solid var(--bd);padding:28px 0}
     <div class="hero-t">
       <h1>Gestisci le tue finanze, giorno per giorno.</h1>
       <p>Myfinance toglie spese fisse e risparmi e, spesa dopo spesa, ti mostra quanto puoi ancora spendere oggi e in settimana. È un progetto personale: si entra solo su invito.</p>
-      <div class="hero-b"><a class="cta" href="/app">Accedi</a><a class="cta ghost" href="#richiesta">Richiedi informazioni</a></div>
+      <div class="hero-b"><a class="cta" href="/app" data-login>Accedi</a><a class="cta ghost" href="#richiesta">Richiedi informazioni</a></div>
     </div>
     <div class="stage">
       <div class="win" aria-hidden="true"><div class="bar"><i></i><i></i><i></i><span>myfinance · Oggi</span></div><img src="/site/anteprima-d-oggi.webp" alt="" width="1280" height="800"></div>
@@ -258,7 +278,7 @@ footer{border-top:1px solid var(--bd);padding:28px 0}
       <div class="fld" style="margin-bottom:0"><label class="consent"><input class="chk" id="consent" name="consent" type="checkbox" aria-describedby="e-consent"><span>Accetto che i miei dati siano usati solo per rispondermi</span></label><span class="err" id="e-consent" style="margin:-4px 0 12px 34px">Serve il tuo consenso per inviare la richiesta.</span></div>
       <button class="send" id="send" type="submit">Invia la richiesta</button>
       <p class="msg" id="msg" role="alert"></p>
-      <p class="have">Hai già un account? <a href="/app">Accedi</a></p>
+      <p class="have" data-guest>Hai già un account? <a href="/app">Accedi</a></p>
     </form>
     <div class="ok" id="ok" role="status" tabindex="-1"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Richiesta inviata</h3><p>Grazie. Ti rispondo via email appena posso, di solito entro un paio di giorni.</p><button type="button" id="again">Invia un'altra richiesta</button></div>
   </div>
@@ -277,8 +297,42 @@ footer{border-top:1px solid var(--bd);padding:28px 0}
 <footer><div class="w ft">
   <a class="brand" href="/"><img src="/brand/Myfinance_Simbolo_Corallo.png" alt="" width="26" height="22">Myfinance</a>
   <a class="lnk" href="#come">Come funziona</a><a class="lnk" href="#anteprima">Anteprima</a><a class="lnk" href="#domande">Domande</a><a class="lnk" href="#richiesta">Richiedi informazioni</a>
-  <span class="sp">Progetto personale · 2026</span><a class="cta s" href="/app">Accedi</a>
+  <span class="sp">Progetto personale · 2026</span><a class="cta s" href="/app" data-login>Accedi</a>
 </div></footer>
+<script>
+(function () {
+  var a = null; try { a = JSON.parse(localStorage.getItem('mf-auth')); } catch (e) {}
+  if (!a || !a.token || !a.email) return;
+  var q = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+  function name(x) { var n = String((x && x.name) || '').trim(); return n ? n.split(/\s+/)[0] : String(x.email || '').split('@')[0]; }
+  function show(x) {
+    var n = name(x), me = document.getElementById('me');
+    document.getElementById('av').textContent = n.charAt(0).toUpperCase(); document.getElementById('av-m').textContent = n.charAt(0).toUpperCase(); document.getElementById('nm').textContent = n; me.hidden = false;
+    document.getElementById('me-m').setAttribute('aria-label', 'Sei connesso come ' + n + ', apri l\'app');
+    q('[data-login]').forEach(function (e) { if (e.hasAttribute('data-hide-logged')) { e.hidden = true; return; } if (!e.dataset.old) e.dataset.old = e.textContent; e.textContent = 'Apri l\'app'; });
+    q('[data-guest]').forEach(function (e) { e.hidden = true; });
+  }
+  function hide() {
+    document.getElementById('me').hidden = true;
+    q('[data-login]').forEach(function (e) { e.hidden = false; if (e.dataset.old) e.textContent = e.dataset.old; });
+    q('[data-guest]').forEach(function (e) { e.hidden = false; });
+  }
+  function go() {
+    show(a);
+    try { fetch('/api/auth', { headers: { authorization: 'Bearer ' + a.token }, cache: 'no-store' }).then(function (r) {
+      if (r.status === 401) hide(); else if (r.ok) r.json().then(function (j) { if (j && j.email) { a = { token: a.token, email: j.email, name: j.name || a.name }; show(a); } }).catch(function () {});
+    }).catch(function () {}); } catch (e) {}
+  }
+  function menu() {
+    var b = document.getElementById('me-b'), m = document.getElementById('me-menu');
+    function set(o) { m.hidden = !o; b.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+    b.addEventListener('click', function (e) { e.stopPropagation(); set(m.hidden); });
+    document.addEventListener('click', function (e) { if (!m.hidden && !m.contains(e.target)) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.hidden) { set(false); b.focus(); } });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { menu(); go(); }); else { menu(); go(); }
+})();
+</script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
