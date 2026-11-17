@@ -43,10 +43,11 @@
         <button onClick="{{ closeSheet }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--mf-surface-hover)"><i class="icon-x" style="font-size:20px;line-height:1"></i></button>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;align-items:baseline;gap:8px;padding-bottom:8px;border-bottom:2px solid var(--mf-brand)">
-          <span class="mf-amt" data-v="{{ formAmount }}" style="font:500 {{ sheetFs }}/1.06 Inter,sans-serif;letter-spacing:-0.03em;font-variant-numeric:tabular-nums lining-nums"><input ref="{{ amountRef }}" data-big="1" aria-label="Importo in euro" enterkeyhint="next" type="text" inputmode="decimal" autocomplete="off" placeholder="0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" style="border:0;outline:0;background:transparent;color:var(--mf-text);font:inherit;letter-spacing:inherit;padding:0;margin:0"></span>
+        <div style="display:flex;align-items:baseline;gap:8px;padding-bottom:8px;border-bottom:2px solid {{ sheetLine }}">
+          <span class="mf-amt" data-v="{{ formAmount }}" style="font:500 {{ sheetFs }}/1.06 Inter,sans-serif;letter-spacing:-0.03em;font-variant-numeric:tabular-nums lining-nums"><input ref="{{ amountRef }}" data-big="1" aria-label="Importo in euro" aria-invalid="{{ sheetErrOn }}" enterkeyhint="next" type="text" inputmode="decimal" autocomplete="off" placeholder="0" value="{{ formAmount }}" onChange="{{ onFormAmount }}" style="border:0;outline:0;background:transparent;color:var(--mf-text);font:inherit;letter-spacing:inherit;padding:0;margin:0"></span>
           <span style="font:500 32px/1 Inter,sans-serif;color:var(--mf-text-muted)">€</span>
         </div>
+        <sc-if value="{{ sheetErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;align-items:center;gap:8px;font:500 13px/18px Inter,sans-serif;color:var(--mf-danger)"><i class="icon-triangle-alert" style="font-size:16px;line-height:1;flex:none"></i><span>{{ sheetErr }}</span></div></sc-if>
         <sc-if value="{{ sheetHint }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:8px;font:400 13px/18px Inter,sans-serif;color:var(--mf-text-secondary)"><i class="{{ sheetHintIcon }}" style="font-size:16px;line-height:1;flex:none;color:{{ sheetHintColor }}"></i><span>{{ sheetHint }}<b style="font-weight:600;color:var(--mf-text)">{{ sheetHintAmt }}</b></span></div></sc-if>
       </div>
       <div style="display:flex;gap:8px">
@@ -108,7 +109,7 @@
     <div onClick="{{ stopProp }}" style="{{ rp.panelStyle }}">
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}"><div style="width:40px;height:4px;border-radius:99px;background:var(--n4);align-self:center;margin-bottom:-4px"></div></sc-if>
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--mf-text-muted)">PERIODO DEL MESE</span><span style="font:400 22px/1.15 Inter,sans-serif;letter-spacing:-0.02em">{{ rp.hint }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.5 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--mf-text-muted)">PERIODO DEL MESE</span><span style="font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em">{{ rp.hint }}</span></div>
         <button onClick="{{ rp.close }}" aria-label="Chiudi" style="width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--n2);color:var(--nW)"><i class="icon-x" style="font-size:18px;line-height:1"></i></button>
       </div>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px">
@@ -125,11 +126,11 @@
         <sc-for list="{{ rp.cells }}" as="c" hint-placeholder-count="35"><div style="{{ c.wrapStyle }}"><button onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.num }}</button></div></sc-for>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <sc-for list="{{ rp.presets }}" as="p" hint-placeholder-count="2"><button onClick="{{ p.pick }}" style="height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 12px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW);border-color:var(--mf-text-muted)">{{ p.label }}</button></sc-for>
+        <sc-for list="{{ rp.presets }}" as="p" hint-placeholder-count="2"><button onClick="{{ p.pick }}" style="height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text-secondary);font:500 13px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW);border-color:var(--mf-text-muted)">{{ p.label }}</button></sc-for>
         <span style="margin-left:auto;font:400 13px/1.4 Inter,sans-serif;color:var(--n7)">{{ rp.daysLabel }}</span>
       </div>
       <div style="display:flex;gap:8px">
-        <button onClick="{{ rp.close }}" style="flex:1;height:48px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 15px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW)">Annulla</button>
+        <button onClick="{{ rp.close }}" style="flex:1;height:52px;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);font:600 16px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--mf-surface-hover)">Annulla</button>
         <button onClick="{{ rp.confirm }}" disabled="{{ rp.cantConfirm }}" style="{{ rp.okStyle }}">Conferma periodo</button>
       </div>
     </div>
@@ -153,7 +154,7 @@
         <sc-for list="{{ dp.cells }}" as="c" hint-placeholder-count="35"><div style="display:flex;justify-content:center"><button onClick="{{ c.pick }}" disabled="{{ c.off }}" style="{{ c.style }}">{{ c.num }}</button></div></sc-for>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <sc-for list="{{ dp.presets }}" as="p" hint-placeholder-count="2"><button onClick="{{ p.pick }}" style="height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 12px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW);border-color:var(--mf-text-muted)">{{ p.label }}</button></sc-for>
+        <sc-for list="{{ dp.presets }}" as="p" hint-placeholder-count="2"><button onClick="{{ p.pick }}" style="height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text-secondary);font:500 13px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW);border-color:var(--mf-text-muted)">{{ p.label }}</button></sc-for>
       </div>
       <div style="display:flex;gap:8px">
         <button onClick="{{ dp.close }}" style="flex:1;height:48px;border-radius:99px;border:1px solid var(--n4);background:transparent;color:var(--n7);font:500 15px/1 Inter,sans-serif;cursor:pointer" style-hover="color:var(--nW)">Annulla</button>
@@ -354,14 +355,13 @@
   </div>
 </sc-if>
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-  <div style="position:fixed;inset:0;z-index:100;background:rgba(11,11,11,.72);display:flex;align-items:center;justify-content:center;padding:24px;animation:mfFade 180ms ease-out">
-    <div style="width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px;padding:clamp(16px,4.5vw,32px);animation:mfPop 200ms cubic-bezier(.23,1,.32,1);border-radius:12px;background:var(--nW);color:var(--n0);box-shadow:0 24px 64px rgba(0,0,0,.4)">
-      <span style="width:12px;height:12px;border-radius:99px;background:#f36458"></span>
-      <div style="font:400 clamp(22px,6vw,32px)/1.13 Inter,sans-serif;letter-spacing:-0.02em;text-wrap:balance">{{ modalTitle }}</div>
-      <div style="font:400 16px/1.5 Inter,sans-serif;color:var(--n2);text-wrap:pretty">{{ modalText }}</div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-        <button onClick="{{ modalCancel }}" style="height:44px;padding:0 20px;border-radius:99px;border:1px solid var(--n8);background:var(--nW);color:var(--n0);font:500 15px/1.5 Inter,sans-serif;cursor:pointer" style-hover="background:var(--n8)">Annulla</button>
+  <div style="position:fixed;inset:0;z-index:100;background:var(--mf-scrim);display:flex;align-items:center;justify-content:center;padding:24px;animation:mfFade 180ms ease-out">
+    <div role="alertdialog" aria-modal="true" aria-label="{{ modalTitle }}" style="width:100%;max-width:460px;display:flex;flex-direction:column;gap:12px;padding:24px;animation:mfPop 200ms cubic-bezier(.23,1,.32,1);border-radius:24px;background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border)">
+      <div style="font:600 24px/30px Inter,sans-serif;letter-spacing:-0.01em;text-wrap:balance">{{ modalTitle }}</div>
+      <div style="font:400 15px/22px Inter,sans-serif;color:var(--mf-text-secondary);text-wrap:pretty">{{ modalText }}</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
         <button onClick="{{ modalConfirm }}" style="{{ modalOkStyle }}">{{ modalOk }}</button>
+        <button onClick="{{ modalCancel }}" style="height:52px;border-radius:99px;border:0;background:var(--mf-surface-raised);color:var(--mf-text);font:600 16px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--mf-surface-hover)">Annulla</button>
       </div>
     </div>
   </div>
@@ -551,7 +551,7 @@
 </sc-if>
       </sc-for>
       </sc-for>
-      <sc-if value="{{ noRecent }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:24px 8px 16px;text-align:center"><i class="icon-receipt" style="font-size:22px;line-height:1;color:var(--n7)"></i><span style="font:400 14px/1.5 Inter,sans-serif;color:var(--mf-text-muted);text-wrap:pretty">Nessuna spesa in questo mese. Tocca un pulsante qui sopra per aggiungerne una.</span></div></sc-if>
+      <sc-if value="{{ noRecent }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin:12px 0 8px;padding:28px 16px;border:1px dashed var(--mf-border);border-radius:20px;text-align:center"><span style="width:48px;height:48px;border-radius:12px;background:var(--mf-surface-raised);color:var(--mf-text-secondary);display:grid;place-items:center"><i class="icon-receipt" style="font-size:22px;line-height:1"></i></span><span style="font:400 14px/21px Inter,sans-serif;color:var(--mf-text-secondary);text-wrap:pretty">Nessuna spesa in questo mese. Tocca un pulsante qui sopra per aggiungerne una.</span></div></sc-if>
     </div>
   </div>
 </sc-if>
@@ -1738,7 +1738,7 @@ class Component extends DCLogic {
       openSheetAny: () => { this.setState({ view: 'm:' + mo.id, sheetOpen: true, picker: null, formDate: '' }); setTimeout(() => { const el = this.amountRef.current; if (el) el.focus(); }, 80); },
       yearTabs, monthTabs, addMonth, nextMonthLabel: `${MN[nxt.month].slice(0, 3)} ${nxt.year}`, isYear, isMonth: !isYear,
       modalOpen: !!s.modal, modalTitle: s.modal ? s.modal.title : '', modalText: s.modal ? s.modal.text : '', modalOk: s.modal ? s.modal.ok : 'OK',
-      modalOkStyle: { height: 44, padding: '0 22px', borderRadius: 99, border: 0, background: s.modal && s.modal.danger ? 'var(--mf-danger-solid)' : 'var(--n0)', color: s.modal && s.modal.danger ? '#fff' : 'var(--nW)', font: '500 15px/1.5 Inter,sans-serif', cursor: 'pointer' },
+      modalOkStyle: { height: 52, borderRadius: 99, border: 0, background: s.modal && s.modal.danger ? 'var(--mf-danger)' : 'var(--mf-brand)', color: s.modal && s.modal.danger ? 'var(--mf-background)' : 'var(--mf-on-brand)', font: '600 16px/1 Inter,sans-serif', cursor: 'pointer' },
       modalCancel: () => { this._modalFn = null; this.setState({ modal: null }); },
       modalConfirm: () => { const f = this._modalFn; this._modalFn = null; this.setState({ modal: null }, () => f && f()); },
       saveStatus: this.savedOk === false ? 'Attenzione: il browser non permette il salvataggio. Usa "Esporta backup".' : `Salvataggio automatico attivo${this.savedAt ? ' · ultimo alle ' + this.savedAt.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }) : ''}`,
@@ -2264,8 +2264,9 @@ class Component extends DCLogic {
       formPk: picker('form', 'formIcon', true, s.formName),
       amountRef: this.amountRef, sheetOpen: s.sheetOpen, toast: s.toast, sheetPk: picker('sheet', 'formIcon', false, s.formName),
       openSheet: () => { this.setState({ sheetOpen: true, picker: null, formDate: '' }); setTimeout(() => { const el = this.amountRef.current; if (el) el.focus(); }, 60); },
-      closeSheet: (this._closeSheet = () => { const pf = this._prefilled; this._prefilled = false; this.setState(pf ? { sheetOpen: false, formAmount: '', formName: '', formIcon: '' } : { sheetOpen: false }); }), stopProp: e => e.stopPropagation(),
+      closeSheet: (this._closeSheet = () => { const pf = this._prefilled; this._prefilled = false; this.setState(pf ? { sheetOpen: false, formAmount: '', formName: '', formIcon: '', formErr: '' } : { sheetOpen: false, formErr: '' }); }), stopProp: e => e.stopPropagation(),
       onSheetKey: e => { if (e.key === 'Escape') { e.stopPropagation(); this._closeSheet(); } else if (e.key === 'Enter' && !this.state.isMobile && e.target && e.target.dataset && (e.target.dataset.big || e.target.dataset.name)) { e.preventDefault(); setTimeout(() => this._addExp && this._addExp(), 0); } },
+      sheetErr: s.sheetOpen ? (s.formErr || '') : '', sheetErrOn: !!(s.sheetOpen && s.formErr), sheetLine: s.sheetOpen && s.formErr ? 'var(--mf-danger)' : 'var(--mf-brand)',
       sheetAlign: mob ? 'flex-end' : 'center', sheetPad: mob ? '0' : '24px', sheetMax: mob ? '520px' : '560px', sheetRadius: mob ? '24px 24px 0 0' : '24px', sheetAnim: mob ? 'mfUp 280ms cubic-bezier(.32,.72,0,1)' : 'mfPop 200ms ease-out',
       sheetFs: (() => { const L = String(s.formAmount || '').length; const t = mob ? [64, 56, 48, 40] : [72, 64, 56, 48]; return t[L <= 6 ? 0 : L <= 7 ? 1 : L <= 8 ? 2 : 3] + 'px'; })(),
       ...(() => { const num = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.')); const nm = String(s.formName || '').trim().toLowerCase(); const last = !!s.formLast && nm === String(s.formLast).toLowerCase() && s.formAmount === s.formLastAmt; const pre = last ? 'Ultimo importo per ' + s.formName.trim() + ' · dopo ti restano ' : 'Dopo ti restano ';
@@ -2317,12 +2318,12 @@ class Component extends DCLogic {
           const col = k % 7, band = (inR || (isA && R.b && R.b !== R.a) || (isB && R.a !== R.b));
           return { num: dt.getDate(),
             pick: () => { if (R.step === 'start') { set({ a: iso, b: R.b && R.b >= iso ? R.b : null, step: 'end', y: dt.getFullYear(), m: dt.getMonth() }); } else { if (!R.a || iso < R.a) set({ a: iso, b: null, step: 'end' }); else set({ b: iso }); } },
-            wrapStyle: { display: 'flex', justifyContent: 'center', background: band ? 'rgba(243,100,88,.16)' : 'transparent',
+            wrapStyle: { display: 'flex', justifyContent: 'center', background: band ? 'var(--mf-surface-raised)' : 'transparent',
               borderTopLeftRadius: (isA || col === 0) ? 99 : 0, borderBottomLeftRadius: (isA || col === 0) ? 99 : 0, borderTopRightRadius: (isB || col === 6) ? 99 : 0, borderBottomRightRadius: (isB || col === 6) ? 99 : 0 },
-            style: { width: '100%', maxWidth: 44, aspectRatio: '1', borderRadius: 99, border: iso === todayIso && !end ? '1px solid var(--n6)' : '1px solid transparent', background: end ? '#f36458' : 'transparent', color: end ? '#0b0b0c' : inM ? 'var(--nW)' : 'var(--n5)', font: (end ? '600' : '400') + ' 15px/1 Inter,sans-serif', cursor: 'pointer', padding: 0 } };
+            style: { width: '100%', maxWidth: 44, aspectRatio: '1', borderRadius: 99, border: iso === todayIso && !end ? '1px solid var(--n6)' : '1px solid transparent', background: end ? 'var(--mf-text)' : 'transparent', color: end ? 'var(--mf-background)' : inM ? 'var(--mf-text)' : 'var(--mf-text-muted)', font: (end ? '600' : '400') + ' 15px/1 Inter,sans-serif', cursor: 'pointer', padding: 0 } };
         });
         const nDays = R.a && R.b ? Math.round((parseIso(R.b) - parseIso(R.a)) / 864e5) + 1 : 0;
-        const tab = on => ({ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2, padding: '10px 14px', borderRadius: 12, border: on ? '1px solid #f36458' : '1px solid var(--n4)', background: on ? 'rgba(243,100,88,.08)' : 'var(--n2)', color: 'var(--nW)', cursor: 'pointer', textAlign: 'left', font: 'inherit', minWidth: 0 });
+        const tab = on => ({ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2, padding: '10px 14px', borderRadius: 12, border: on ? '1px solid var(--mf-text)' : '1px solid var(--mf-border)', background: on ? 'var(--mf-surface-raised)' : 'var(--mf-surface)', color: 'var(--mf-text)', cursor: 'pointer', textAlign: 'left', font: 'inherit', minWidth: 0 });
         const mob = !!s.isMobile, can = !!(R.a && R.b);
         const ref = new Date(R.y, R.m, 1);
         return { ...res, rp: { open: true,
@@ -2337,7 +2338,7 @@ class Component extends DCLogic {
           ],
           daysLabel: nDays ? nDays + ' giorni' : 'Scegli la fine',
           cantConfirm: !can,
-          okStyle: { flex: 1.4, height: 48, borderRadius: 99, border: 0, background: can ? 'var(--nW)' : 'var(--n4)', color: can ? 'var(--n0)' : 'var(--n6)', font: '500 15px/1 Inter,sans-serif', cursor: can ? 'pointer' : 'default' },
+          okStyle: { flex: 1.4, height: 52, borderRadius: 99, border: 0, background: can ? 'var(--mf-brand)' : 'var(--mf-surface-raised)', color: can ? 'var(--mf-on-brand)' : 'var(--mf-text-muted)', font: '600 16px/1 Inter,sans-serif', cursor: can ? 'pointer' : 'default' },
           close: () => this.setState({ rp: null }),
           confirm: () => { if (!can) return; upd(m => ({ ...m, pStart: R.a, pEnd: R.b })); this.setState({ rp: null }); },
           overlayStyle: { animation: 'mfFade 180ms ease-out', position: 'fixed', inset: 0, zIndex: 110, background: 'rgba(11,11,11,.72)', display: 'flex', alignItems: mob ? 'flex-end' : 'center', justifyContent: 'center', padding: mob ? 0 : 24 },
@@ -2351,7 +2352,7 @@ class Component extends DCLogic {
         const ok = iso => (!D.min || iso >= D.min) && (!D.max || iso <= D.max);
         const cells = Array.from({ length: rows }, (_, k) => { const dt = new Date(D.y, D.m, k - off + 1), iso = isoOf(dt), inM = dt.getMonth() === D.m, sel = iso === D.v, offD = !ok(iso);
           return { num: dt.getDate(), off: offD, pick: () => { if (!offD) set({ v: iso, y: dt.getFullYear(), m: dt.getMonth() }); },
-            style: { width: '100%', maxWidth: 44, aspectRatio: '1', borderRadius: 99, border: iso === todayIso && !sel ? '1px solid var(--n6)' : '1px solid transparent', background: sel ? '#f36458' : 'transparent', color: sel ? '#0b0b0c' : offD ? 'var(--n4)' : inM ? 'var(--nW)' : 'var(--n5)', font: (sel ? '600' : '400') + ' 15px/1 Inter,sans-serif', cursor: offD ? 'default' : 'pointer', padding: 0 } }; });
+            style: { width: '100%', maxWidth: 44, aspectRatio: '1', borderRadius: 99, border: iso === todayIso && !sel ? '1px solid var(--n6)' : '1px solid transparent', background: sel ? 'var(--mf-text)' : 'transparent', color: sel ? 'var(--mf-background)' : offD ? 'var(--mf-border)' : inM ? 'var(--mf-text)' : 'var(--mf-text-muted)', font: (sel ? '600' : '400') + ' 15px/1 Inter,sans-serif', cursor: offD ? 'default' : 'pointer', padding: 0 } }; });
         const vd = parseIso(D.v), yIso = isoOf(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1));
         const jump = iso => () => { if (!ok(iso)) return; const d = parseIso(iso); set({ v: iso, y: d.getFullYear(), m: d.getMonth() }); };
         return { dp: { open: true, label: `${DOWS[vd.getDay()]} ${vd.getDate()} ${MN[vd.getMonth()]} ${vd.getFullYear()}`,
@@ -2368,10 +2369,10 @@ class Component extends DCLogic {
       onPEnd: e => { const v = e.target.value; if (!v) return; upd(m => ({ ...m, pStart: m.pStart || isoOf(rg.start), pEnd: v < (m.pStart || isoOf(rg.start)) ? (m.pStart || isoOf(rg.start)) : v })); },
       outCount: (mo.variable || []).filter(e => { const k = dkey(parseIso(e.date)); return k < rg.sK || k > rg.eK; }).length,
       onFormKey: e => { if (e.key === 'Enter') { e.preventDefault(); setTimeout(() => this._addExp && this._addExp(), 0); } },
-      onFormName: e => this.setState({ formName: e.target.value }), onFormAmount: e => this.setState({ formAmount: e.target.value }), onFormDate: e => this.setState({ formDate: e.target.value }),
+      onFormName: e => this.setState({ formName: e.target.value }), onFormAmount: e => this.setState({ formAmount: e.target.value, formErr: '' }), onFormDate: e => this.setState({ formDate: e.target.value }),
       addExpense: (this._addExp = () => {
         const amt = parseFloat(String(s.formAmount || '').replace(/\s|€/g, '').replace(',', '.'));
-        if (!(amt > 0)) { const el = this.amountRef.current; if (el && s.sheetOpen) el.focus(); return; }
+        if (!(amt > 0)) { if (s.sheetOpen) this.setState({ formErr: 'Scrivi un importo maggiore di 0' }); const el = this.amountRef.current; if (el && s.sheetOpen) el.focus(); return; }
         if (!s.formName.trim()) { this.setState({ formName: (suggestIcons('')[0] || [])[2] || 'Spesa' }); }
         let date = s.formDate || defDate; const dk = dkey(parseIso(date)); if (dk < rg.sK || dk > rg.eK) date = defDate;
         const id = s.nextId;
@@ -2391,7 +2392,7 @@ class Component extends DCLogic {
           dots: Array.from({ length: r.count }, (_, i) => ({ style: { flex: 1, height: 10, borderRadius: 2, background: i < ri.k - 1 ? 'var(--nW)' : i === ri.k - 1 ? '#f36458' : 'var(--n4)' } })),
           viewing: !ing, editing: ing,
           edit: () => this.setState({ ed: { list: 'rates', id: r.id }, edName: r.name, edAmount: String(r.total), edCount: String(r.count), edPaid: String(r.paidBefore), picker: null }),
-          del: () => ask(`Eliminare "${r.name}"?`, 'La rata verrà tolta da tutti i mesi.', 'Elimina', true, () => this.setState(st => ({ rates: st.rates.filter(x => x.id !== r.id) }))),
+          del: () => ask(`Eliminare "${r.name}"?`, 'La rata verrà tolta da tutti i mesi. Non si può annullare.', 'Elimina', true, () => this.setState(st => ({ rates: st.rates.filter(x => x.id !== r.id) }))),
           ed: ing ? { name: s.edName, total: s.edAmount, count: s.edCount, paid: s.edPaid,
             onName: e => this.setState({ edName: e.target.value }), onTotal: e => this.setState({ edAmount: e.target.value }), onCount: e => this.setState({ edCount: e.target.value }), onPaid: e => this.setState({ edPaid: e.target.value }),
             cancel: cancelEdit,
@@ -2403,7 +2404,7 @@ class Component extends DCLogic {
       onRName: e => this.setState({ rName: e.target.value }), onRTotal: e => this.setState({ rTotal: e.target.value }), onRCount: e => this.setState({ rCount: e.target.value }), onRPaid: e => this.setState({ rPaid: e.target.value }),
       addRate: () => { if (!s.rName.trim() || !(rT > 0) || !(rC > 0) || rP >= rC) return; this.setState(st => ({ rates: [...st.rates, { id: st.nextId, name: st.rName.trim(), total: rT, count: rC, paidBefore: rP, startIdx: idx(mo) }], nextId: st.nextId + 1, rName: '', rTotal: '', rCount: '', rPaid: '' })); },
       goYear: go('y:' + Y),
-      deleteMonth: () => ask(`Eliminare ${MN[M]} ${Y}?`, months.length < 2 ? 'È l\'unico mese: verrà sostituito da un mese vuoto. Spese e voci di questo mese andranno perse.' : 'Verranno eliminate tutte le spese, le entrate extra e le voci fisse di questo mese. Le rate restano.', 'Elimina mese', true, () => {
+      deleteMonth: () => ask(`Eliminare ${MN[M]} ${Y}?`, months.length < 2 ? 'È l\'unico mese: verrà sostituito da un mese vuoto. Spese e voci di questo mese andranno perse. Non si può annullare.' : 'Verranno eliminate tutte le spese, le entrate extra e le voci fisse di questo mese. Le rate restano. Non si può annullare.', 'Elimina mese', true, () => {
         const rest = months.filter(m => m.id !== mo.id);
         if (!rest.length) { this.setState({ ...MF_DEFAULT(), rates: this.state.rates, nextId: this.state.nextId }); return; }
         this.setState({ months: rest, view: 'm:' + rest[rest.length - 1].id });
