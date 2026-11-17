@@ -5,6 +5,7 @@
 // Protezioni: stesso sito (Origin/Referer), campo trappola, tempo minimo di compilazione,
 // limite per IP (5 all'ora), lunghezze massime, nessun dato personale nei log.
 const L = require('./_lib');
+const E = require('./_email');
 
 const TO = () => process.env.REQUEST_TO || 'raffcapasso95@gmail.com';
 const FROM = () => process.env.REQUEST_FROM || 'Myfinance <onboarding@resend.dev>';
@@ -22,10 +23,10 @@ const sameSite = req => {
 
 async function sendMail(r) {
   const key = process.env.RESEND_API_KEY; if (!key) return false;
-  const text = `Nuova richiesta dal sito Myfinance\n\nNome: ${r.name}\nEmail: ${r.email}\nRicevuta: ${r.at}\n\nMessaggio:\n${r.message}\n`;
+  const text = E.renderRequestText(r), html = E.renderRequestHtml(r);
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST', headers: { Authorization: 'Bearer ' + key, 'content-type': 'application/json' },
-    body: JSON.stringify({ from: FROM(), to: [TO()], reply_to: r.email, subject: oneLine('Myfinance · richiesta da ' + r.name, 120), text }),
+    body: JSON.stringify({ from: FROM(), to: [TO()], reply_to: r.email, subject: oneLine('Myfinance · richiesta da ' + r.name, 120), text, html }),
   });
   return res.ok;
 }
