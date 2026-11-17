@@ -1151,8 +1151,8 @@
 </sc-if>
 </div>
 <sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}">
-<aside style="align-self:stretch;width:320px;flex:none;box-sizing:border-box;border-left:1px solid var(--mf-border);background:var(--mf-background);color:var(--mf-text)">
-<div class="mf-rail" style="position:sticky;top:-30px;max-height:calc(100dvh + 30px);overflow-y:auto;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:54px 20px 24px">
+<aside style="align-self:stretch;width:384px;flex:none;box-sizing:border-box;border-left:1px solid var(--mf-border);background:var(--mf-background);color:var(--mf-text)">
+<div class="mf-rail" style="position:sticky;top:-30px;max-height:calc(100dvh + 30px);overflow-y:auto;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:54px 24px 28px">
 <div style="display:flex;align-items:center;gap:8px;flex:none">
         <button onClick="{{ openCm }}" aria-label="Cambia mese" style="display:inline-flex;align-items:center;justify-content:space-between;gap:8px;flex:1;min-width:0;height:44px;padding:0 14px 0 16px;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);font:500 14px/1 Inter,sans-serif;cursor:pointer" style-hover="background:var(--mf-surface-raised)"><span>{{ mobileSelLabel }}</span><i class="icon-chevron-down" style="color:var(--mf-text-muted);font-size:16px;line-height:1"></i></button>
         <button onClick="{{ addMonth }}" aria-label="Nuovo mese" style="width:44px;height:44px;flex:none;border-radius:99px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-calendar-plus" style="font-size:20px;line-height:1"></i></button>
@@ -1592,7 +1592,7 @@ class Component extends DCLogic {
   componentDidMount() {
     try { this._mq = window.matchMedia('(max-width: 760px)'); this._mqH = e => this.setState({ isMobile: e.matches }); this._mq.addEventListener ? this._mq.addEventListener('change', this._mqH) : this._mq.addListener(this._mqH); this.setState({ isMobile: this._mq.matches }); } catch (e) {}
     try { this._escH = e => { if (e.key !== 'Escape') return; const st = this.state; if (st.modal) return; if (st.nmOpen) this.setState({ nmOpen: false, nmErr: '' }); else if (st.cmOpen) this.setState({ cmOpen: false }); else if (st.sheetOpen && this._closeSheet) this._closeSheet(); }; document.addEventListener('keydown', this._escH); } catch (e) {}
-    try { this._wq = window.matchMedia('(min-width: 1180px)'); this._wqH = e => this.setState({ isWide: e.matches }); this._wq.addEventListener('change', this._wqH); this.setState({ isWide: this._wq.matches }); } catch (e) {}
+    try { this._wq = window.matchMedia('(min-width: 1280px)'); this._wqH = e => this.setState({ isWide: e.matches }); this._wq.addEventListener('change', this._wqH); this.setState({ isWide: this._wq.matches }); } catch (e) {}
     try { const vv = window.visualViewport, de = document.documentElement; if (vv) { this._vvH = () => { de.style.setProperty('--mf-vvh', Math.round(vv.height) + 'px'); de.style.setProperty('--mf-vvt', Math.round(vv.offsetTop) + 'px'); }; vv.addEventListener('resize', this._vvH); vv.addEventListener('scroll', this._vvH); this._vvH(); } } catch (e) {}
     try { this._pop = () => { if (!this._hist) return; this._hist = false; const st = this.state; if (st.nmOpen || st.cmOpen || st.sheetOpen) document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); }; window.addEventListener('popstate', this._pop); } catch (e) {}
     try { this._fi = e => { const t = e.target; if (t && t.closest && t.closest('[data-mf-sheet]') && /INPUT|TEXTAREA|SELECT/.test(t.tagName)) setTimeout(() => { try { t.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (x) {} }, 280); }; document.addEventListener('focusin', this._fi); } catch (e) {}
