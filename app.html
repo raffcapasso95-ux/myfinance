@@ -1729,6 +1729,7 @@ class Component extends DCLogic {
       document.addEventListener('touchstart', this._swS, { passive: true }); document.addEventListener('touchmove', this._swM, { passive: false }); document.addEventListener('touchend', this._swE); document.addEventListener('touchcancel', this._swE);
     } catch (e) {}
     this._tourR = () => { if (this.state.tour != null) this.setState({ tourTick: Date.now() }); }; window.addEventListener('resize', this._tourR); window.addEventListener('scroll', this._tourR, true);
+    try { if (/[?&]esci\b/.test(location.search)) { this._autoOut = true; history.replaceState(null, '', location.pathname); } } catch (e) {}
     this._onHide = () => this.persist();
     window.addEventListener('pagehide', this._onHide);
     window.addEventListener('beforeunload', this._onHide);
@@ -1750,7 +1751,7 @@ class Component extends DCLogic {
     document.removeEventListener('visibilitychange', this._onVis); window.removeEventListener('focus', this._onFocus); clearInterval(this._syncI); clearTimeout(this._pushT);
     window.removeEventListener('touchstart', this._ptrS); window.removeEventListener('touchmove', this._ptrM); window.removeEventListener('touchend', this._ptrE); window.removeEventListener('touchcancel', this._ptrE); window.removeEventListener('resize', this._onRs);
   }
-  componentDidUpdate() { this.persist(); this.fixSticky(); this.syncLock(); }
+  componentDidUpdate() { this.persist(); this.fixSticky(); this.syncLock(); if (this._autoOut && this.state.authed && !this.state.onboard && this._askLogout) { this._autoOut = false; this._askLogout(); } }
   tourFind(k) { return [...document.querySelectorAll('[data-tour="' + k + '"]')].find(e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; }); }
   tourGo(i) {
     const K = ['budget', 'add', 'nav', 'settings'];
@@ -1918,7 +1919,7 @@ class Component extends DCLogic {
           ...years.slice().reverse().map(y => ({ key: 'y' + y, title: `Resoconto ${y}`, sub: 'Anno intero', badge: '', amt: '', on: isYear && s.view === 'y:' + y, go: () => { this.setState({ view: 'y:' + y, cmOpen: false }); window.scrollTo(0, 0); } }))];
         const mM = !!s.isMobile;
         return {
-          askLogout: () => { this.setState({ settingsOpen: false }); ask('Uscire da Myfinance?', 'I tuoi dati restano salvati sul tuo account e li ritrovi al prossimo accesso. Le modifiche non ancora sincronizzate vengono salvate prima di uscire.', 'Esci', false, () => this.logout()); }, logoutTop: this.auth && this.auth.admin ? '1px solid var(--mf-border)' : '0',
+          askLogout: (this._askLogout = () => { this.setState({ settingsOpen: false }); ask('Uscire da Myfinance?', 'I tuoi dati restano salvati sul tuo account e li ritrovi al prossimo accesso. Le modifiche non ancora sincronizzate vengono salvate prima di uscire.', 'Esci', false, () => this.logout()); }), logoutTop: this.auth && this.auth.admin ? '1px solid var(--mf-border)' : '0',
           stopProp: e => e.stopPropagation(), sheetAlign: mM ? 'flex-end' : 'center', sheetPad: mM ? '0' : '24px', sheetMax: mM ? '520px' : '560px', sheetRadius: mM ? '24px 24px 0 0' : '24px', sheetAnim: mM ? 'mfUp 280ms cubic-bezier(.32,.72,0,1)' : 'mfPop 200ms ease-out',
           nmOpen: !!s.nmOpen, nmClose: () => this.setState({ nmOpen: false, nmErr: '' }), nmSub: 'Crea il mese dopo ' + MN[last.month].toLowerCase(), nmPeriod: `${fm(ns)} → ${fm(ne)}`, nmDays: `${days} giorni · ${nRt} ${nRt === 1 ? 'rata in corso' : 'rate in corso'}`,
           nmFixedTitle: 'Copia le spese fisse', nmFixedSub: last.fixed.length ? `${names} · ${eur(fxTot)}` : 'Nessuna spesa fissa nel mese precedente', nmFixedOn: s.nmFixed !== false, nmFixedBg: f.bg, nmFixedLeft: f.left, nmToggleFixed: () => this.setState({ nmFixed: s.nmFixed === false }),
