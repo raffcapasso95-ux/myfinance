@@ -700,6 +700,16 @@
 </sc-if>
 
 <sc-if value="{{ tabPiano }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(12px,3.5vw,24px) 20px 0">
+    <div role="group" aria-label="A colpo d'occhio" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+      <button onClick="{{ glSavGo }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;padding:14px;border-radius:20px;border:1px solid var(--mf-brand);background:var(--mf-brand);color:var(--mf-on-brand);cursor:pointer;text-align:left;font:inherit" style-hover="filter:brightness(1.05)"><span style="font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mf-on-brand)">Salvadanaio</span><span style="font:600 var(--fs-num)/1.1 Inter,sans-serif;letter-spacing:-0.02em;color:inherit">{{ glSavFmt }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--mf-on-brand);text-wrap:pretty">{{ glSavNote }}</span></button>
+      <button onClick="{{ glExtraGo }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;padding:14px;border-radius:20px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--mf-surface-raised)"><span style="font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mf-text-muted)">Extra budget</span><span style="font:600 var(--fs-num)/1.1 Inter,sans-serif;letter-spacing:-0.02em;color:{{ glExtraColor }}">{{ glExtraFmt }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--mf-text-secondary);text-wrap:pretty">{{ glExtraNote }}</span></button>
+      <button onClick="{{ glSubGo }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;padding:14px;border-radius:20px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--mf-surface-raised)"><span style="font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mf-text-muted)">Abbonamenti</span><span style="font:600 var(--fs-num)/1.1 Inter,sans-serif;letter-spacing:-0.02em;color:inherit">{{ glSubFmt }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--mf-text-secondary);text-wrap:pretty">{{ glSubNote }}</span></button>
+      <button onClick="{{ glRateGo }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;padding:14px;border-radius:20px;border:1px solid var(--mf-border);background:var(--mf-surface);color:var(--mf-text);cursor:pointer;text-align:left;font:inherit" style-hover="background:var(--mf-surface-raised)"><span style="font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mf-text-muted)">Rate</span><span style="font:600 var(--fs-num)/1.1 Inter,sans-serif;letter-spacing:-0.02em;color:inherit">{{ glRateFmt }}</span><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--mf-text-secondary);text-wrap:pretty">{{ glRateNote }}</span></button>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ tabPiano }}" hint-placeholder-val="{{ false }}">
   <div style="max-width:1280px;margin:0 auto;padding:12px 20px 0">
    <div style="display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:24px;background:var(--mf-surface);border:1px solid var(--mf-border)">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -868,7 +878,7 @@
         </div>
       </div>
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:4px;padding-top:14px;border-top:1px solid var(--n8)">
-        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n5)">Nel salvadanaio questo mese</span><span style="font:500 var(--fs-numxl)/1.13 Inter,sans-serif;letter-spacing:-0.03em;color:var(--n0)">{{ savTotalFmt }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 Inter,sans-serif;color:var(--n5)">Nel salvadanaio questo mese · totale da sempre <b style="font-weight:600;color:var(--n0)">{{ glSavFmt }}</b></span><span style="font:500 var(--fs-numxl)/1.13 Inter,sans-serif;letter-spacing:-0.03em;color:var(--n0)">{{ savTotalFmt }}</span></div>
       </div>
       <div style="display:flex;height:6px;border-radius:99px;overflow:hidden;gap:2px;background:var(--n8)"><div style="{{ savAutoBar }}"></div><div style="{{ savExtraBar }}"></div></div>
       <div style="display:flex;flex-direction:column;margin-top:4px">
@@ -918,7 +928,8 @@
       </div>
       </sc-if>
       <sc-if value="{{ svClosed }}" hint-placeholder-val="{{ true }}"><button onClick="{{ toggleSvOpen }}" style="display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:99px;border:1px dashed var(--mf-brand);background:transparent;color:var(--mf-text);font:600 15px/1 Inter,sans-serif;cursor:pointer"><i class="icon-plus" style="font-size:18px;line-height:1"></i>Metti da parte un extra</button></sc-if>
-      <div style="display:flex;flex-direction:column;gap:10px;padding:14px;margin-top:auto;border-radius:12px;background:var(--n9)">
+      <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 14px;border-radius:12px;border:1px dashed var(--mf-input-border);margin-top:auto;cursor:text"><span style="display:flex;flex-direction:column;gap:1px;font:500 14px/1.3 Inter,sans-serif">Saldo di partenza<span style="font:400 12px/1.4 Inter,sans-serif;color:var(--mf-text-secondary)">Quanto avevi già da parte prima di Myfinance</span></span><span style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;border:1px solid var(--mf-border);background:var(--mf-surface)"><span style="color:var(--mf-text-muted)">€</span><input type="text" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="Saldo di partenza del salvadanaio" value="{{ savStartVal }}" onChange="{{ onSavStart }}" style="width:84px;text-align:right;background:transparent;border:0;color:var(--mf-text);font:500 16px/1.4 Inter,sans-serif;outline:0;padding:0;font-variant-numeric:tabular-nums"></span></label>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:14px;margin-top:0;border-radius:12px;background:var(--n9)">
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font:400 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">SALVADANAIO {{ monthYear }}</span><span style="font:500 16px/1.2 Inter,sans-serif;letter-spacing:-0.02em">{{ savYearFmt }}</span></div>
         <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;align-items:end;height:56px">
           <sc-for list="{{ savMonths }}" as="sm" hint-placeholder-count="12"><div title="{{ sm.title }}" style="{{ sm.style }}"></div></sc-for>
@@ -1249,7 +1260,7 @@
 </sc-if>
 
 <sc-if value="{{ showRate }}" hint-placeholder-val="{{ true }}">
-<section style="background:var(--n0);color:var(--nW)">
+<section id="sez-rate" style="background:var(--n0);color:var(--nW);scroll-margin-top:80px">
   <div style="max-width:1280px;margin:0 auto;padding:clamp(20px,3vw,28px) 20px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(16px,4.5vw,32px);flex-wrap:wrap">
       <div>
@@ -2665,6 +2676,22 @@ class Component extends DCLogic {
           inSplitSummary: !ok ? 'Scrivi prima l’importo' : sv <= 0 ? 'Con 0 € da parte, tutto va nel budget' : sv >= amt ? 'Tutto va da parte, niente nel budget' : 'Nel budget ' + eur(amt - t) + ' · Da parte ' + eur(t) }; })(),
       incBars: [[mo.salary, 'var(--mf-text)'], [c.incBudget, 'var(--mf-positive)'], [c.incSave, '#f36458'], [c.incFree, 'var(--mf-text-muted)']].filter(([v], i) => i === 0 || v > 0).map(([v, bg]) => ({ style: { flex: v || 0.0001, background: bg, minWidth: 4 } })),
       incLegend: [['Stipendio', mo.salary, 'var(--mf-text)'], ['Nel budget', c.incBudget, 'var(--mf-positive)'], ['Da parte', c.incSave, '#f36458'], ['Non assegnate', c.incFree, 'var(--mf-text-muted)']].filter(([, v], i) => i === 0 || v > 0).map(([l, v, dot]) => ({ label: l, fmt: s.hideInc ? '€ •••' : eur(v), dot })),
+      ...(() => {
+        const ord = [...months].sort((a, b) => idx(a) - idx(b)), first = ord[0], savStart = +(first && first.savStart) || 0;
+        const savTotal = savStart + months.filter(m => idx(m) <= idx(mo)).reduce((a, m) => { const cc = this.calc(m); return a + cc.saveBudget + cc.extraSaved; }, 0);
+        const free = (c.left + carry) - (c.varBudget - c.varSpent);
+        const subs = mo.fixed.filter(e => parseInt(e.renewDay, 10) >= 1), subTot = subs.reduce((t, e) => t + e.amount, 0), nxt = renewals[0];
+        const scrollTo = id => () => { let tries = 0; const go = () => { const el = document.getElementById(id); if (!el) { if (tries++ < 20) setTimeout(go, 50); return; } window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - (mob ? 76 : 84)), behavior: 'smooth' }); }; this.setState({ mTab: 'rate', view: 'm:' + mo.id }); setTimeout(go, 150); };
+        return {
+          glSavFmt: eur(savTotal), glSavNote: (c.saveBudget + c.extraSaved) > 0 ? '+ ' + eur(c.saveBudget + c.extraSaved) + ' questo mese' : 'Niente da parte questo mese', glSavGo: scrollTo('box-save'),
+          glExtraFmt: c.incBudget > 0 ? '+ ' + eur(c.incBudget) : '—', glExtraColor: c.incBudget > 0 ? 'var(--mf-positive)' : 'var(--mf-text)',
+          glExtraNote: c.incBudget > 0 || c.incFree > 0 ? (free >= 0.5 ? eur(free) + ' liberi oltre il budget' : 'Tutto nel budget') + (c.incFree > 0.5 ? ' · ' + eur(c.incFree) + ' non assegnati' : '') : 'Nessun extra questo mese', glExtraGo: () => { this.setState({ mTab: 'rate', view: 'm:' + mo.id, hideInc: false }); scrollTo('box-in')(); },
+          glSubFmt: subs.length ? eur(subTot) : '—', glSubNote: subs.length ? subs.length + (subs.length === 1 ? ' attivo' : ' attivi') + (nxt ? ' · ' + nxt.name + ' ' + nxt.rel.toLowerCase() : '') : 'Aggiungi il rinnovo alle spese fisse', glSubWarn: !!(nxt && nxt.soon), glSubGo: scrollTo('box-fisse'),
+          glRateFmt: c.rateMonth > 0 ? eur(c.rateMonth) : '—', glRateNote: c.act.length ? 'restano ' + eur(rateDebt) + ' · ' + c.act.length + (c.act.length === 1 ? ' rata attiva' : ' rate attive') : (s.rates.length ? 'Nessuna rata questo mese' : 'Nessuna rata attiva'), glRateGo: scrollTo('sez-rate'),
+          savStartVal: savStart ? fmtIn(savStart) : '', hasSavStart: savStart > 0,
+          onSavStart: e => { const v = parseFloat(String(e.target.value).replace(/\s|€/g, '').replace(',', '.')); this.setState(st => { const o = [...st.months].sort((a, b) => idx(a) - idx(b)), f = o[0]; return f ? { months: st.months.map(m => m.id === f.id ? { ...m, savStart: v > 0 ? Math.round(v * 100) / 100 : 0 } : m) } : null; }); },
+        };
+      })(),
       hasSavInc: c.incSave > 0, savIncFmt: '+ ' + eur(c.incSave), svOpen: !!s.svOpen, svClosed: !s.svOpen, toggleSvOpen: () => this.setState(st => ({ svOpen: !st.svOpen })),
       esName: s.esName, esAmount: s.esAmount, onEsName: e => this.setState({ esName: e.target.value }), onEsAmount: e => this.setState({ esAmount: e.target.value }),
       addExtraSave: () => { const st = this.state, a = parseFloat(String(st.svAmount || '').replace(',', '.')); if (!(a > 0)) return; if (!(st.svName || '').trim()) this.state.svName = 'Extra salvadanaio'; this.state.svAmount = String(a); addFor('extraSave', 'svName', 'svAmount')(); this.setState({ svOpen: false }); },
