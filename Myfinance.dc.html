@@ -2954,7 +2954,7 @@ class Component extends DCLogic {
 (function(){
   var MESI=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],GG=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
   var css=document.createElement('style');
-  css.textContent='input[type=date]{cursor:pointer}input[type=date]::-webkit-calendar-picker-indicator{display:none}'+
+  css.textContent='input[type=date]{cursor:pointer}input[type=date]::-webkit-calendar-picker-indicator{display:none}input[type=date]::-webkit-datetime-edit{display:none}input[type=date]::before{content:attr(data-label);flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}input[type=date][data-empty]::before{color:var(--mf-text-muted)}'+
   '.mfc-scrim{position:fixed;inset:0;z-index:300;background:var(--mf-scrim);display:flex;align-items:center;justify-content:center;padding:16px}'+
   '.mfc{width:100%;max-width:340px;background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:var(--mf-radius-xl);box-shadow:var(--mf-shadow);padding:16px;font-family:var(--mf-font-sans)}'+
   '.mfc-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}'+
@@ -3006,6 +3006,11 @@ class Component extends DCLogic {
     draw();document.body.appendChild(el);
     var f=box.querySelector('.mfc-d.on')||box.querySelector('.mfc-d.td:not(:disabled)')||box.querySelector('.mfc-d:not(:disabled)');if(f)f.focus();
   }
+  var GS=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+  function lab(i){var p=parse(i.value),l=p?p.d+' '+GS[p.m]+' '+p.y:'Scegli una data';if(i.getAttribute('data-label')!==l)i.setAttribute('data-label',l);if(!p!==i.hasAttribute('data-empty')){if(p)i.removeAttribute('data-empty');else i.setAttribute('data-empty','')}}
+  var sync=function(){var a=document.querySelectorAll('input[type=date]');for(var k=0;k<a.length;k++)lab(a[k])},pend=0;
+  new MutationObserver(function(){if(pend)return;pend=1;requestAnimationFrame(function(){pend=0;sync()})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['value']});
+  document.addEventListener('input',sync,true);document.addEventListener('change',sync,true);setInterval(sync,500);sync();
   var isD=function(t){return t&&t.tagName==='INPUT'&&t.type==='date'};
   document.addEventListener('click',function(e){if(isD(e.target)){e.preventDefault();open(e.target)}},true);
   document.addEventListener('focusin',function(e){if(isD(e.target)&&!cur){e.target.blur();open(e.target)}},true);
