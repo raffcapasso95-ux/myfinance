@@ -1877,15 +1877,18 @@ class Component extends DCLogic {
     const act = this.state.rates.filter(r => typeof r.startIdx === 'number').filter(r => { const k = this.rateK(r, mo); return k >= 1 && k <= r.count; });
     const rateMonth = act.reduce((a, r) => a + this.rataOf(r), 0);
     const fixedTotal = sum(mo.fixed) + rateMonth;
-    const saveBudget = mo.salary * mo.pSave / 100;
     const sp = mo.split;
     const incL = mo.incomes || [], incPart = e => e.dest === 'save' ? [e.amount, 0] : e.dest === 'budget' ? [0, e.amount] : e.dest === 'split' ? (t => [t, e.amount - t])(Math.min(e.amount, Math.max(0, +e.toSave || 0))) : [0, 0];
     const incSave = incL.reduce((t, e) => t + incPart(e)[0], 0), incBudget = incL.reduce((t, e) => t + incPart(e)[1], 0);
-    const varRaw = (sp ? mo.salary * sp.var / 100 : mo.salary - saveBudget - fixedTotal) + incBudget;
-    const fixedBudget = sp ? mo.salary * sp.fix / 100 : fixedTotal;
+    // Con la suddivisione personalizzata le percentuali si applicano a stipendio + extra messi nel budget;
+    // con quella automatica lo stipendio resta la base e gli extra nel budget vanno alle spese quotidiane.
+    const baseB = mo.salary + incBudget;
+    const saveBudget = (sp ? baseB : mo.salary) * mo.pSave / 100;
+    const varRaw = sp ? baseB * sp.var / 100 : mo.salary - saveBudget - fixedTotal + incBudget;
+    const fixedBudget = sp ? baseB * sp.fix / 100 : fixedTotal;
     const varSpent = sum(this.varIn(mo)), savSpent = saveBudget;
     const incExtra = sum(incL), extraSavedManual = sum(mo.extraSave || []), extraSaved = extraSavedManual + incSave;
-    return { act, rateMonth, fixedTotal, fixedBudget, saveBudget, varRaw, varBudget: Math.max(0, varRaw), varSpent, savSpent, incExtra, incBudget, incSave, incFree: incExtra - incBudget - incSave, extraSavedManual, extraSaved, left: mo.salary + incExtra - fixedTotal - varSpent - savSpent - extraSaved };
+    return { act, rateMonth, fixedTotal, fixedBudget, saveBudget, baseB, varRaw, varBudget: Math.max(0, varRaw), varSpent, savSpent, incExtra, incBudget, incSave, incFree: incExtra - incBudget - incSave, extraSavedManual, extraSaved, left: mo.salary + incExtra - fixedTotal - varSpent - savSpent - extraSaved };
   }
   renderVals() {
     const v = this._rv(), s = this.state, close = { settingsOpen: false };
@@ -2560,10 +2563,10 @@ class Component extends DCLogic {
         const segBtn = on => ({ height: 30, padding: '0 14px', borderRadius: 99, border: 0, background: on ? 'var(--nW)' : 'transparent', color: on ? 'var(--n0)' : 'var(--n7)', font: '500 13px/1 Inter,sans-serif', cursor: 'pointer', whiteSpace: 'nowrap' });
         const clampP = e => Math.max(0, Math.min(100, Math.round(+e.target.value || 0)));
         const setSp = (k, v) => upd(m => k === 'save' ? ({ ...m, pSave: v }) : ({ ...m, split: { ...(m.split || {}), [k]: v } }));
-        const row = (k, name, icon, color, val, note, noteColor) => ({ name, icon, iconColor: color, val, fmt: eur(mo.salary * val / 100), onChange: e => setSp(k, clampP(e)), note, noteColor: noteColor || 'var(--n6)',
+        const row = (k, name, icon, color, val, note, noteColor) => ({ name, icon, iconColor: color, val, fmt: eur(c.baseB * val / 100), onChange: e => setSp(k, clampP(e)), note, noteColor: noteColor || 'var(--n6)',
           fillStyle: { position: 'absolute', left: 0, width: val + '%', height: 6, borderRadius: 99, background: color },
           thumbStyle: { position: 'absolute', left: `calc(${val}% - 9px)`, width: 18, height: 18, borderRadius: 99, background: color === 'var(--nW)' ? 'var(--n0)' : 'var(--nW)', border: `3px solid ${color}`, boxSizing: 'border-box', pointerEvents: 'none' } });
-        const realFix = pc(c.fixedTotal);
+        const realFix = c.baseB ? Math.round(c.fixedTotal / c.baseB * 100) : 0;
         const tot = sp ? sp.fix + sp.var + mo.pSave : 100;
         return {
           splitIsAuto: !sp, splitIsCustom: !!sp, splitAutoStyle: segBtn(!sp), splitCustomStyle: segBtn(!!sp),
@@ -2571,12 +2574,12 @@ class Component extends DCLogic {
           splitCustom: () => upd(m => m.split ? m : ({ ...m, split: { fix: Math.min(100, realFix), var: Math.max(0, 100 - realFix - m.pSave) } })),
           splitRows: sp ? [
             row('fix', 'Spese fisse', 'icon-house', 'var(--nW)', sp.fix, `Voci reali ${eur(c.fixedTotal)} (${realFix}%)${c.fixedTotal > c.fixedBudget + 0.5 ? ' · oltre il budget' : ''}`, c.fixedTotal > c.fixedBudget + 0.5 ? 'var(--mf-danger)' : 'var(--n6)'),
-            row('var', 'Spese quotidiane', 'icon-shopping-bag', 'var(--n7)', sp.var, `Circa ${eur(mo.salary * sp.var / 100 / 4.33)} a settimana`),
+            row('var', 'Spese quotidiane', 'icon-shopping-bag', 'var(--n7)', sp.var, `Circa ${eur(c.baseB * sp.var / 100 / 4.33)} a settimana`),
             row('save', 'Salvadanaio', 'icon-piggy-bank', '#f36458', mo.pSave, 'Messo da parte, non si spende'),
           ] : [],
           splitPresets: [[50, 30, 20], [60, 25, 15], [70, 20, 10]].map(([a, b, d]) => ({ label: `${a} / ${b} / ${d}`, pick: () => upd(m => ({ ...m, pSave: d, split: { fix: a, var: b } })) }))
             .concat([{ label: 'Da spese reali', pick: () => upd(m => ({ ...m, split: { fix: Math.min(100, realFix), var: Math.max(0, 100 - realFix - m.pSave) } })) }]),
-          splitTotalLabel: tot === 100 ? 'Totale 100% · tutto assegnato' : tot < 100 ? `Totale ${tot}% · ${100 - tot}% non assegnato (${eur(mo.salary * (100 - tot) / 100)})` : `Totale ${tot}% · supera lo stipendio di ${tot - 100}%`,
+          splitTotalLabel: tot === 100 ? 'Totale 100% · tutto assegnato' : tot < 100 ? `Totale ${tot}% · ${100 - tot}% non assegnato (${eur(c.baseB * (100 - tot) / 100)})` : `Totale ${tot}% · supera il totale di ${tot - 100}%`,
           splitTotalColor: tot === 100 ? 'var(--mf-positive)' : tot < 100 ? 'var(--n7)' : 'var(--mf-danger)',
         };
       })(),
