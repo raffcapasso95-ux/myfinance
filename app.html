@@ -2949,5 +2949,68 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script>
+/* Calendario Myfinance: sostituisce il selettore nativo di ogni campo data */
+(function(){
+  var MESI=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],GG=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+  var css=document.createElement('style');
+  css.textContent='input[type=date]{cursor:pointer}input[type=date]::-webkit-calendar-picker-indicator{display:none}'+
+  '.mfc-scrim{position:fixed;inset:0;z-index:300;background:var(--mf-scrim);display:flex;align-items:center;justify-content:center;padding:16px}'+
+  '.mfc{width:100%;max-width:340px;background:var(--mf-surface);color:var(--mf-text);border:1px solid var(--mf-border);border-radius:var(--mf-radius-xl);box-shadow:var(--mf-shadow);padding:16px;font-family:var(--mf-font-sans)}'+
+  '.mfc-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}'+
+  '.mfc-t{font:600 17px/1.2 var(--mf-font-sans);letter-spacing:-.01em}'+
+  '.mfc-n{width:44px;height:44px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text);font:500 18px/1 var(--mf-font-sans);cursor:pointer;display:flex;align-items:center;justify-content:center}'+
+  '.mfc-n:hover:not(:disabled){background:var(--mf-surface-hover)}.mfc-n:disabled{opacity:.3;cursor:default}'+
+  '.mfc-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}'+
+  '.mfc-w{font:400 11px/1 var(--mf-font-mono);letter-spacing:.06em;color:var(--mf-text-muted);text-align:center;padding:6px 0;text-transform:uppercase}'+
+  '.mfc-d{height:42px;border-radius:99px;border:1px solid transparent;background:transparent;color:var(--mf-text);font:500 15px/1 var(--mf-font-sans);cursor:pointer;padding:0}'+
+  '.mfc-d:hover:not(:disabled):not(.on){background:var(--mf-surface-hover)}'+
+  '.mfc-d.td{border-color:var(--mf-input-border)}'+
+  '.mfc-d.on{background:var(--mf-brand);color:var(--mf-on-brand);border-color:var(--mf-brand);font-weight:700}'+
+  '.mfc-d:disabled{opacity:.28;cursor:default}'+
+  '.mfc button:focus-visible{outline:2px solid var(--mf-focus);outline-offset:2px}'+
+  '.mfc-f{display:flex;gap:8px;margin-top:12px}'+
+  '.mfc-b{flex:1;height:44px;border-radius:99px;border:1px solid var(--mf-border);background:transparent;color:var(--mf-text);font:500 14px/1 var(--mf-font-sans);cursor:pointer}'+
+  '.mfc-b:hover{background:var(--mf-surface-hover)}';
+  document.head.appendChild(css);
+  var pad=function(n){return n<10?'0'+n:''+n},iso=function(y,m,d){return y+'-'+pad(m+1)+'-'+pad(d)},cur=null;
+  function parse(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||'');return m?{y:+m[1],m:+m[2]-1,d:+m[3]}:null}
+  function close(){if(!cur)return;document.removeEventListener('keydown',cur.key,true);cur.el.remove();cur=null}
+  function open(inp){
+    if(cur||inp.disabled||inp.readOnly)return;
+    var sel=parse(inp.value),t=new Date(),today=iso(t.getFullYear(),t.getMonth(),t.getDate()),mn=inp.min||'',mx=inp.max||'';
+    var base=sel||parse(today);if(!sel){if(mn&&today<mn)base=parse(mn);else if(mx&&today>mx)base=parse(mx)}
+    var vy=base.y,vm=base.m,el=document.createElement('div');el.className='mfc-scrim';
+    function pick(v){var set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(inp,v);inp.dispatchEvent(new Event('input',{bubbles:true}));inp.dispatchEvent(new Event('change',{bubbles:true}));close()}
+    function draw(){
+      var first=(new Date(vy,vm,1).getDay()+6)%7,dim=new Date(vy,vm+1,0).getDate(),h='';
+      var prevOk=!mn||iso(vy,vm,1)>mn,nextOk=!mx||iso(vy,vm,dim)<mx;
+      h+='<div class="mfc-h"><button type="button" class="mfc-n" data-n="-1" aria-label="Mese precedente"'+(prevOk?'':' disabled')+'>‹</button><div class="mfc-t" aria-live="polite">'+MESI[vm]+' '+vy+'</div><button type="button" class="mfc-n" data-n="1" aria-label="Mese successivo"'+(nextOk?'':' disabled')+'>›</button></div><div class="mfc-g">';
+      GG.forEach(function(g){h+='<div class="mfc-w">'+g+'</div>'});
+      for(var i=0;i<first;i++)h+='<div></div>';
+      for(var d=1;d<=dim;d++){var v=iso(vy,vm,d),off=(mn&&v<mn)||(mx&&v>mx);h+='<button type="button" class="mfc-d'+(v===inp.value?' on':'')+(v===today?' td':'')+'" data-v="'+v+'"'+(off?' disabled':'')+' aria-label="'+d+' '+MESI[vm]+' '+vy+'"'+(v===inp.value?' aria-pressed="true"':'')+'>'+d+'</button>'}
+      var tOk=!((mn&&today<mn)||(mx&&today>mx));
+      h+='</div><div class="mfc-f"><button type="button" class="mfc-b" data-x="1">Annulla</button>'+(tOk?'<button type="button" class="mfc-b" data-v="'+today+'">Oggi</button>':'')+'</div>';
+      el.firstChild.innerHTML=h;
+    }
+    var box=document.createElement('div');box.className='mfc';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label',inp.getAttribute('aria-label')||'Scegli una data');el.appendChild(box);
+    var down=false;el.addEventListener('pointerdown',function(e){down=e.target===el});
+    el.addEventListener('click',function(e){
+      if(e.target===el){if(down)close();return}
+      var b=e.target.closest('button');if(!b)return;e.stopPropagation();
+      if(b.dataset.n){vm+=+b.dataset.n;if(vm<0){vm=11;vy--}if(vm>11){vm=0;vy++}draw();var nb=box.querySelector('[data-n="'+b.dataset.n+'"]:not([disabled])');if(nb)nb.focus();return}
+      if(b.dataset.x){close();return}
+      if(b.dataset.v)pick(b.dataset.v)});
+    var key=function(e){if(e.key==='Escape'){e.stopPropagation();e.preventDefault();close()}};
+    document.addEventListener('keydown',key,true);cur={el:el,key:key};
+    draw();document.body.appendChild(el);
+    var f=box.querySelector('.mfc-d.on')||box.querySelector('.mfc-d.td:not(:disabled)')||box.querySelector('.mfc-d:not(:disabled)');if(f)f.focus();
+  }
+  var isD=function(t){return t&&t.tagName==='INPUT'&&t.type==='date'};
+  document.addEventListener('click',function(e){if(isD(e.target)){e.preventDefault();open(e.target)}},true);
+  document.addEventListener('focusin',function(e){if(isD(e.target)&&!cur){e.target.blur();open(e.target)}},true);
+  document.addEventListener('keydown',function(e){if(isD(e.target)&&!cur&&(e.key==='Enter'||e.key===' '||e.key==='ArrowDown')){e.preventDefault();open(e.target)}},true);
+})();
+</script>
 </body>
 </html>
