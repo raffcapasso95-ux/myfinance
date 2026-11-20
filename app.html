@@ -1504,14 +1504,12 @@
     <div style="display:flex;flex-direction:column;padding:clamp(16px,4.5vw,28px);border-radius:20px;background:var(--nW)">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:12px"><span style="font:500 16px/1.3 Inter,sans-serif">Riepilogo dei mesi</span><span style="display:flex;gap:12px;flex-wrap:wrap;font:400 12px/1.4 Inter,sans-serif;color:var(--n5)"><sc-for list="{{ yearLegend }}" as="l" hint-placeholder-count="4"><span style="display:inline-flex;align-items:center;gap:6px"><span style="{{ l.dot }}"></span>{{ l.label }}</span></sc-for></span></div>
       <sc-for list="{{ yearRows }}" as="r" hint-placeholder-count="3">
-        <button onClick="{{ r.go }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px 16px;padding:14px 0;border:0;border-top:1px solid var(--n8);background:transparent;color:var(--n0);text-align:left;cursor:pointer;width:100%" style-hover="background:rgba(127,127,127,.06)">
-          <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-            <span style="font:500 16px/1.3 Inter,sans-serif">{{ r.name }}</span>
-            <span style="display:flex;height:6px;gap:2px;border-radius:99px;overflow:hidden;background:var(--n8);max-width:420px"><sc-for list="{{ r.segs }}" as="g" hint-placeholder-count="4"><span style="{{ g.style }}"></span></sc-for></span>
-            <span style="font:400 12px/1.45 Inter,sans-serif;color:var(--n5);text-wrap:pretty">{{ r.detail }}</span>
+        <button onClick="{{ r.go }}" style="display:flex;flex-direction:column;gap:12px;padding:16px 0;border:0;border-top:1px solid var(--n8);background:transparent;color:var(--n0);text-align:left;cursor:pointer;width:100%" style-hover="background:rgba(127,127,127,.06)">
+          <span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font:600 17px/1.3 Inter,sans-serif">{{ r.name }}</span><i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n5)"></i></span>
+          <span style="display:flex;height:6px;gap:2px;border-radius:99px;overflow:hidden;background:var(--n8)"><sc-for list="{{ r.segs }}" as="g" hint-placeholder-count="4"><span style="{{ g.style }}"></span></sc-for></span>
+          <span style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px 16px">
+            <sc-for list="{{ r.cells }}" as="q" hint-placeholder-count="4"><span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font:400 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">{{ q.label }}</span><span style="font:500 17px/1.25 Inter,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums;color:{{ q.color }}">{{ q.val }}</span><span style="font:400 12px/1.35 Inter,sans-serif;color:var(--n5)">{{ q.sub }}</span></span></sc-for>
           </span>
-          <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px"><span style="font:400 12px/1.3 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--n5)">RIMASTO</span><span style="font:500 16px/1.3 Inter,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums;color:{{ r.leftColor }}">{{ r.left }}</span></span>
-          <i class="icon-chevron-right" style="font-size:16px;line-height:1;color:var(--n5)"></i>
         </button>
       </sc-for>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:1px;margin-top:8px;border-radius:12px;overflow:hidden;background:var(--n8);border:1px solid var(--n8)">
@@ -2156,6 +2154,11 @@ class Component extends DCLogic {
       const pBase = Math.max(1, parts.reduce((a, p) => a + p[1], 0));
       const dot = c => ({ width: 10, height: 10, borderRadius: 99, background: c, flex: 'none', display: 'inline-block' });
       const segsOf = (vals, base, light) => vals.map((v, i) => ({ v, i })).filter(x => x.v > 0).map(x => ({ style: { display: 'block', width: (x.v / base * 100) + '%', background: parts[x.i][light ? 3 : 2], minWidth: 2 } }));
+      const savOf = c => c.savSpent + c.extraSaved;
+      const extraParts = c => [c.incBudget > 0.5 && eur(c.incBudget) + ' nel budget', c.incSave > 0.5 && eur(c.incSave) + ' da parte', c.incFree > 0.5 && eur(c.incFree) + ' non assegnati'].filter(Boolean).join(' · ');
+      const ordAll = [...months].sort((a, b) => idx(a) - idx(b)), savStart0 = +(ordAll[0] && ordAll[0].savStart) || 0;
+      const cumSav = m => savStart0 + ordAll.filter(x => idx(x) <= idx(m)).reduce((a, x) => a + savOf(this.calc(x)), 0);
+      const cumEnd = cs.length ? cumSav(cs[cs.length - 1].m) : savStart0, Sauto = tot('savSpent'), Sextra = tot('extraSaved'), Xb = tot('incBudget'), Xs = tot('incSave'), Xn = cs.filter(x => x.c.incExtra > 0).length;
       const saveRate = inc > 0 ? Math.round((S + Math.max(0, totLeft)) / inc * 100) : 0;
       const kpi = (label, value, note, hot) => ({ label, value, note, sub: hot ? '#0b0b0c' : 'var(--n7)', style: { display: 'flex', flexDirection: 'column', gap: 6, minHeight: 132, padding: 'clamp(14px,4vw,20px)', borderRadius: 16, background: hot ? '#f36458' : 'var(--n1)', color: hot ? '#0b0b0c' : 'var(--nW)', border: hot ? '1px solid #f36458' : '1px solid var(--n3)' } });
       const allVar = cs.flatMap(({ m }) => this.varIn(m).map(e => ({ ...e, mo: m })));
@@ -2167,7 +2170,7 @@ class Component extends DCLogic {
       const catMap = {}; allVar.forEach(e => { const key = (e.name || 'Spesa').trim().toLowerCase(); const c = catMap[key] || (catMap[key] = { name: (e.name || 'Spesa').trim(), icon: e.icon, n: 0, amt: 0 }); c.n++; c.amt += e.amount; if (!c.icon && e.icon) c.icon = e.icon; });
       const cats = Object.values(catMap).sort((a, b) => b.amt - a.amt).slice(0, 8), catMax = Math.max(1, ...cats.map(c => c.amt));
       const metric = s.yMetric || 'left';
-      const MET = { left: ['Rimasto', c => c.left], var: ['Quotidiane', c => c.varSpent], fix: ['Fisse', c => c.fixedTotal], sav: ['Salvadanaio', c => c.savSpent + c.extraSaved] };
+      const MET = { left: ['Rimasto', c => c.left], sav: ['Salvadanaio', c => c.savSpent + c.extraSaved], ext: ['Extra', c => c.incExtra], var: ['Quotidiane', c => c.varSpent], fix: ['Fisse', c => c.fixedTotal] };
       const mv = MET[metric][1], vals = cs.map(x => mv(x.c)), mMax = Math.max(1, ...vals.map(Math.abs)), mAvg = vals.reduce((a, v) => a + v, 0) / n;
       const selI = (s.ySel && s.ySel[y] != null && cs.some(x => x.m.month === s.ySel[y])) ? s.ySel[y] : (cs.length ? cs[cs.length - 1].m.month : -1);
       const sel = cs.find(x => x.m.month === selI);
@@ -2182,7 +2185,7 @@ class Component extends DCLogic {
         yearIncFmt: mask(inc), yearIncSub: hid ? 'Importi nascosti' : `Stipendi ${eur(sal)}${X > 0 ? ' · extra ' + eur(X) : ''}`,
         yearSegs: segsOf(parts.map(p => p[1]), pBase, false),
         yearSplit: parts.map(p => ({ label: p[0], fmt: eur(p[1]), pct: Math.round(p[1] / pBase * 100) + '%', dot: dot(p[2]) })),
-        yearKpis: [kpi('Nel salvadanaio', eur(S), 'messi da parte quest\'anno', true), kpi('Tasso di risparmio', saveRate + '%', 'salvadanaio + rimasto sulle entrate'), kpi('Rimasto in media', eur(avgL), 'a fine mese'), kpi('Quotidiane in media', eur(V / n), 'al mese · ' + eur(V / Math.max(1, n * 4.33)) + ' a settimana')],
+        yearKpis: [kpi('Salvadanaio in totale', eur(cumEnd), '+ ' + eur(S) + ' messi da parte nel ' + y + ' (automatico ' + eur(Sauto) + ' + extra ' + eur(Sextra) + ')' + (savStart0 ? ' · partivi da ' + eur(savStart0) : ''), true), kpi('Extra incassati', mask(X), X > 0 ? 'in ' + Xn + (Xn === 1 ? ' mese' : ' mesi') + ' · ' + (hid ? 'importi nascosti' : [Xb > 0.5 && eur(Xb) + ' nel budget', Xs > 0.5 && eur(Xs) + ' da parte', (X - Xb - Xs) > 0.5 && eur(X - Xb - Xs) + ' non assegnati'].filter(Boolean).join(', ')) : 'Nessuna entrata extra quest\'anno'), kpi('Tasso di risparmio', saveRate + '%', 'salvadanaio + rimasto sulle entrate'), kpi('Rimasto in media', eur(avgL), 'a fine mese'), kpi('Quotidiane in media', eur(V / n), 'al mese · ' + eur(V / Math.max(1, n * 4.33)) + ' a settimana'), kpi('Fisse al mese', eur(F / n), 'in media, rate comprese')],
         yearHighlights: [
           best && { label: 'MESE MIGLIORE', title: MN[best.m.month], sub: 'rimasti ' + eur(best.c.left), icon: 'icon-trophy', chip: chip('var(--mf-positive-soft)', 'var(--mf-positive)'), go: go('m:' + best.m.id) },
           costly && costly.c.varSpent > 0 && { label: 'MESE PIÙ CARO', title: MN[costly.m.month], sub: eur(costly.c.varSpent) + ' di spese quotidiane', icon: 'icon-flame', chip: chip('var(--mf-warning-soft)', 'var(--mf-warning)'), go: go('m:' + costly.m.id) },
@@ -2190,7 +2193,7 @@ class Component extends DCLogic {
         ].filter(Boolean),
         yearMetrics: Object.entries(MET).map(([key, [label]]) => ({ label, pick: () => this.setState({ yMetric: key }), style: { height: 36, padding: '0 14px', borderRadius: 99, border: '1px solid ' + (key === metric ? 'var(--n0)' : 'var(--n7)'), background: key === metric ? 'var(--n0)' : 'transparent', color: key === metric ? 'var(--nW)' : 'var(--n0)', font: '500 13px/1 Inter,sans-serif', cursor: 'pointer' } })),
         ySelName: sel ? (MN[sel.m.month] + ' · ' + MET[metric][0]).toUpperCase() : 'NESSUN MESE', ySelValue: sel ? eur(mv(sel.c)) : '—', ySelColor: sel && mv(sel.c) < 0 ? 'var(--mf-warning)' : 'var(--n0)',
-        ySelSub: sel ? detail(sel.m, sel.c) : 'Aggiungi un mese per vedere l\'andamento.', ySelHas: !!sel, ySelGo: sel ? go('m:' + sel.m.id) : () => {},
+        ySelSub: sel ? (metric === 'sav' ? `Automatico ${eur(sel.c.savSpent)} + extra ${eur(sel.c.extraSaved)} messi da parte nel mese · totale accumulato ${eur(cumSav(sel.m))}` : metric === 'ext' ? (sel.c.incExtra > 0 ? (hid ? 'Importi nascosti' : extraParts(sel.c)) : 'Nessuna entrata extra questo mese') : detail(sel.m, sel.c)) : 'Aggiungi un mese per vedere l\'andamento.', ySelHas: !!sel, ySelGo: sel ? go('m:' + sel.m.id) : () => {},
         yearShowVals: !mobY, yearAvgFmt: eur(mAvg),
         yearAvgLine: { position: 'absolute', left: 0, right: 0, bottom: (Math.max(0, mAvg) / mMax * 82) + '%', borderTop: '1px dashed var(--n5)', pointerEvents: 'none' },
         yearBars: all12.map(({ i, f }) => { const v = f ? mv(f.c) : 0, on = i === selI; return {
@@ -2198,9 +2201,9 @@ class Component extends DCLogic {
           labelColor: on ? 'var(--mf-text)' : f ? 'var(--mf-text-secondary)' : 'var(--mf-text-muted)', valColor: on ? 'var(--mf-text)' : 'var(--mf-text-muted)',
           barStyle: { display: 'block', width: '100%', maxWidth: 48, height: f ? Math.max(1.5, Math.abs(v) / mMax * 82) + '%' : '0%', borderRadius: '6px 6px 2px 2px', background: !f ? 'transparent' : v < 0 ? 'var(--mf-warn-fill)' : on ? (metric === 'left' ? 'var(--mf-positive)' : 'var(--mf-text)') : 'var(--mf-bar)', opacity: 1, transition: 'height .3s cubic-bezier(.2,.8,.2,1), background .2s' } }; }),
         yearLegend: parts.map(p => ({ label: p[0], dot: dot(p[3]) })),
-        yearRows: cs.map(({ m, c }) => ({ name: MN[m.month], left: eur(c.left), leftColor: c.left < 0 ? 'var(--mf-warning)' : 'var(--n0)', go: go('m:' + m.id), detail: detail(m, c),
+        yearRows: cs.map(({ m, c }) => ({ name: MN[m.month], left: eur(c.left), leftColor: c.left < 0 ? 'var(--mf-warning)' : 'var(--n0)', go: go('m:' + m.id), cells: [{ label: 'ENTRATE', val: mask(m.salary + c.incExtra), sub: c.incExtra > 0 && !hid ? 'stipendio ' + eur(m.salary) : '', color: 'var(--n0)' }, { label: 'EXTRA', val: c.incExtra > 0 ? '+ ' + mask(c.incExtra) : '—', sub: c.incExtra > 0 && !hid ? extraParts(c) : '', color: c.incExtra > 0 ? 'var(--mf-positive)' : 'var(--mf-text-muted)' }, { label: 'SALVADANAIO', val: savOf(c) > 0 ? '+ ' + eur(savOf(c)) : '—', sub: 'totale ' + eur(cumSav(m)), color: savOf(c) > 0 ? 'var(--mf-brand-text)' : 'var(--mf-text-muted)' }, { label: 'RIMASTO', val: eur(c.left), sub: '', color: c.left < 0 ? 'var(--mf-warning)' : 'var(--n0)' }],
           segs: segsOf([c.fixedTotal, c.varSpent, c.savSpent + c.extraSaved, Math.max(0, c.left)], Math.max(1, c.fixedTotal + c.varSpent + c.savSpent + c.extraSaved + Math.max(0, c.left)), true) })),
-        yearTotals: [['ENTRATE', inc, 'var(--n0)', true], ['FISSE', F, 'var(--n0)'], ['QUOTIDIANE', V, 'var(--n0)'], ['SALVADANAIO', S, 'var(--mf-brand-text)'], ['RIMASTO', totLeft, totLeft < 0 ? 'var(--mf-warning)' : 'var(--mf-positive)']].map(([label, v, color, m]) => ({ label, color, fmt: m ? mask(v) : eur(v), avg: m ? mask(v / n) : eur(v / n) })),
+        yearTotals: [['ENTRATE', inc, 'var(--n0)', true], ['EXTRA', X, 'var(--mf-positive)', true], ['FISSE', F, 'var(--n0)'], ['QUOTIDIANE', V, 'var(--n0)'], ['SALVADANAIO', S, 'var(--mf-brand-text)'], ['RIMASTO', totLeft, totLeft < 0 ? 'var(--mf-warning)' : 'var(--mf-positive)']].map(([label, v, color, m]) => ({ label, color, fmt: m ? mask(v) : eur(v), avg: m ? mask(v / n) : eur(v / n) })),
         yearCats: cats.map((c, i) => ({ name: c.name, count: c.n === 1 ? '1 volta' : c.n + ' volte', fmt: eur(c.amt), pct: V > 0 ? Math.round(c.amt / V * 100) + '%' : '', ico: iconView(c.icon, 18), rule: i ? 'var(--mf-border)' : 'transparent',
           bar: { display: 'block', height: '100%', width: (c.amt / catMax * 100) + '%', borderRadius: 99, background: i === 0 ? 'var(--mf-text-secondary)' : 'var(--mf-bar)' } })),
         yearNoCats: cats.length === 0,
